@@ -211,12 +211,19 @@
         <div class="text-center mb-10">
             <span class="text-xs font-bold uppercase tracking-widest text-amber-500">LIPUTAN LOKASI</span>
             <h2 class="text-3xl font-extrabold text-white mt-1">Sekolah Seliaan (12 Sekolah)</h2>
-            <p class="text-sm text-slate-400 mt-2">Senarai penuh sekolah di bawah seliaan teknikal dan sokongan operasi Geng PTIS Pelangai. Klik kotak untuk melihat maklumat inventori aset</p>
+            
+            <!-- Gantikan bahagian perenggan teks biasa dengan kod ini -->
+            <div class="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-800/60 border border-slate-700/50 text-xs text-slate-300 shadow-sm">
+                <span class="flex h-2 w-2 relative">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                </span>
+                <span>Senarai penuh sekolah di bawah seliaan teknikal Geng PTIS Pelangai. <strong class="text-cyan-400">Klik mana-mana kotak sekolah</strong> untuk paparan inventori aset.</span>
+            </div>
         </div>
 
         <div id="publicSchoolGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            
-            <!-- 1. SMK Seri Pelangai -->
+	<!-- 1. SMK Seri Pelangai -->
             <div onclick="openInventoryModal('SMK Seri Pelangai', 'CEA0055')" class="bg-slate-900/90 border border-slate-800 hover:border-indigo-500/50 p-4 rounded-xl flex items-center space-x-4 transition group cursor-pointer">
                 <div class="bg-indigo-950/80 text-indigo-400 p-3 rounded-lg group-hover:scale-105 transition"><i class="fa-solid fa-school text-xl"></i></div>
                 <div><h4 class="text-sm font-bold text-white group-hover:text-indigo-300 transition">SMK Seri Pelangai</h4><span class="text-xs text-slate-400">CEA0055</span></div>
