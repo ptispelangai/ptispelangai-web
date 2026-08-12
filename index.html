@@ -566,10 +566,12 @@
             </div>
 
             <div class="w-full h-[70vh] min-h-[500px] bg-slate-950 p-2 relative">
-    <iframe 
-        src="https://datastudio.google.com/embed/reporting/c0fc78ef-1af4-4069-90b2-e0583e716f85/page/OE95F" 
+    <iframe
+        id="dashboardFrame"
+        data-src="https://datastudio.google.com/embed/reporting/c0fc78ef-1af4-4069-90b2-e0583e716f85/page/OE95F"
         class="w-full h-full border-0 rounded-xl"
         allowfullscreen
+        loading="lazy"
         sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
     </iframe>
 </div>
@@ -859,22 +861,55 @@
         let editingSchoolId = null;
         let editingTeamId = null;
 
+        // ================= MODAL CONTROL (STABIL) =================
         function openModal(id) {
-            document.getElementById(id).classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+            const modal = document.getElementById(id);
+            if (!modal) {
+                console.warn('Modal tidak dijumpai:', id);
+                return;
+            }
+
+            modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+
+            // Dashboard hanya dimuat apabila benar-benar dibuka.
+            if (id === 'dashboardModal') {
+                const frame = document.getElementById('dashboardFrame');
+                if (frame && !frame.src.includes('/embed/reporting/')) {
+                    const src = frame.dataset.src;
+                    if (src) frame.src = src;
+                }
+            }
         }
 
         function closeModal(id) {
-            document.getElementById(id).classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
+            const modal = document.getElementById(id);
+            if (!modal) return;
 
-        window.onclick = function(event) {
-            if (event.target.classList.contains('fixed')) {
-                event.target.classList.add('hidden');
-                document.body.style.overflow = 'auto';
+            modal.classList.add('hidden');
+
+            // Jangan paksa body kepada "auto" kerana mungkin ada modal lain yang masih terbuka.
+            const anyOpenModal = document.querySelector(
+                '.fixed:not(.hidden)[id$="Modal"], .fixed:not(.hidden)#adminDashboard'
+            );
+
+            if (!anyOpenModal) {
+                document.body.classList.remove('overflow-hidden');
             }
         }
+
+        // Tutup modal hanya apabila klik pada backdrop modal itu sendiri.
+        document.addEventListener('click', function(event) {
+            const target = event.target;
+            if (!(target instanceof HTMLElement)) return;
+
+            if (target.classList.contains('fixed') && target.id) {
+                const id = target.id;
+                if (id !== 'adminDashboard') {
+                    closeModal(id);
+                }
+            }
+        });
 
         function esc(v) {
             return String(v || '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));
@@ -1570,31 +1605,47 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     </div>
 </div>
-
-<!-- FUNGSI SKRIP KHAS INTERNET -->
+<!-- ==================== FUNGSI SKRIP KHAS INTERNET & MODAL ==================== -->
 <script>
+// FUNGSI BUKA MODAL INTERNET (Mengunci skrin belakang)
 function openInternetModal() {
-    document.getElementById('internetModal').style.display = 'block';
+    const modal = document.getElementById('internetModal');
+    if (modal) {
+        modal.style.display = 'block';
+        document.body.classList.add('overflow-hidden');
+    }
 }
 
+// FUNGSI TUTUP MODAL INTERNET
 function closeInternetModal() {
-    document.getElementById('internetModal').style.display = 'none';
+    const modal = document.getElementById('internetModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.classList.remove('overflow-hidden');
+    }
 }
 
 window.addEventListener('click', function(event) {
     var modal = document.getElementById('internetModal');
-    if (event.target === modal) {
-        modal.style.display = 'none';
+    if (modal && event.target === modal) {
+        closeInternetModal();
     }
 });
 
-  // FUNGSI LOAD DATA INVENTORI DARI SUPABASE
+// FUNGSI LOAD DATA INVENTORI DARI SUPABASE
 async function loadInventoryData(schoolCode) {
     const contentDiv = document.getElementById('inventoryContent');
+    if (!contentDiv) return;
+
     contentDiv.innerHTML = `<p class="text-center py-10 text-slate-500"><i class="fa-solid fa-spinner fa-spin"></i> Sedang mengambil data...</p>`;
 
     try {
-        const { data, error } = await getSupabase()
+        const client = getSupabase();
+        if (!client) {
+            throw new Error('Sambungan Supabase belum tersedia.');
+        }
+
+        const { data, error } = await client
             .from('inventory_assets')
             .select('*')
             .eq('school_code', schoolCode);
@@ -1640,23 +1691,23 @@ async function loadInventoryData(schoolCode) {
         console.error("Error fetching inventory:", err);
         contentDiv.innerHTML = `<p class="text-center py-10 text-red-400">Gagal memuatkan data. Sila semak sambungan.</p>`;
     }
-} 
-    // FUNGSI MEMBUKA MODAL INVENTORI
-    function openInventoryModal(schoolName, schoolCode) {
-        document.getElementById('invModalTitle').innerText = schoolName;
-        document.getElementById('invModalCode').innerText = "Kod Sekolah: " + schoolCode;
-        
-        // Paparkan modal
-        document.getElementById('inventoryModal').classList.remove('hidden');
-        
-        // Panggil fungsi fetch data
-        loadInventoryData(schoolCode);
-    }
+}
 
-    // FUNGSI ASAS TUTUP MODAL
-    function closeModal(modalId) {
-        document.getElementById(modalId).classList.add('hidden');
-    }
+// FUNGSI MEMBUKA MODAL INVENTORI (Tambah kawalan overflow body)
+function openInventoryModal(schoolName, schoolCode) {
+    document.getElementById('invModalTitle').innerText = schoolName;
+    document.getElementById('invModalCode').innerText = "Kod Sekolah: " + schoolCode;
+    
+    // Paparkan modal & kunci scroll belakang
+    document.getElementById('inventoryModal').classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+    
+    // Panggil fungsi fetch data
+    loadInventoryData(schoolCode);
+}
+
+// closeModal dikendalikan oleh fungsi modal utama di atas.
+
 </script>
 </body>
 </html>
