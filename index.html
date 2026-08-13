@@ -47,6 +47,9 @@
         .hero-gradient {
             background: radial-gradient(circle at 50% 0%, #312e81 0%, #0f172a 70%, #020617 100%);
         }
+        @media (max-width: 640px) {
+            .glass-card-dark { backdrop-filter: none; }
+        }
     </style>
 </head>
 
@@ -167,44 +170,86 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50 hover:border-cyan-400/50 transition-all">
-                <div class="w-12 h-12 bg-cyan-500/10 text-cyan-400 rounded-xl flex items-center justify-center mb-4 text-2xl">🖥️</div>
+            <!-- PENYELENGGARAAN -->
+            <article onclick="openServiceImage('Penyelenggaraan Perkakasan', 'https://images.pexels.com/photos/4316/technology-computer-chips-gigabyte.jpg?auto=compress&cs=tinysrgb&w=1600', 'Bantuan pemeriksaan, pembaikan asas, dan sokongan teknikal bagi perkakasan ICT serta peranti sewaan di sekolah.')"
+                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openServiceImage('Penyelenggaraan Perkakasan','https://images.pexels.com/photos/4316/technology-computer-chips-gigabyte.jpg?auto=compress&cs=tinysrgb&w=1600','Bantuan pemeriksaan, pembaikan asas, dan sokongan teknikal bagi perkakasan ICT serta peranti sewaan di sekolah.')}"
+                role="button" tabindex="0"
+                class="group bg-slate-800/60 p-6 rounded-2xl border border-slate-700/60 hover:border-cyan-400/50 hover:bg-slate-800 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-cyan-500/5">
+                <div class="overflow-hidden rounded-xl border border-slate-700/70 mb-4 bg-slate-950">
+                    <img width="900" height="506" src="https://images.pexels.com/photos/4316/technology-computer-chips-gigabyte.jpg?auto=compress&cs=tinysrgb&w=900" alt="Motherboard komputer untuk penyelenggaraan perkakasan" loading="lazy" decoding="async"
+                         class="w-full h-[162px] object-cover group-hover:scale-[1.03] transition-transform duration-500">
+                </div>
+                <div class="w-12 h-12 bg-cyan-500/10 text-cyan-300 rounded-xl flex items-center justify-center mb-4 text-2xl border border-cyan-500/10">🖥️</div>
                 <h3 class="text-xl font-bold mb-2 text-white">Penyelenggaraan Perkakasan</h3>
                 <p class="text-slate-400 text-sm leading-relaxed">
                     Bantuan pemeriksaan, pembaikan asas, dan sokongan teknikal bagi perkakasan ICT serta peranti sewaan di sekolah.
                 </p>
-            </div>
+                <p class="text-cyan-400 text-xs font-semibold mt-4">Klik untuk lihat gambar</p>
+            </article>
 
-            <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50 hover:border-amber-400/50 transition-all">
-                <div class="w-12 h-12 bg-amber-500/10 text-amber-400 rounded-xl flex items-center justify-center mb-4 text-2xl">🌐</div>
-                <h3 class="text-xl font-bold mb-2 text-white">Pengurusan Rangkaian & Wi-Fi</h3>
+            <!-- RANGKAIAN -->
+            <article onclick="openServiceImage('Pengurusan Rangkaian & Wi-Fi', 'https://images.pexels.com/photos/2881229/pexels-photo-2881229.jpeg?auto=compress&cs=tinysrgb&w=1600', 'Pemantauan dan pemastian kestabilan talian internet KPM, talian ketersambungan (PoP/MyGovNet), serta rangkaian Wi-Fi sekolah.')"
+                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openServiceImage('Pengurusan Rangkaian & Wi-Fi','https://images.pexels.com/photos/2881229/pexels-photo-2881229.jpeg?auto=compress&cs=tinysrgb&w=1600','Pemantauan dan pemastian kestabilan talian internet KPM, talian ketersambungan (PoP/MyGovNet), serta rangkaian Wi-Fi sekolah.')}"
+                role="button" tabindex="0"
+                class="group bg-slate-800/60 p-6 rounded-2xl border border-slate-700/60 hover:border-amber-400/50 hover:bg-slate-800 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-amber-500/5">
+                <div class="overflow-hidden rounded-xl border border-slate-700/70 mb-4 bg-slate-950">
+                    <img width="900" height="506" src="https://images.pexels.com/photos/2881229/pexels-photo-2881229.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Server rack dan kabel rangkaian" loading="lazy" decoding="async"
+                         class="w-full h-[162px] object-cover group-hover:scale-[1.03] transition-transform duration-500">
+                </div>
+                <div class="w-12 h-12 bg-amber-500/10 text-amber-300 rounded-xl flex items-center justify-center mb-4 text-2xl border border-amber-500/10">🌐</div>
+                <h3 class="text-xl font-bold mb-2 text-white">Pengurusan Rangkaian &amp; Wi-Fi</h3>
                 <p class="text-slate-400 text-sm leading-relaxed">
                     Pemantauan dan pemastian kestabilan talian internet KPM, talian ketersambungan (PoP/MyGovNet), serta rangkaian Wi-Fi sekolah.
                 </p>
-            </div>
+                <p class="text-amber-400 text-xs font-semibold mt-4">Klik untuk lihat gambar</p>
+            </article>
 
-            <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50 hover:border-cyan-400/50 transition-all">
-                <div class="w-12 h-12 bg-cyan-500/10 text-cyan-400 rounded-xl flex items-center justify-center mb-4 text-2xl">🛠️</div>
+            <!-- BANTUAN MAKMAL -->
+            <article onclick="openServiceImage('Bantuan Teknikal Makmal', 'https://images.pexels.com/photos/18471480/pexels-photo-18471480.jpeg?auto=compress&cs=tinysrgb&w=1600', 'Khidmat nasihat pengurusan makmal komputer, penyediaan peranti untuk program sekolah, serta khidmat sokongan operasi ICT.')"
+                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openServiceImage('Bantuan Teknikal Makmal','https://images.pexels.com/photos/18471480/pexels-photo-18471480.jpeg?auto=compress&cs=tinysrgb&w=1600','Khidmat nasihat pengurusan makmal komputer, penyediaan peranti untuk program sekolah, serta khidmat sokongan operasi ICT.')}"
+                role="button" tabindex="0"
+                class="group bg-slate-800/60 p-6 rounded-2xl border border-slate-700/60 hover:border-cyan-400/50 hover:bg-slate-800 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-cyan-500/5">
+                <div class="overflow-hidden rounded-xl border border-slate-700/70 mb-4 bg-slate-950">
+                    <img width="900" height="506" src="https://images.pexels.com/photos/18471480/pexels-photo-18471480.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Makmal komputer sekolah" loading="lazy" decoding="async"
+                         class="w-full h-[162px] object-cover group-hover:scale-[1.03] transition-transform duration-500">
+                </div>
+                <div class="w-12 h-12 bg-cyan-500/10 text-cyan-300 rounded-xl flex items-center justify-center mb-4 text-2xl border border-cyan-500/10">🛠️</div>
                 <h3 class="text-xl font-bold mb-2 text-white">Bantuan Teknikal Makmal</h3>
                 <p class="text-slate-400 text-sm leading-relaxed">
                     Khidmat nasihat pengurusan makmal komputer, penyediaan peranti untuk program sekolah, serta khidmat sokongan operasi ICT.
                 </p>
-            </div>
+                <p class="text-cyan-400 text-xs font-semibold mt-4">Klik untuk lihat gambar</p>
+            </article>
         </div>
     </section>
-    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 mb-8 shadow-xl">
+
+    <!-- Popup Gambar Perkhidmatan -->
+    <div id="serviceImageModal" class="fixed inset-0 z-[110] hidden items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md" role="dialog" aria-modal="true" aria-labelledby="serviceImageTitle">
+        <div class="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-4 md:p-5">
+            <button type="button" onclick="closeServiceImage()" aria-label="Tutup" class="absolute right-4 top-4 z-10 w-9 h-9 rounded-full bg-slate-950/90 border border-slate-700 text-slate-300 hover:text-white hover:border-cyan-400 transition-colors flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="pr-12 mb-4">
+                <h3 id="serviceImageTitle" class="text-xl md:text-2xl font-bold text-white"></h3>
+                <p id="serviceImageDescription" class="text-slate-400 text-sm mt-1"></p>
+            </div>
+            <img id="serviceImagePreview" src="" alt="Paparan gambar perkhidmatan" class="w-full max-h-[70vh] object-contain rounded-xl border border-slate-700 bg-slate-950">
+        </div>
+    </div>
+    <!-- Bahagian Pengumuman Semasa -->
+<div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 mb-8 shadow-xl">
     <div class="flex justify-between items-center mb-4">
         <h3 class="text-lg font-bold text-white flex items-center gap-2">
             📢 Pengumuman Semasa
         </h3>
     </div>
     
-    <!-- Ditukar dari space-y-3 kepada grid 2 kolum -->
+    <!-- Grid untuk paparan kad -->
     <div id="announcementContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Pengumuman akan dipaparkan di sini oleh JavaScript -->
         <p class="text-slate-400 text-sm">Memuatkan pengumuman...</p>
     </div>
 </div>
-
    <!-- SECTION: PAPARAN GRID LENGKAP 12 SEKOLAH SELIAAN -->
 <section id="sekolah-zon" class="py-16 bg-slate-950 border-t border-slate-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -406,7 +451,7 @@
                         <div class="bg-slate-900 border border-slate-800 hover:border-cyan-500/50 p-5 rounded-xl transition-all flex flex-col justify-between text-center">
                             <div>
                                 <div style="width: 100px; height: 120px; margin: 0 auto 12px auto; border-radius: 12px; overflow: hidden; border: 2px solid #22d3ee; background-color: #0f172a;">
-                                    <img src="https://github.com/mohdhuszaini-tech/ptispelangai-web/blob/main/amirul.jpg?raw=true" onerror="this.src='https://ui-avatars.com/api/?name=Amirulakbar+Amir&background=0284c7&color=fff'" alt="Amirulakbar bin Amir" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <img src="https://github.com/mohdhuszaini-tech/ptispelangai-web/blob/main/amirul.jpg?raw=true" onerror="this.src='https://ui-avatars.com/api/?name=Amirulakbar+Amir&background=0284c7&color=fff'" loading="lazy" decoding="async" alt="Amirulakbar bin Amir" style="width: 100%; height: 100%; object-fit: cover;">
                                 </div>
                                 <h4 class="text-sm font-bold text-white leading-tight">Amirulakbar bin Amir</h4>
                                 <p class="text-[11px] text-slate-400 mt-1">Juruteknik PTIS</p>
@@ -420,7 +465,7 @@
                         <div class="bg-slate-900 border border-slate-800 hover:border-amber-500/50 p-5 rounded-xl transition-all flex flex-col justify-between text-center">
                             <div>
                                 <div style="width: 100px; height: 120px; margin: 0 auto 12px auto; border-radius: 12px; overflow: hidden; border: 2px solid #fbbf24; background-color: #0f172a;">
-                                   <img src="https://github.com/mohdhuszaini-tech/ptispelangai-web/blob/main/huszaini.jpg?raw=true" onerror="this.src='https://ui-avatars.com/api/?name=Huszaini+Zakaria&background=d97706&color=fff'" alt="Mohd Huszaini bin Zakaria" style="width: 100%; height: 100%; object-fit: cover;"> 
+                                   <img src="https://github.com/mohdhuszaini-tech/ptispelangai-web/blob/main/huszaini.jpg?raw=true" onerror="this.src='https://ui-avatars.com/api/?name=Huszaini+Zakaria&background=d97706&color=fff'" loading="lazy" decoding="async" alt="Mohd Huszaini bin Zakaria" style="width: 100%; height: 100%; object-fit: cover;"> 
                                 </div>
                                 <h4 class="text-sm font-bold text-white leading-tight">Mohd Huszaini bin Zakaria</h4>
                                 <p class="text-[11px] text-slate-400 mt-1">Juruteknik PTIS</p>
@@ -434,7 +479,7 @@
                         <div class="bg-slate-900 border border-slate-800 hover:border-indigo-500/50 p-5 rounded-xl transition-all flex flex-col justify-between text-center">
                             <div>
                                 <div style="width: 100px; height: 120px; margin: 0 auto 12px auto; border-radius: 12px; overflow: hidden; border: 2px solid #818cf8; background-color: #0f172a;">
-                                    <img src="https://github.com/mohdhuszaini-tech/ptispelangai-web/blob/main/shahrul.jpg?raw=true" onerror="this.src='https://ui-avatars.com/api/?name=Shahrul+Izad&background=4f46e5&color=fff'" alt="Mohd Shahrul Izad bin Shahbani" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <img src="https://github.com/mohdhuszaini-tech/ptispelangai-web/blob/main/shahrul.jpg?raw=true" onerror="this.src='https://ui-avatars.com/api/?name=Shahrul+Izad&background=4f46e5&color=fff'" loading="lazy" decoding="async" alt="Mohd Shahrul Izad bin Shahbani" style="width: 100%; height: 100%; object-fit: cover;">
                                 </div>
                                 <h4 class="text-sm font-bold text-white leading-tight">Mohd Shahrul Izad bin Shahbani</h4>
                                 <p class="text-[11px] text-slate-400 mt-1">Juruteknik PTIS</p>
@@ -455,7 +500,7 @@
                         </h3>
 
                         <div class="w-full h-36 mb-4 rounded-xl overflow-hidden border border-slate-800">
-                            <img src="pkg-pelangai.jpg" onerror="this.src='https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80'" alt="PKG Pelangai" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                            <img src="pkg-pelangai.jpg" onerror="this.src='https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80'" loading="lazy" decoding="async" alt="PKG Pelangai" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
                         </div>
 
                         <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl space-y-2">
@@ -618,6 +663,42 @@
         </div>
     </div>
 </div>
+
+<!-- 5. MODAL PAPARAN PENUH PENGUMUMAN -->
+    <div id="modalPaparDetail" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700/85 rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden text-white">
+            
+            <!-- Header Modal -->
+            <div class="p-5 border-b border-slate-800 flex justify-between items-center bg-slate-950/50">
+                <div class="flex items-center gap-2">
+                    <span id="modalDetailKategori" class="bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 text-xs px-2.5 py-1 rounded-md font-semibold"></span>
+                    <span id="modalDetailTarikh" class="text-slate-400 text-xs"></span>
+                </div>
+                <button onclick="tutupDetailPengumuman()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <!-- Kandungan Modal (Boleh Scroll) -->
+            <div class="p-6 overflow-y-auto space-y-4">
+                <!-- Tajuk Penuh -->
+                <h3 id="modalDetailTajuk" class="text-xl font-bold text-white leading-snug"></h3>
+                
+                <!-- Gambar (Jika ada) -->
+                <img id="modalDetailGambar" src="" alt="Gambar Pengumuman" class="w-full h-auto rounded-xl border border-slate-800 hidden">
+                
+                <!-- Kandungan / Butiran Penuh -->
+                <div id="modalDetailKandungan" class="text-slate-300 text-sm whitespace-pre-line leading-relaxed border-t border-slate-800/80 pt-4"></div>
+            </div>
+            
+            <!-- Footer Modal -->
+            <div class="p-4 border-t border-slate-800 bg-slate-950/50 text-right">
+                <button onclick="tutupDetailPengumuman()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs px-5 py-2.5 rounded-xl transition-all cursor-pointer">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
 
 <!-- MODAL PAPAR POSTER ADUAN -->
 <div id="aduanModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[90] hidden flex items-center justify-center p-4">
@@ -797,6 +878,14 @@
                 <label class="block text-xs font-medium text-slate-400 mb-1">Butiran / Mesej</label>
                 <textarea id="newAnnDesc" rows="3" placeholder="Keterangan lanjut..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-cyan-400"></textarea>
             </div>
+
+            <!-- RUANGAN MUAT NAIK GAMBAR (TAMBAHAN) -->
+            <div>
+                <label class="block text-xs font-medium text-slate-400 mb-1">Muat Naik Gambar (Opsional)</label>
+                <input type="file" id="newAnnImageFile" accept="image/*" 
+                       class="w-full text-sm text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-cyan-500/20 file:text-cyan-300 hover:file:bg-cyan-500/30 cursor-pointer bg-slate-950 border border-slate-700 rounded-xl p-1">
+            </div>
+
             <div class="flex gap-3 pt-2">
                 <button onclick="closeModal('addAnnouncementModal')" class="flex-1 bg-slate-800 text-slate-200 px-4 py-3 rounded-xl font-semibold hover:bg-slate-700 transition-colors">Batal</button>
                 <button onclick="saveNewAnnouncement()" class="flex-1 bg-cyan-500 text-slate-950 px-4 py-3 rounded-xl font-bold hover:bg-cyan-400 transition-colors">Simpan Pengumuman</button>
@@ -869,6 +958,38 @@
         let editingTeamId = null;
 
         // ================= MODAL CONTROL (STABIL) =================
+        function openServiceImage(title, imageSrc, description) {
+            const modal = document.getElementById('serviceImageModal');
+            const image = document.getElementById('serviceImagePreview');
+            const titleEl = document.getElementById('serviceImageTitle');
+            const descEl = document.getElementById('serviceImageDescription');
+            if (!modal || !image) return;
+            titleEl.textContent = title || '';
+            descEl.textContent = description || '';
+            image.src = imageSrc || '';
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeServiceImage() {
+            const modal = document.getElementById('serviceImageModal');
+            const image = document.getElementById('serviceImagePreview');
+            if (!modal) return;
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            if (image) image.src = '';
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') closeServiceImage();
+        });
+
+        document.getElementById('serviceImageModal')?.addEventListener('click', function(event) {
+            if (event.target === this) closeServiceImage();
+        });
+
         function openModal(id) {
             const modal = document.getElementById(id);
             if (!modal) {
@@ -949,10 +1070,7 @@
                     }
                 }
 
-                if (u === 'admin' && p === 'admin123') {
-                    finishLogin();
-                    return;
-                }
+                // Gunakan Supabase Auth; jangan simpan kata laluan admin di dalam HTML.
 
                 errEl.textContent = "Akaun e-mel atau kata laluan tidak sah.";
                 errEl.classList.remove('hidden');
@@ -967,10 +1085,10 @@
             }
         }
 
-        function finishLogin() {
+        async function finishLogin() {
             document.getElementById('adminLoginModal').classList.add('hidden');
             document.getElementById('adminDashboard').classList.remove('hidden');
-            refreshAllData();
+            await refreshAllData();
         }
 
         function logoutAdmin() {
@@ -986,8 +1104,8 @@
     const annSec = document.getElementById('adminAnnouncementsSection');
     if (annSec) {
         annSec.classList.toggle('hidden', which !== 'announcements');
-        if (which === 'announcements' && typeof renderAdminAnnouncements === 'function') {
-            renderAdminAnnouncements();
+        if (which === 'announcements') {
+            loadAdminAnnouncements();
         }
     }
 }
@@ -1028,28 +1146,30 @@ async function loadPTISMembers() {
         const client = getSupabase();
         if (!client) return;
 
-        const { data: members, error: mErr } = await client.from('ptis_members').select('*');
-        const { data: memberSchools, error: msErr } = await client.from('member_schools').select('*');
-        
-        // Ditukar kepada 'schools' di sini juga
-        const { data: schools, error: sErr } = await client.from('schools').select('*');
+        const [membersResult, linksResult] = await Promise.all([
+            client.from('ptis_members').select('*'),
+            client.from('member_schools').select('*')
+        ]);
+
+        const { data: members, error: mErr } = membersResult;
+        const { data: memberSchools, error: msErr } = linksResult;
 
         if (mErr) {
             console.error('Ralat ptis_members:', mErr);
             return;
         }
+        if (msErr) console.error('Ralat member_schools:', msErr);
+
+        // Reuse data sekolah yang telah dimuatkan oleh loadSchools().
+        const schools = globalSchools || [];
 
         globalTeam = (members || []).map(m => {
             const relSchoolIds = (memberSchools || [])
                 .filter(ms => ms.ptis_member_id === m.id || ms.member_id === m.id)
                 .map(ms => ms.school_id);
 
-            const assigned = (schools || []).filter(s => relSchoolIds.includes(s.id));
-
-            return {
-                ...m,
-                assignedSchools: assigned
-            };
+            const assigned = schools.filter(s => relSchoolIds.includes(s.id));
+            return { ...m, assignedSchools: assigned };
         });
 
         const stat = document.getElementById('statTeamCount');
@@ -1057,7 +1177,6 @@ async function loadPTISMembers() {
 
         renderPublicTeamModal();
         renderAdminTeam();
-
     } catch (err) {
         console.error('Load PTIS Members Error:', err);
     }
@@ -1089,17 +1208,45 @@ async function loadAnnouncements() {
         container.innerHTML = '';
 
         data.forEach(item => {
+            // Sokong kolum kandungan atau butiran, serta tukar ke huruf kecil untuk semakan
+            let rawContent = item.kandungan || item.butiran || '';
+            let displayText = rawContent;
+            let hasImage = false;
+            let lowerContent = rawContent.toLowerCase();
+
+            if (lowerContent.includes('[img')) {
+                hasImage = true;
+                // Potong terus apa sahaja bermula dari [img (hurup besar/kecil) ke belakang
+                const index = lowerContent.indexOf('[img');
+                displayText = rawContent.substring(0, index).trim();
+            } else if (lowerContent.includes('http') && (lowerContent.includes('/storage/v1/object/public/') || lowerContent.match(/\.(jpeg|jpg|gif|png|webp|svg)/i))) {
+                hasImage = true;
+                const httpIndex = lowerContent.indexOf('http');
+                displayText = rawContent.substring(0, httpIndex).trim();
+            }
+
             container.innerHTML += `
-                <div class="bg-slate-950/60 border border-slate-800 p-4 rounded-2xl relative space-y-2">
-                    <div class="flex justify-between items-start">
-                        <div class="flex items-center gap-2">
-                            <span class="bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 text-xs px-2 py-0.5 rounded-md font-semibold">${esc(item.kategori || 'Umum')}</span>
-                            <span class="text-slate-400 text-xs">${esc(item.tarikh || '')}</span>
+                <div class="bg-slate-950/60 border border-slate-800 p-4 rounded-2xl relative flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 text-xs px-2 py-0.5 rounded-md font-semibold">${esc(item.kategori || 'Umum')}</span>
+                                <span class="text-slate-400 text-xs">${esc(item.tarikh || '')}</span>
+                            </div>
+                            <span class="text-slate-500 text-xs">Oleh: ${esc(item.penulis || 'Admin')}</span>
                         </div>
-                        <span class="text-slate-500 text-xs">Oleh: ${esc(item.penulis || 'Admin')}</span>
+                        <h4 class="text-white font-bold text-base mb-2">${esc(item.tajuk)}</h4>
+                        <p class="text-slate-300 text-sm line-clamp-2 mb-4">
+                            ${displayText ? esc(displayText) : ''}
+                            ${hasImage ? '<span class="block text-cyan-400 text-xs mt-1 font-medium">📷 Lampiran Imej</span>' : ''}
+                        </p>
                     </div>
-                    <h4 class="text-white font-bold text-base">${esc(item.tajuk)}</h4>
-                    <p class="text-slate-300 text-sm whitespace-pre-line">${esc(item.kandungan)}</p>
+                    <div class="flex justify-between items-center mt-auto pt-3 border-t border-slate-800/80">
+                        <span class="text-xs text-slate-500">Pasukan PTIS</span>
+                        <button onclick="bukaDetailPengumuman('${item.id}')" class="text-xs font-bold text-red-400 hover:text-red-300 uppercase cursor-pointer transition-colors">
+                            KLIK SELANJUTNYA
+                        </button>
+                    </div>
                 </div>
             `;
         });
@@ -1108,46 +1255,34 @@ async function loadAnnouncements() {
         container.innerHTML = `<p class="text-rose-400 text-sm">Gagal memuatkan pengumuman.</p>`;
     }
 }
-function openAddAnnouncementModal() {
-    document.getElementById('announcementTitle').value = '';
-    document.getElementById('announcementContent').value = '';
-    const modal = document.getElementById('announcementModal');
-    if (modal) modal.classList.remove('hidden');
-}
+        let refreshPromise = null;
 
-async function saveAnnouncement() {
-    const tajuk = document.getElementById('announcementTitle').value.trim();
-    const kandungan = document.getElementById('announcementContent').value.trim();
-    const kategori = 'Aktiviti Zon';
-    const tarikh = new Date().toLocaleDateString('ms-MY');
-    const penulis = 'Admin PTIS';
+        async function refreshAllData() {
+            const adminDashboard = document.getElementById('adminDashboard');
+            const adminIsOpen = adminDashboard && !adminDashboard.classList.contains('hidden');
 
-    if (!tajuk || !kandungan) {
-        alert('Sila isi tajuk dan kandungan pengumuman.');
-        return;
-    }
+            // Elak refresh bertindih daripada login, butang refresh dan operasi CRUD.
+            if (refreshPromise) {
+                await refreshPromise;
+                if (adminIsOpen) await loadAdminAnnouncements();
+                return;
+            }
 
-    try {
-        const client = getSupabase();
-        const { error } = await client
-            .from('announcements')
-            .insert([{ tajuk, kandungan, kategori, tarikh, penulis }]);
+            refreshPromise = (async () => {
+                // Sekolah dimuat dahulu kerana loadPTISMembers menggunakan globalSchools.
+                await loadSchools();
+                await loadPTISMembers();
+                await loadAnnouncements();
+            })();
 
-        if (error) throw error;
+            try {
+                await refreshPromise;
+            } finally {
+                refreshPromise = null;
+            }
 
-        alert('Pengumuman berjaya diterbitkan!');
-        closeModal('announcementModal');
-        await loadAnnouncements();
-    } catch (err) {
-        console.error('Save Announcement Error:', err);
-        alert('Gagal menyimpan pengumuman: ' + err.message);
-    }
-}
-        function refreshAllData() {
-            loadSchools();
-            loadPTISMembers();
-	    loadAnnouncements();
-            loadAdminAnnouncements();
+            // Jangan query senarai admin pada page load biasa.
+            if (adminIsOpen) await loadAdminAnnouncements();
         }
 
         // ================= PAPARAN ADMIN & PUBLIC =================
@@ -1466,12 +1601,12 @@ function openAddAnnouncementModal() {
     if (modal) modal.classList.remove('hidden');
 }
 
-// Simpan Pengumuman Baru ke Supabase
 async function saveNewAnnouncement() {
     const tarikh = document.getElementById('newAnnDate').value;
     const kategori = document.getElementById('newAnnCategory').value.trim();
     const tajuk = document.getElementById('newAnnTitle').value.trim();
-    const kandungan = document.getElementById('newAnnDesc').value.trim(); // Tukar dari deskripsi ke kandungan
+    const kandunganText = document.getElementById('newAnnDesc').value.trim();
+    const imageInput = document.getElementById('newAnnImageFile');
 
     if (!tajuk) {
         alert('Sila masukkan tajuk pengumuman.');
@@ -1480,18 +1615,63 @@ async function saveNewAnnouncement() {
 
     try {
         const client = getSupabase();
+        let imageUrl = '';
+
+        // 1. Jika ada fail gambar, muat naik ke Supabase Storage
+        if (imageInput && imageInput.files.length > 0) {
+            const file = imageInput.files[0];
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${Date.now()}.${fileExt}`;
+            const filePath = `announcements/${fileName}`;
+
+            const { error: uploadError } = await client
+                .storage
+                .from('announcements')
+                .upload(filePath, file);
+
+            if (uploadError) throw uploadError;
+
+            const { data: urlData } = client
+                .storage
+                .from('announcements')
+                .getPublicUrl(filePath);
+
+            if (urlData && urlData.publicUrl) {
+                imageUrl = urlData.publicUrl;
+            }
+        }
+
+        // 2. Kita simpan text butiran di 'kandungan' dan URL gambar di ruangan lain 
+        // (Atau jika anda guna 1 kolum 'kandungan', kita boleh gabungkan dengan tanda khas, 
+        // tapi cara paling mudah tanpa ubah database structure adalah letak URL gambar di hujung atau buat kolum baru).
+        // *Cadangan paling mudah:* Jika ada gambar, kita simpan format: "TextMesej [IMG:url_gambar]"
+        
+        let finalKandungan = kandunganText;
+        if (imageUrl) {
+            finalKandungan = kandunganText ? `${kandunganText} [IMG:${imageUrl}]` : `[IMG:${imageUrl}]`;
+        }
+
         const { error } = await client
             .from('announcements')
-            .insert([{ tarikh, kategori, tajuk, kandungan }]); // Tukar dari deskripsi ke kandungan
+            .insert([{ 
+                tarikh, 
+                kategori, 
+                tajuk, 
+                kandungan: finalKandungan, 
+                penulis: 'Admin PTIS' 
+            }]);
 
         if (error) throw error;
 
         alert('Pengumuman berjaya ditambah!');
-        closeModal('addAnnouncementModal');
         
-        // Muat semula data di paparan awam & admin
-        if (typeof loadAnnouncements === 'function') loadAnnouncements();
-        if (typeof renderAdminAnnouncements === 'function') renderAdminAnnouncements();
+        if (imageInput) imageInput.value = '';
+        document.getElementById('newAnnDesc').value = '';
+        document.getElementById('newAnnTitle').value = '';
+        
+        closeModal('addAnnouncementModal');
+        await loadAnnouncements();
+        await loadAdminAnnouncements();
 
     } catch (err) {
         console.error('Save Announcement Error:', err);
@@ -1515,8 +1695,10 @@ async function deleteAnnouncement(id) {
         alert('Pengumuman berjaya dipadam!');
         
         // Muat semula data di paparan admin & awam
-        if (typeof loadAnnouncements === 'function') loadAnnouncements();
-        if (typeof renderAdminAnnouncements === 'function') renderAdminAnnouncements();
+        await loadAnnouncements();
+        if (document.getElementById('adminDashboard') && !document.getElementById('adminDashboard').classList.contains('hidden')) {
+            await loadAdminAnnouncements();
+        }
 
     } catch (err) {
         console.error('Delete Announcement Error:', err);
@@ -1536,27 +1718,27 @@ async function deleteAnnouncement(id) {
 
         if (error) throw error;
 
+        const countEl = document.getElementById('statAnnouncementCount');
+        if (countEl) countEl.textContent = (data || []).length + ' pengumuman';
+
         if (!data || data.length === 0) {
             tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400 italic">Tiada pengumuman.</td></tr>`;
             return;
         }
 
-        tbody.innerHTML = '';
-        data.forEach((item, index) => {
-            tbody.innerHTML += `
-                <tr class="border-b border-slate-800 hover:bg-slate-800/50 transition">
-                    <td class="p-4 text-slate-300">${index + 1}</td>
-                    <td class="p-4 text-slate-300">${esc(item.tarikh || '')}</td>
-                    <td class="p-4 text-cyan-400 font-semibold">${esc(item.kategori || '')}</td>
-                    <td class="p-4 text-white font-medium">${esc(item.tajuk || '')}</td>
-                    <td class="p-4">
-                        <button onclick="deleteAnnouncement(${item.id})" class="bg-rose-600 hover:bg-rose-700 text-white text-xs px-3 py-1.5 rounded-lg transition font-medium">
-                            Padam
-                        </button>
-                    </td>
-                </tr>
-            `;
-        });
+        tbody.innerHTML = data.map((item, index) => `
+            <tr class="border-b border-slate-800 hover:bg-slate-800/50 transition">
+                <td class="p-4 text-slate-300">${index + 1}</td>
+                <td class="p-4 text-slate-300">${esc(item.tarikh || '')}</td>
+                <td class="p-4 text-cyan-400 font-semibold">${esc(item.kategori || '')}</td>
+                <td class="p-4 text-white font-medium">${esc(item.tajuk || '')}</td>
+                <td class="p-4">
+                    <button onclick="deleteAnnouncement('${String(item.id).replace(/'/g, '&#039;')}')" class="bg-rose-600 hover:bg-rose-700 text-white text-xs px-3 py-1.5 rounded-lg transition font-medium">
+                        Padam
+                    </button>
+                </td>
+            </tr>
+        `).join('');
     } catch (err) {
         console.error('Error loading admin announcements:', err);
     }
@@ -1713,7 +1895,121 @@ function openInventoryModal(schoolName, schoolCode) {
     loadInventoryData(schoolCode);
 }
 
-// closeModal dikendalikan oleh fungsi modal utama di atas.
+
+
+// ==========================================
+// 2. FUNGSI MODAL DETAIL (PINTAR TEKS / GAMBAR)
+// ==========================================
+function bukaDetailPengumuman(id) {
+    loadAnnouncementDetail(id);
+}
+
+async function loadAnnouncementDetail(id) {
+    try {
+        const client = getSupabase();
+        const { data, error } = await client
+            .from('announcements')
+            .select('*')
+            .eq('id', id)
+            .single();
+
+        if (error) throw error;
+
+        if (data) {
+            document.getElementById('modalDetailTajuk').innerText = data.tajuk || '';
+            document.getElementById('modalDetailTarikh').innerText = data.tarikh || '';
+            document.getElementById('modalDetailKategori').innerText = data.kategori || 'Umum';
+            
+            const rawContent = data.kandungan || data.butiran || '';
+            const textEl = document.getElementById('modalDetailKandungan');
+            const imgEl = document.getElementById('modalDetailGambar');
+
+            let mainText = rawContent;
+            let fileUrl = '';
+            let isPdf = false;
+
+            // Semak sama ada mengandungi format [IMG:...]
+            if (rawContent.includes('[IMG:') && rawContent.includes(']')) {
+                const parts = rawContent.split('[IMG:');
+                mainText = parts[0].trim(); // Ambil teks biasa di atas
+                const filePart = parts[1].split(']')[0]; // Ambil URL di dalam kurungan
+                fileUrl = filePart.trim();
+                
+                // Semak sama ada fail tersebut adalah PDF
+                if (fileUrl.toLowerCase().match(/\.pdf$/i)) {
+                    isPdf = true;
+                }
+            }
+
+            // Paparkan teks biasa jika ada
+            if (textEl) {
+                textEl.innerText = mainText;
+                if (mainText) {
+                    textEl.classList.remove('hidden');
+                } else {
+                    textEl.classList.add('hidden');
+                }
+            }
+
+            // Uruskan paparan Imej atau Butang Muat Turun PDF
+            if (imgEl) {
+                // Cari atau buat elemen kontena butang PDF di bawah gambar
+                let pdfBtnContainer = document.getElementById('modalDetailPdfContainer');
+                if (!pdfBtnContainer) {
+                    pdfBtnContainer = document.createElement('div');
+                    pdfBtnContainer.id = 'modalDetailPdfContainer';
+                    imgEl.parentNode.insertBefore(pdfBtnContainer, imgEl.nextSibling);
+                }
+
+                if (fileUrl) {
+                    if (isPdf) {
+                        // Jika fail PDF: Sembunyikan elemen <img>, paparkan butang dokumen PDF
+                        imgEl.classList.add('hidden');
+                        imgEl.src = '';
+                        pdfBtnContainer.innerHTML = `
+                            <a href="${fileUrl}" target="_blank" class="flex items-center justify-center gap-2 bg-red-600 hover:bg-red-500 text-white font-semibold py-3 px-4 rounded-xl mt-4 transition-colors shadow-lg cursor-pointer">
+                                <span>📄 Buka / Muat Turun Surat Siaran (PDF)</span>
+                            </a>
+                        `;
+                        pdfBtnContainer.classList.remove('hidden');
+                    } else {
+                        // Jika fail Imej: Paparkan elemen <img> seperti biasa, sembunyikan butang PDF
+                        imgEl.src = fileUrl;
+                        imgEl.classList.remove('hidden');
+                        pdfBtnContainer.classList.add('hidden');
+                        pdfBtnContainer.innerHTML = '';
+                    }
+                } else {
+                    // Jika tiada fail langsung
+                    imgEl.classList.add('hidden');
+                    imgEl.src = '';
+                    pdfBtnContainer.classList.add('hidden');
+                    pdfBtnContainer.innerHTML = '';
+                }
+            }
+
+            // Paparkan modal
+            const modal = document.getElementById('modalPaparDetail');
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            } else {
+                alert('Ralat: Elemen modalPaparDetail tidak dijumpai dalam HTML.');
+            }
+        }
+    } catch (err) {
+        console.error('Error opening announcement detail:', err);
+        alert('Gagal memaparkan maklumat penuh pengumuman.');
+    }
+}
+
+function tutupDetailPengumuman() {
+    const modal = document.getElementById('modalPaparDetail');
+    if (modal) {
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+}
 
 </script>
 </body>
