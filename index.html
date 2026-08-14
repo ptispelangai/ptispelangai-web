@@ -582,6 +582,7 @@
                                 <th class="py-3 px-4">Bil</th>
                                 <th class="py-3 px-4">Kod</th>
                                 <th class="py-3 px-4">Nama Sekolah</th>
+                                <th class="py-3 px-4">Nama Pengetua / Guru Besar</th>
                                 <th class="py-3 px-4">Nama Guru ICT</th>
                                 <th class="py-3 px-4">No. Tel Sekolah</th>
                             </tr>
@@ -765,19 +766,27 @@
 </div>
 
             <div id="adminSchoolsSection" class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-                <div class="p-4 border-b border-slate-800 flex flex-wrap gap-3 justify-between items-center">
-                    <h3 class="font-bold text-white">🏫 Data Sekolah & Guru ICT (Supabase Live)</h3>
-                    <input id="adminSearch" oninput="renderAdminSchools()" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white outline-none" placeholder="Cari sekolah / guru...">
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm">
-                        <thead class="bg-slate-950 text-slate-400 text-xs uppercase">
-                            <tr><th class="p-4">Bil</th><th class="p-4">Kod</th><th class="p-4">Sekolah</th><th class="p-4">Guru ICT</th><th class="p-4">Telefon</th><th class="p-4">Tindakan</th></tr>
-                        </thead>
-                        <tbody id="adminSchoolBody"></tbody>
-                    </table>
-                </div>
-            </div>
+    <div class="p-4 border-b border-slate-800 flex flex-wrap gap-3 justify-between items-center">
+        <h3 class="font-bold text-white">🏫 Data Sekolah & Guru ICT (Supabase Live)</h3>
+        <input id="adminSearch" oninput="renderAdminSchools()" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white outline-none" placeholder="Cari sekolah / guru...">
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+            <thead class="bg-slate-950 text-slate-400 text-xs uppercase">
+                <tr>
+                    <th class="p-4">Bil</th>
+                    <th class="p-4">Kod</th>
+                    <th class="p-4">Sekolah</th>
+                    <th class="p-4">Guru Besar / Pengetua</th> <!-- DITAMBAH DI SINI -->
+                    <th class="p-4">Guru ICT</th>
+                    <th class="p-4">Telefon</th>
+                    <th class="p-4">Tindakan</th>
+                </tr>
+            </thead>
+            <tbody id="adminSchoolBody"></tbody>
+        </table>
+    </div>
+</div>
 
             <div id="adminTeamSection" class="hidden bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
                 <div class="p-4 border-b border-slate-800 flex justify-between items-center">
@@ -820,6 +829,11 @@
                 <label class="block text-xs font-medium text-slate-400 mb-1">Nama Sekolah</label>
                 <input id="editSchool" placeholder="Nama Sekolah" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-cyan-400 font-semibold">
             </div>
+            <!-- DITAMBAH: Input Nama Pengetua / Guru Besar -->
+            <div>
+                <label class="block text-xs font-medium text-slate-400 mb-1">Nama Pengetua / Guru Besar</label>
+                <input id="editHeadmaster" placeholder="Nama Pengetua / Guru Besar" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-cyan-400">
+            </div>
             <div>
                 <label class="block text-xs font-medium text-slate-400 mb-1">Nama Guru ICT</label>
                 <input id="editTeacher" placeholder="Nama Guru ICT" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-cyan-400">
@@ -835,7 +849,6 @@
         </div>
     </div>
 </div>
-
     <!-- MODAL EDIT TEAM -->
 <div id="editTeamModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[90] hidden flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-lg w-full shadow-2xl">
@@ -1286,73 +1299,79 @@ async function loadAnnouncements() {
         }
 
         // ================= PAPARAN ADMIN & PUBLIC =================
-        function renderPublicSchoolTable() {
-            const tbody = document.getElementById('schoolTableBody');
-            if (!tbody) return;
+       
+function renderPublicSchoolTable() {
+    const tbody = document.getElementById('schoolTableBody');
+    if (!tbody) return;
 
-            if (globalSchools.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-slate-400 italic">Tiada data sekolah dijumpai.</td></tr>`;
-                return;
-            }
+    if (globalSchools.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-slate-400 italic">Tiada data sekolah dijumpai.</td></tr>`;
+        return;
+    }
 
-            tbody.innerHTML = globalSchools.map((s, i) => {
-                // PENYESUAIAN LAJUR SUPABASE:
-                const kod = s['KOD'] || s.kod_sekolah || s.code || '-';
-                const nama = s['SEKOLAH'] || s.nama_sekolah || s.nama || '-';
-                const guru = s['GURU ICT'] || s.nama_guru_ict || s.guru_ict || '-';
-                const tel = s['TELEFON'] || s.no_tel || s.phone || '-';
+    tbody.innerHTML = globalSchools.map((s, i) => {
+        // PENYESUAIAN LAJUR SUPABASE:
+        const kod = s['KOD'] || s.kod_sekolah || s.code || '-';
+        const nama = s['SEKOLAH'] || s.nama_sekolah || s.nama || '-';
+        const gb = s['GURU BESAR'] || s.guru_besar || s.nama_guru_besar || '-'; // DITAMBAH
+        const guru = s['GURU ICT'] || s.nama_guru_ict || s.guru_ict || '-';
+        const tel = s['TELEFON'] || s.no_tel || s.phone || '-';
 
-                return `
-                    <tr class="hover:bg-slate-800/40 transition-colors">
-                        <td class="py-3 px-4 font-medium text-slate-400">${i + 1}</td>
-                       <td class="py-3 px-4">
-    <span class="bg-amber-500/20 text-amber-300 font-bold text-sm px-2.5 py-1 rounded-md border border-amber-500/40 font-mono">
-        ${esc(kod)}
-    </span>
-</td>
-                        <td class="py-3 px-4 font-bold text-white">${esc(nama)}</td>
-                        <td class="py-3 px-4 text-cyan-300 font-medium">${esc(guru)}</td>
-                        <td class="py-3 px-4 text-cyan-300 font-mono text-base">${esc(tel)}</td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function renderAdminSchools() {
-            const q = (document.getElementById('adminSearch')?.value || '').toLowerCase();
-            const b = document.getElementById('adminSchoolBody');
-            if (!b) return;
-
-            b.innerHTML = '';
-            globalSchools.forEach((s, i) => {
-                // PENYESUAIAN LAJUR SUPABASE:
-                const kod = s['KOD'] || s.kod_sekolah || s.code || '';
-                const nama = s['SEKOLAH'] || s.nama_sekolah || s.nama || '';
-                const guru = s['GURU ICT'] || s.nama_guru_ict || s.guru_ict || '';
-                const tel = s['TELEFON'] || s.no_tel || s.phone || '';
-
-                if (!(nama + ' ' + guru + ' ' + kod).toLowerCase().includes(q)) return;
-
-                b.innerHTML += `
-                    <tr class="border-t border-slate-800 hover:bg-slate-950/40">
-                        <td class="p-4 text-slate-400">${i + 1}</td>
-                        <td class="p-4">
+        return `
+            <tr class="hover:bg-slate-800/40 transition-colors">
+                <td class="py-3 px-4 font-medium text-slate-400">${i + 1}</td>
+                <td class="py-3 px-4">
                     <span class="bg-amber-500/20 text-amber-300 font-bold text-sm px-2.5 py-1 rounded-md border border-amber-500/40 font-mono">
                         ${esc(kod)}
                     </span>
                 </td>
-                        <td class="p-4 text-white font-semibold">${esc(nama)}</td>
-                        <td class="p-4 text-cyan-300">${esc(guru)}</td>
-                        <td class="p-4 text-cyan-300 font-mono text-base">${esc(tel)}</td>
-                        <td class="p-4">
-                            <button onclick="editSchool(${i})" class="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors">
-                                Edit
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
+                <td class="py-3 px-4 font-bold text-white">${esc(nama)}</td>
+                <td class="py-3 px-4 text-emerald-300 font-medium">${esc(gb)}</td> <!-- DITAMBAH -->
+                <td class="py-3 px-4 text-cyan-300 font-medium">${esc(guru)}</td>
+                <td class="py-3 px-4 text-cyan-300 font-mono text-base">${esc(tel)}</td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function renderAdminSchools() {
+    const q = (document.getElementById('adminSearch')?.value || '').toLowerCase();
+    const b = document.getElementById('adminSchoolBody');
+    if (!b) return;
+
+    b.innerHTML = '';
+    globalSchools.forEach((s, i) => {
+        // PENYESUAIAN LAJUR SUPABASE:
+        const kod = s['KOD'] || s.kod_sekolah || s.code || '';
+        const nama = s['SEKOLAH'] || s.nama_sekolah || s.nama || '';
+        const gb = s['GURU BESAR'] || s.guru_besar || s.nama_guru_besar || ''; // DITAMBAH
+        const guru = s['GURU ICT'] || s.nama_guru_ict || s.guru_ict || '';
+        const tel = s['TELEFON'] || s.no_tel || s.phone || '';
+
+        // Ditambah 'gb' dalam carian supaya boleh cari guna nama Guru Besar
+        if (!(nama + ' ' + gb + ' ' + guru + ' ' + kod).toLowerCase().includes(q)) return;
+
+        b.innerHTML += `
+            <tr class="border-t border-slate-800 hover:bg-slate-950/40">
+                <td class="p-4 text-slate-400">${i + 1}</td>
+                <td class="p-4">
+                    <span class="bg-amber-500/20 text-amber-300 font-bold text-sm px-2.5 py-1 rounded-md border border-amber-500/40 font-mono">
+                        ${esc(kod)}
+                    </span>
+                </td>
+                <td class="p-4 text-white font-semibold">${esc(nama)}</td>
+                <td class="p-4 text-emerald-300 font-medium">${esc(gb)}</td> <!-- DITAMBAH -->
+                <td class="p-4 text-cyan-300">${esc(guru)}</td>
+                <td class="p-4 text-cyan-300 font-mono text-base">${esc(tel)}</td>
+                <td class="p-4">
+                    <button onclick="editSchool(${i})" class="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors">
+                        Edit
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+}
 
         function renderPublicTeamModal() {
             const container = document.getElementById('ptisDynamicList');
@@ -1426,29 +1445,34 @@ async function loadAnnouncements() {
 
         // ================= OPERATIONS SIMPAN KE SUPABASE =================
         function editSchool(i) {
-            const s = globalSchools[i];
-            if (!s) return;
+    const s = globalSchools[i];
+    if (!s) return;
 
-            editingSchoolId = s.id;
-            document.getElementById('editCode').value = s['KOD'] || s.kod_sekolah || s.code || '';
-            document.getElementById('editSchool').value = s['SEKOLAH'] || s.nama_sekolah || s.nama || '';
-            
-            const rawTeacher = s['GURU ICT'] || s.nama_guru_ict || s.guru_ict || '';
-            document.getElementById('editTeacher').value = (rawTeacher === '-') ? '' : rawTeacher;
-            document.getElementById('editPhone').value = s['TELEFON'] || s.no_tel || s.phone || '';
+    editingSchoolId = s.id;
+    document.getElementById('editCode').value = s['KOD'] || s.kod_sekolah || s.code || '';
+    document.getElementById('editSchool').value = s['SEKOLAH'] || s.nama_sekolah || s.nama || '';
+    
+    // DITAMBAH: Membaca nilai Guru Besar ke input modal (editHeadmaster)
+    const rawHeadmaster = s['GURU BESAR'] || s.guru_besar || s.nama_guru_besar || '';
+    document.getElementById('editHeadmaster').value = (rawHeadmaster === '-') ? '' : rawHeadmaster;
 
-            document.getElementById('editSchoolModal').classList.remove('hidden');
-        }
+    const rawTeacher = s['GURU ICT'] || s.nama_guru_ict || s.guru_ict || '';
+    document.getElementById('editTeacher').value = (rawTeacher === '-') ? '' : rawTeacher;
+    document.getElementById('editPhone').value = s['TELEFON'] || s.no_tel || s.phone || '';
 
-     async function saveSchool() {
+    document.getElementById('editSchoolModal').classList.remove('hidden');
+}
+
+async function saveSchool() {
     if (!editingSchoolId) {
         alert('Tiada rekod sekolah dipilih!');
         return;
     }
 
-    // Ambil nilai terkini daripada ruangan input
+    // Ambil nilai terkini daripada ruangan input (termasuk editHeadmaster)
     const code = document.getElementById('editCode').value.trim();
     const name = document.getElementById('editSchool').value.trim();
+    const headmaster = document.getElementById('editHeadmaster').value.trim() || '-'; // DITAMBAH
     const teacher = document.getElementById('editTeacher').value.trim() || '-';
     const phone = document.getElementById('editPhone').value.trim();
     const btn = document.getElementById('btnSaveSchool');
@@ -1463,12 +1487,13 @@ async function loadAnnouncements() {
 
     try {
         const client = getSupabase();
-        // Sertakan KOD dan SEKOLAH dalam proses update ke Supabase
+        // DITAMBAH: Sertakan 'GURU BESAR' dalam query update Supabase
         const { error } = await client
             .from('schools')
             .update({
                 'KOD': code,
                 'SEKOLAH': name,
+                'GURU BESAR': headmaster, // DITAMBAH
                 'GURU ICT': teacher,
                 'TELEFON': phone
             })
@@ -1489,7 +1514,6 @@ async function loadAnnouncements() {
         btn.disabled = false;
     }
 }
-
         function editTeam(i) {
             const t = globalTeam[i];
             if (!t) return;
