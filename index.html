@@ -758,13 +758,13 @@
                     <button onclick="logoutAdmin()" class="bg-rose-500/10 text-rose-300 border border-rose-500/30 px-3 py-2 rounded-xl text-xs font-semibold">Logout</button>
                 </div>
             </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-5">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
     <button onclick="showAdminSection('schools')" class="bg-slate-900 border border-slate-800 rounded-2xl p-4 text-left hover:border-cyan-500/55"><div class="text-2xl">🏫</div><div class="text-white font-bold mt-2">Sekolah</div><div id="statSchoolCount" class="text-xs text-slate-400">Loading...</div></button>
     <button onclick="showAdminSection('team')" class="bg-slate-900 border border-slate-800 rounded-2xl p-4 text-left hover:border-cyan-500/55"><div class="text-2xl">👨‍💻</div><div class="text-white font-bold mt-2">Geng PTIS</div><div id="statTeamCount" class="text-xs text-slate-400">Loading...</div></button>
     <button onclick="showAdminSection('announcements')" class="bg-slate-900 border border-slate-800 rounded-2xl p-4 text-left hover:border-cyan-500/55"><div class="text-2xl">📢</div><div class="text-white font-bold mt-2">Pengumuman</div><div id="statAnnouncementCount" class="text-xs text-slate-400">Loading...</div></button>
+    <button onclick="showAdminSection('inventory')" class="bg-slate-900 border border-slate-800 rounded-2xl p-4 text-left hover:border-cyan-500/55"><div class="text-2xl">📦</div><div class="text-white font-bold mt-2">Inventori Aset</div><div class="text-xs text-slate-400">Pengurusan Data</div></button>
 </div>
-
+          
             <div id="adminSchoolsSection" class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
     <div class="p-4 border-b border-slate-800 flex flex-wrap gap-3 justify-between items-center">
         <h3 class="font-bold text-white">🏫 Data Sekolah & Guru ICT (Supabase Live)</h3>
@@ -798,22 +798,143 @@
 	<!-- SEKSYEN PENGUMUMAN DALAM ADMIN -->
 	<div id="adminAnnouncementsSection" class="hidden bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
     	<div class="p-4 border-b border-slate-800 flex justify-between items-center">
-        <h3 class="font-bold text-white">📢 Pengurusan Pengumuman (Supabase Live)</h3>
-        <button onclick="openAddAnnouncementModal()" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-4 py-2 rounded-xl font-bold transition-colors text-sm">
-            + Tambah Pengumuman Baru
-        </button>
+            <h3 class="font-bold text-white">📢 Pengurusan Pengumuman (Supabase Live)</h3>
+            <button onclick="openAddAnnouncementModal()" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-4 py-2 rounded-xl font-bold transition-colors text-sm">
+                + Tambah Pengumuman Baru
+            </button>
     	</div>
     	<div class="overflow-x-auto">
-        <table class="w-full text-left text-sm">
-            <thead class="bg-slate-950 text-slate-400 text-xs uppercase">
-                <tr><th class="p-4">Bil</th><th class="p-4">Tarikh</th><th class="p-4">Kategori</th><th class="p-4">Tajuk</th><th class="p-4">Tindakan</th></tr>
-            </thead>
-            <tbody id="adminAnnouncementBody"></tbody>
-        </table>
+            <table class="w-full text-left text-sm">
+                <thead class="bg-slate-950 text-slate-400 text-xs uppercase">
+                    <tr><th class="p-4">Bil</th><th class="p-4">Tarikh</th><th class="p-4">Kategori</th><th class="p-4">Tajuk</th><th class="p-4">Tindakan</th></tr>
+                </thead>
+                <tbody id="adminAnnouncementBody"></tbody>
+            </table>
     	</div>
 	</div>
+
+  <!-- SEKSYEN INVENTORI ADMIN -->
+    <div id="adminInventorySection" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-6 overflow-hidden mt-4">
+        <h3 class="text-xl font-bold mb-6 text-white flex items-center gap-2 border-b border-slate-800 pb-3">
+            📦 Pengurusan Inventori Aset Sekolah
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div>
+                <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Carian Kod Sekolah</label>
+                <div class="flex gap-2">
+                    <input type="text" id="adminInvSearchCode" placeholder="Cth: CBA0021" class="w-full p-2.5 bg-slate-950 border border-slate-700 rounded-lg text-white focus:ring-2 focus:ring-cyan-500 focus:outline-none uppercase">
+                    <button onclick="adminInvSearchByCode()" class="bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold px-4 py-2 rounded-lg text-sm">Cari</button>
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Carian Nama Sekolah</label>
+                <select id="adminInvSelectSchool" onchange="adminInvSearchByDropdown()" class="w-full p-2.5 bg-slate-950 border border-slate-700 rounded-lg text-white focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+                    <option value="">-- Pilih Sekolah --</option>
+                    <option value="CBA0009">SK PELANGAI (CBA0009)</option>
+                    <option value="CBA0010">SK SIMPANG PELANGAI (CBA0010)</option>
+                    <option value="CBA0011">SK KAMPUNG SHAFIE (CBA0011)</option>
+                    <option value="CBA0016">SK FELDA KEMASUL (CBA0016)</option>
+                    <option value="CBA0020">SK (FELDA) CHEMOMOI (CBA0020)</option>
+                    <option value="CBA0021">SK (FELDA) SG KEMAHAL (CBA0021)</option>
+                    <option value="CEA0055">SMK SERI PELANGAI (CEA0055)</option>
+                    <option value="CEA0060">SMK FELDA CHEMOMOI (CEA0060)</option>
+                    <option value="CEB0017">SMK TELEMONG (CEB0017)</option>
+                    <option value="CBC0033">SJK (C) TELEMONG (CBC0033)</option>
+                    <option value="CBC0034">SJK (C) MANCHIS (CBC0034)</option>
+                    <option value="CBD0040">SJK (T) LADANG RENJOK (CBD0040)</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="adminInvSchoolHeader" class="bg-slate-950/80 border-l-4 border-cyan-500 p-4 rounded-r-lg mb-6 hidden flex justify-between items-center">
+            <div>
+                <p class="text-xs text-slate-400 uppercase">Nama Sekolah</p>
+                <p id="adminInvDispSchoolName" class="text-lg font-bold text-white"></p>
+            </div>
+            <div>
+                <p class="text-xs text-slate-400 uppercase">Kod Sekolah</p>
+                <p id="adminInvDispSchoolCode" class="text-lg font-mono font-bold text-cyan-400"></p>
+            </div>
+        </div>
+
+        <div class="overflow-x-auto rounded-lg border border-slate-800">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-950 text-slate-300 text-xs uppercase border-b border-slate-800">
+                        <th class="p-3 border-r border-slate-800">Nama Aset / Item</th>
+                        <th class="p-3 border-r border-slate-800">Fasa</th>
+                        <th class="p-3 border-r border-slate-800 text-center">Jumlah (J)</th>
+                        <th class="p-3 border-r border-slate-800 text-center">Baik (B)</th>
+                        <th class="p-3 border-r border-slate-800 text-center">Rosak (R)</th>
+                        <th class="p-3 border-r border-slate-800 text-center">Hilang (H)</th>
+                        <th class="p-3 text-center">Tindakan</th>
+                    </tr>
+                </thead>
+                <tbody id="adminInvTableBody" class="divide-y divide-slate-800 text-sm">
+                    <tr><td colspan="7" class="p-6 text-center text-slate-500">Sila masukkan Kod atau pilih Sekolah.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-6">
+            <button id="adminBtnAddAsset" onclick="openAdminAssetModal()" disabled class="bg-slate-800 text-slate-500 cursor-not-allowed px-5 py-2.5 rounded-lg font-semibold text-sm">+ KLIK UNTUK TAMBAH ASET</button>
         </div>
     </div>
+
+</div>
+</div>
+
+<!-- MODAL BORANG EDIT / TAMBAH INVENTORI -->
+<div id="adminAssetModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-sm flex items-center justify-center hidden p-4 z-[95]">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-lg p-6 shadow-2xl">
+        <h4 id="adminModalTitle" class="text-xl font-bold text-white mb-4 border-b border-slate-800 pb-2">Tambah Aset Baharu</h4>
+        
+        <form id="adminAssetForm" onsubmit="saveAdminAsset(event)" class="space-y-4">
+            <input type="hidden" id="adminAssetId">
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Kod Sekolah</label>
+                    <input type="text" id="adminFormSchoolCode" readonly class="w-full p-2 bg-slate-950 border border-slate-800 rounded text-slate-400 font-mono">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Nama Aset / Item</label>
+                    <input type="text" id="adminFormItem" required placeholder="Cth: Laptop" class="w-full p-2 bg-slate-950 border border-slate-700 rounded text-white">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-1">Fasa</label>
+                <input type="text" id="adminFormFasa" required placeholder="Cth: PdP FASA 2" class="w-full p-2 bg-slate-950 border border-slate-700 rounded text-white">
+            </div>
+
+            <div class="grid grid-cols-4 gap-3">
+                <div>
+                    <label class="block text-xs font-semibold text-blue-400 mb-1">Jumlah (J)</label>
+                    <input type="number" id="adminFormJ" required min="0" value="0" class="w-full p-2 bg-slate-950 border border-slate-700 rounded text-white text-center font-bold">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-emerald-400 mb-1">Baik (B)</label>
+                    <input type="number" id="adminFormB" required min="0" value="0" class="w-full p-2 bg-slate-950 border border-slate-700 rounded text-white text-center">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-amber-400 mb-1">Rosak (R)</label>
+                    <input type="number" id="adminFormR" required min="0" value="0" class="w-full p-2 bg-slate-950 border border-slate-700 rounded text-white text-center">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-rose-400 mb-1">Hilang (H)</label>
+                    <input type="number" id="adminFormH" required min="0" value="0" class="w-full p-2 bg-slate-950 border border-slate-700 rounded text-white text-center">
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
+                <button type="button" onclick="closeAdminAssetModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-semibold">Batal</button>
+                <button type="submit" class="px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-slate-950 rounded-lg text-sm font-bold">Simpan ke Supabase</button>
+            </div>
+        </form>
+    </div>
+</div>
 
     <!-- MODAL EDIT SEKOLAH -->
     <div id="editSchoolModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[90] hidden flex items-center justify-center p-4">
@@ -917,7 +1038,7 @@
                             <i class="fa-solid fa-laptop-code"></i>
                         </div>
                         <div>
-                            <h3 class="text-white font-bold text-base leading-tight">PTIS PKG Pelangai</h3>
+                            <h3 class="text-white font-bold text-base leading-tight">PTIS Pelangai</h3>
                             <p class="text-[11px] text-cyan-400">Pasukan Teknikal ICT Sekolah</p>
                         </div>
                     </div>
@@ -1110,7 +1231,7 @@
             document.getElementById('adminDashboard').classList.add('hidden');
         }
 
-       function showAdminSection(which) {
+      function showAdminSection(which) {
     document.getElementById('adminSchoolsSection').classList.toggle('hidden', which !== 'schools');
     document.getElementById('adminTeamSection').classList.toggle('hidden', which !== 'team');
     
@@ -1121,11 +1242,19 @@
             loadAdminAnnouncements();
         }
     }
+
+    // TAMBAHAN UNTUK MODUL INVENTORI
+    const invSec = document.getElementById('adminInventorySection');
+    if (invSec) {
+        invSec.classList.toggle('hidden', which !== 'inventory');
+    }
 }
+
 function openAduanModal() {
     const modal = document.getElementById('aduanModal');
     if (modal) modal.classList.remove('hidden');
 }
+
         // ================= LOAD & RENDER DATA DARI SUPABASE =================
         async function loadSchools() {
     try {
@@ -2033,6 +2162,172 @@ function tutupDetailPengumuman() {
         modal.classList.add('hidden');
         document.body.classList.remove('overflow-hidden');
     }
+}
+
+// ==========================================
+// SKRIP PENGURUSAN INVENTORI ASET (ADMIN - DIBAIKI)
+// ==========================================
+let adminCurrentSchool = null;
+let adminCurrentAssetList = [];
+
+function adminInvSearchByCode() {
+    const code = document.getElementById('adminInvSearchCode').value.trim().toUpperCase();
+    if (!code) return;
+    document.getElementById('adminInvSelectSchool').value = code;
+    fetchAdminInventory(code);
+}
+
+function adminInvSearchByDropdown() {
+    const code = document.getElementById('adminInvSelectSchool').value;
+    if (!code) return;
+    document.getElementById('adminInvSearchCode').value = code;
+    fetchAdminInventory(code);
+}
+
+async function fetchAdminInventory(code) {
+    const tbody = document.getElementById('adminInvTableBody');
+    tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-cyan-400 animate-pulse">Memuat turun data...</td></tr>`;
+
+    try {
+        const client = getSupabase();
+        const { data, error } = await client.from('inventory_assets').select('*').eq('school_code', code);
+        if (error) throw error;
+
+        adminCurrentSchool = code;
+        adminCurrentAssetList = data || [];
+
+        document.getElementById('adminInvDispSchoolCode').innerText = code;
+        document.getElementById('adminInvDispSchoolName').innerText = getSchoolNameByCode(code);
+        document.getElementById('adminInvSchoolHeader').classList.remove('hidden');
+
+        const btnAdd = document.getElementById('adminBtnAddAsset');
+        btnAdd.disabled = false;
+        btnAdd.className = "bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-5 py-2.5 rounded-lg font-bold text-sm cursor-pointer shadow-lg shadow-cyan-900/40";
+
+        renderAdminInvTable();
+    } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-rose-400">Ralat: ${err.message}</td></tr>`;
+    }
+}
+
+function renderAdminInvTable() {
+    const tbody = document.getElementById('adminInvTableBody');
+    tbody.innerHTML = '';
+    if (adminCurrentAssetList.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-amber-500">Tiada aset ditemui. Klik tambah di bawah.</td></tr>`;
+        return;
+    }
+    adminCurrentAssetList.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-800/50 transition border-b border-slate-800";
+        tr.innerHTML = `
+            <td class="p-3 border-r border-slate-800 font-semibold text-white">${item.item || '-'}</td>
+            <td class="p-3 border-r border-slate-800 text-slate-400">${item.fasa || '-'}</td>
+            <td class="p-3 border-r border-slate-800 text-center font-bold text-cyan-400">${item.j ?? 0}</td>
+            <td class="p-3 border-r border-slate-800 text-center text-emerald-400">${item.b ?? 0}</td>
+            <td class="p-3 border-r border-slate-800 text-center text-amber-400">${item.r ?? 0}</td>
+            <td class="p-3 border-r border-slate-800 text-center text-rose-400">${item.h ?? 0}</td>
+            <td class="p-3 text-center space-x-2">
+                <button onclick="openAdminAssetModal('${item.id}')" class="text-cyan-400 font-semibold text-xs bg-cyan-950/50 px-2.5 py-1 rounded border border-cyan-800 cursor-pointer hover:bg-cyan-900/80">[Edit]</button>
+                <button onclick="deleteAdminAsset('${item.id}')" class="text-rose-400 font-semibold text-xs bg-rose-950/50 px-2.5 py-1 rounded border border-rose-800 cursor-pointer hover:bg-rose-900/80">[Padam]</button>
+            </td>`;
+        tbody.appendChild(tr);
+    });
+}
+
+function openAdminAssetModal(assetId = null) {
+    const modal = document.getElementById('adminAssetModal');
+    document.getElementById('adminFormSchoolCode').value = adminCurrentSchool;
+
+    if (assetId) {
+        // Tukar kedua-dua ID kepada String supaya padanan sentiasa dijumpai
+        const item = adminCurrentAssetList.find(a => String(a.id) === String(assetId));
+        if (item) {
+            document.getElementById('adminModalTitle').innerText = "Kemaskini Aset";
+            document.getElementById('adminAssetId').value = item.id;
+            document.getElementById('adminFormItem').value = item.item || '';
+            document.getElementById('adminFormFasa').value = item.fasa || '';
+            document.getElementById('adminFormJ').value = item.j ?? 0;
+            document.getElementById('adminFormB').value = item.b ?? 0;
+            document.getElementById('adminFormR').value = item.r ?? 0;
+            document.getElementById('adminFormH').value = item.h ?? 0;
+        }
+    } else {
+        document.getElementById('adminModalTitle').innerText = "Tambah Aset Baharu";
+        document.getElementById('adminAssetForm').reset();
+        document.getElementById('adminAssetId').value = '';
+        document.getElementById('adminFormSchoolCode').value = adminCurrentSchool;
+    }
+
+    // Buka borang modal terus tanpa sekatan
+    if (modal) {
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+    }
+}
+
+function closeAdminAssetModal() {
+    const modal = document.getElementById('adminAssetModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+}
+
+async function saveAdminAsset(event) {
+    event.preventDefault();
+    const id = document.getElementById('adminAssetId').value;
+    const client = getSupabase();
+
+    const payload = {
+        school_code: adminCurrentSchool,
+        fasa: document.getElementById('adminFormFasa').value,
+        item: document.getElementById('adminFormItem').value,
+        j: parseInt(document.getElementById('adminFormJ').value) || 0,
+        b: parseInt(document.getElementById('adminFormB').value) || 0,
+        r: parseInt(document.getElementById('adminFormR').value) || 0,
+        h: parseInt(document.getElementById('adminFormH').value) || 0,
+    };
+
+    let error;
+    if (id) {
+        ({ error } = await client.from('inventory_assets').update(payload).eq('id', id));
+    } else {
+        ({ error } = await client.from('inventory_assets').insert([payload]));
+    }
+
+    if (!error) {
+        closeAdminAssetModal();
+        fetchAdminInventory(adminCurrentSchool);
+    } else {
+        alert("Gagal menyimpan: " + error.message);
+    }
+}
+
+async function deleteAdminAsset(id) {
+    if (confirm("Adakah anda pasti memadam aset ini?")) {
+        const client = getSupabase();
+        const { error } = await client.from('inventory_assets').delete().eq('id', id);
+        if (!error) fetchAdminInventory(adminCurrentSchool);
+    }
+}
+
+function getSchoolNameByCode(code) {
+    const schools = {
+        "CBA0009": "SK PELANGAI",
+        "CBA0010": "SK SIMPANG PELANGAI",
+        "CBA0011": "SK KAMPUNG SHAFIE",
+        "CBA0016": "SK FELDA KEMASUL",
+        "CBA0020": "SK (FELDA) CHEMOMOI",
+        "CBA0021": "SK (FELDA) SG KEMAHAL",
+        "CEA0055": "SMK SERI PELANGAI",
+        "CEA0060": "SMK FELDA CHEMOMOI",
+        "CEB0017": "SMK TELEMONG",
+        "CBC0033": "SJK (C) TELEMONG",
+        "CBC0034": "SJK (C) MANCHIS",
+        "CBD0040": "SJK (T) LADANG RENJOK"
+    };
+    return schools[code] || code;
 }
 
 </script>
