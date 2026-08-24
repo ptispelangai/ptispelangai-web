@@ -526,35 +526,41 @@
 
     <!-- ==================== HIMPUNAN MODAL POP-UP ==================== -->
 
-    <!-- 1. MODAL: SENARAI PASUKAN PTIS -->
-    <div id="ptisModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
-            <div class="p-6 border-b border-slate-800 flex justify-between items-center bg-slate-950/50">
-                <div class="flex items-center gap-3">
-                    <div class="p-2.5 bg-cyan-500/10 rounded-xl text-cyan-400">
-                        <i class="fa-solid fa-user-shield text-xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-white">Senarai PTIS Zon Pelangai</h3>
-                        <p class="text-xs text-slate-400">Juruteknik & Sekolah Seliaan (Terkini)</p>
-                    </div>
+  <!-- 1. MODAL: DIREKTORI PEGAWAI PTIS (FORMAL) -->
+<div id="ptisModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-4xl w-full max-h-[85vh] flex flex-col shadow-xl overflow-hidden">
+        
+        <!-- Header -->
+        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 bg-blue-50 border border-blue-100 rounded-lg text-blue-600">
+                    <i class="fa-solid fa-users-gear text-lg"></i>
                 </div>
-                <button onclick="closeModal('ptisModal')" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-
-            <div class="p-6 overflow-y-auto space-y-4">
-                <div id="ptisDynamicList" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- Data PTIS dari Supabase -->
+                <div>
+                    <h3 class="text-base font-semibold text-slate-800">Pasukan Teknikal ICT Sekolah Zon Pelangai</h3>
+                    <p class="text-xs text-slate-500">Maklumat Pegawai & Taburan Sekolah Seliaan</p>
                 </div>
             </div>
+            <button onclick="closeModal('ptisModal')" class="w-8 h-8 rounded-lg bg-transparent hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
 
-            <div class="p-4 border-t border-slate-800 bg-slate-950/50 text-right">
-                <button onclick="closeModal('ptisModal')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs px-5 py-2.5 rounded-xl transition-all">Tutup</button>
+        <!-- Body / Grid Pegawai -->
+        <div class="p-6 overflow-y-auto max-h-[65vh]">
+            <div id="ptisDynamicList" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <!-- Data PTIS dari Supabase akan diisi di sini oleh JS -->
             </div>
         </div>
-    </div>     
+
+        <!-- Footer -->
+        <div class="p-4 border-t border-slate-100 bg-slate-50/50 flex justify-end">
+            <button onclick="closeModal('ptisModal')" class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium text-xs px-4 py-2 rounded-lg shadow-sm transition-all">
+                Tutup
+            </button>
+        </div>
+    </div>
+</div>
 
     <!-- 2. Modal Pop-Up Senarai 12 Sekolah (Gaya Formal/Kemaskini) -->
 <div id="schoolModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
@@ -977,24 +983,38 @@
         </div>
     </div>
 </div>
-    <!-- MODAL EDIT TEAM -->
+    
+<!-- MODAL EDIT TEAM (DENGAN RUANGAN GAMBAR) -->
 <div id="editTeamModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[90] hidden flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-lg w-full shadow-2xl">
-        <div class="p-6 border-b border-slate-800"><h3 class="text-lg font-bold text-white">Kemaskini Juruteknik</h3></div>
+        <div class="p-6 border-b border-slate-800">
+            <h3 class="text-lg font-bold text-white">Kemaskini Juruteknik</h3>
+        </div>
         <div class="p-6 space-y-4">
-            <input id="editTeamName" placeholder="Nama Juruteknik" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-cyan-400">
-            <input id="editTeamRole" placeholder="Jawatan (Cth: Juruteknik FT19)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-cyan-400">
-            <div class="flex gap-3">
+            <div>
+                <label class="block text-xs font-medium text-slate-400 mb-1">Nama Juruteknik</label>
+                <input id="editTeamName" placeholder="Nama Juruteknik" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-cyan-400">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-slate-400 mb-1">Jawatan & Gred</label>
+                <input id="editTeamRole" placeholder="Jawatan (Cth: Penolong Pegawai Teknologi Maklumat FA5)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-cyan-400">
+            </div>
+            
+            <!-- RUANGAN GAMBAR PASPORT -->
+            <div>
+                <label class="block text-xs font-medium text-slate-400 mb-1">URL / Pautan Gambar Pasport</label>
+                <input id="editTeamImage" placeholder="Cth: https://raw.githubusercontent.com/.../amirul.jpg" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-cyan-400 font-mono text-xs">
+            </div>
+
+            <div class="flex gap-3 pt-2">
                 <button onclick="closeModal('editTeamModal')" class="flex-1 bg-slate-800 text-slate-200 px-4 py-3 rounded-xl font-semibold hover:bg-slate-700 transition-colors">Batal</button>
-                
-                <!-- Butang Padam Baru -->
                 <button onclick="deleteTeam()" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 px-4 py-3 rounded-xl font-bold transition-colors">Padam</button>
-                
                 <button id="btnSaveTeam" onclick="saveTeam()" class="flex-1 bg-cyan-500 text-slate-950 px-4 py-3 rounded-xl font-bold hover:bg-cyan-400 transition-colors">Simpan ke Supabase</button>
             </div>
         </div>
     </div>
 </div>
+
 <!-- MODAL TAMBAH PENGUMUMAN -->
 <div id="addAnnouncementModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[90] hidden flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden">
@@ -1509,75 +1529,133 @@ function renderAdminSchools() {
     });
 }
 
-        function renderPublicTeamModal() {
-            const container = document.getElementById('ptisDynamicList');
-            if (!container) return;
+      // 1. Paparan Awam (Public Modal - Dengan Gambar Pasport)
+function renderPublicTeamModal() {
+    const container = document.getElementById('ptisDynamicList');
+    if (!container) return;
 
-            if (globalTeam.length === 0) {
-                container.innerHTML = `<div class="col-span-full text-center p-8 text-slate-400">Tiada data ahli.</div>`;
-                return;
-            }
+    if (globalTeam.length === 0) {
+        container.innerHTML = `<div class="col-span-full text-center p-8 text-slate-400 italic">Tiada data pegawai dijumpai.</div>`;
+        return;
+    }
 
-            container.innerHTML = globalTeam.map(member => {
-                const nama = member.name || member.nama || 'Ahli PTIS';
-                const jawatan = member.jawatan || member.role || 'Juruteknik FT19/FT22';
-                
-                let schoolsHTML = '';
-                if (member.assignedSchools && member.assignedSchools.length > 0) {
-                    schoolsHTML = member.assignedSchools.map(s => {
-                        const namaSekolah = s['SEKOLAH'] || s.nama_sekolah || s.name || 'Sekolah';
-                        return `<span class="inline-block bg-slate-900/90 text-cyan-300 text-[11px] px-2.5 py-1 rounded-lg border border-cyan-500/20 font-medium">${esc(namaSekolah)}</span>`;
-                    }).join(' ');
-                } else {
-                    schoolsHTML = `<span class="text-xs text-slate-500 italic">Tiada sekolah seliaan</span>`;
-                }
+    container.innerHTML = globalTeam.map(member => {
+        const nama = member.name || member.nama || 'Nama Pegawai';
+        const jawatan = member.jawatan || member.role || 'Penolong Pegawai Teknologi Maklumat FA5';
 
-                return `
-                    <div class="bg-slate-950/60 border border-slate-800/80 rounded-2xl p-5 flex flex-col justify-between hover:border-cyan-500/40 transition-all">
-                        <div>
-                            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-3 font-bold">
-                                <i class="fa-solid fa-user-gear"></i>
-                            </div>
-                            <h4 class="text-base font-extrabold text-white mb-1">${esc(nama)}</h4>
-                            <p class="text-xs text-cyan-400 font-semibold mb-3">${esc(jawatan)}</p>
-                            
-                            <div class="pt-3 border-t border-slate-800/60">
-                                <p class="text-[10px] uppercase tracking-wider font-bold text-slate-400 mb-2">Sekolah Seliaan:</p>
-                                <div class="flex flex-wrap gap-1.5">
-                                    ${schoolsHTML}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+        let imgUrl = member.image_url || member.gambar || '';
+        if (!imgUrl) {
+            const lower = nama.toLowerCase();
+            if (lower.includes('amirul')) imgUrl = 'https://raw.githubusercontent.com/mohdhuszaini-tech/ptispelangai-web/main/amirul.jpg';
+            else if (lower.includes('huszaini')) imgUrl = 'https://raw.githubusercontent.com/mohdhuszaini-tech/ptispelangai-web/main/huszaini.jpg';
+            else if (lower.includes('shahrul')) imgUrl = 'https://raw.githubusercontent.com/mohdhuszaini-tech/ptispelangai-web/main/shahrul.jpg';
         }
 
-        function renderAdminTeam() {
-            const b = document.getElementById('adminTeamBody');
-            if (!b) return;
-
-            b.innerHTML = globalTeam.map((t, i) => {
-                const nama = t.name || t.nama || 'Juruteknik';
-                const jawatan = t.jawatan || t.role || '-';
-                
-                let listSchools = (t.assignedSchools || []).map(x => `<li>› ${esc(x['SEKOLAH'] || x.nama_sekolah || x.name)}</li>`).join('');
-                if (!listSchools) listSchools = `<li class="text-slate-500 italic">Tiada pautan sekolah</li>`;
-
+        let schoolsHTML = '';
+        if (member.assignedSchools && member.assignedSchools.length > 0) {
+            schoolsHTML = member.assignedSchools.map(s => {
+                const namaSekolah = s['SEKOLAH'] || s.nama_sekolah || s.name || 'Sekolah';
                 return `
-                    <div class="bg-slate-950 border border-slate-800 p-4 rounded-2xl flex flex-col justify-between">
-                        <div>
-                            <h4 class="font-bold text-white text-base">${esc(nama)}</h4>
-                            <p class="text-xs text-cyan-400 mb-3">${esc(jawatan)}</p>
-                            <ul class="text-xs text-slate-300 space-y-1">${listSchools}</ul>
-                        </div>
-                        <button onclick="editTeam(${i})" class="mt-4 text-xs bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/20 px-3 py-2 rounded-lg font-semibold transition-colors">
-                            Edit
-                        </button>
-                    </div>
-                `;
+                    <li class="flex items-center gap-2 text-xs text-slate-700 font-medium">
+                        <span class="w-1.5 h-1.5 rounded-full bg-blue-600 inline-block flex-shrink-0"></span>
+                        <span>${esc(namaSekolah)}</span>
+                    </li>`;
             }).join('');
+        } else {
+            schoolsHTML = `<li class="text-xs text-slate-400 italic">Tiada sekolah seliaan</li>`;
         }
+
+        return `
+            <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                <div>
+                    <!-- Profil Header (Gambar Saiz Pasport Dibesarkan) -->
+                    <div class="flex items-center gap-4 mb-3">
+                        <div class="w-16 h-20 rounded-xl overflow-hidden border-2 border-slate-200 bg-slate-100 flex-shrink-0 shadow-sm">
+                            <img src="${imgUrl}" 
+                                 onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(nama)}&background=0284c7&color=fff'" 
+                                 alt="${esc(nama)}" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800 leading-snug">${esc(nama)}</h4>
+                        </div>
+                    </div>
+
+                    <!-- Jawatan Rasmi -->
+                    <p class="text-xs text-blue-700 font-semibold mb-4 leading-relaxed">${esc(jawatan)}</p>
+
+                    <!-- Senarai Sekolah Seliaan -->
+                    <div class="pt-3 border-t border-slate-100">
+                        <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider block mb-2">Sekolah Seliaan:</span>
+                        <ul class="space-y-1.5">
+                            ${schoolsHTML}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// 2. Paparan Panel Admin (Dengan Preview Gambar Pasport)
+function renderAdminTeam() {
+    const b = document.getElementById('adminTeamBody');
+    if (!b) return;
+
+    if (globalTeam.length === 0) {
+        b.innerHTML = `<div class="col-span-full text-center p-8 text-slate-400 italic">Tiada data juruteknik dijumpai.</div>`;
+        return;
+    }
+
+    b.innerHTML = globalTeam.map((t, i) => {
+        const nama = t.name || t.nama || 'Juruteknik';
+        const jawatan = t.jawatan || t.role || 'Penolong Pegawai Teknologi Maklumat';
+
+        let imgUrl = t.image_url || t.gambar || '';
+        if (!imgUrl) {
+            const lower = nama.toLowerCase();
+            if (lower.includes('amirul')) imgUrl = 'https://raw.githubusercontent.com/mohdhuszaini-tech/ptispelangai-web/main/amirul.jpg';
+            else if (lower.includes('huszaini')) imgUrl = 'https://raw.githubusercontent.com/mohdhuszaini-tech/ptispelangai-web/main/huszaini.jpg';
+            else if (lower.includes('shahrul')) imgUrl = 'https://raw.githubusercontent.com/mohdhuszaini-tech/ptispelangai-web/main/shahrul.jpg';
+        }
+
+        let listSchools = (t.assignedSchools || []).map(x => {
+            const namaSekolah = x['SEKOLAH'] || x.nama_sekolah || x.name || 'Sekolah';
+            return `<li class="flex items-center gap-2 text-xs text-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-blue-400 inline-block flex-shrink-0"></span>${esc(namaSekolah)}</li>`;
+        }).join('');
+
+        if (!listSchools) listSchools = `<li class="text-xs text-slate-500 italic">Tiada pautan sekolah</li>`;
+
+        return `
+            <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between shadow-md">
+                <div>
+                    <div class="flex items-center gap-3.5 mb-3">
+                        <div class="w-11 h-13 rounded-lg overflow-hidden border border-slate-700 bg-slate-900 flex-shrink-0 shadow-inner">
+                            <img src="${imgUrl}" 
+                                 onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(nama)}&background=0284c7&color=fff'" 
+                                 alt="${esc(nama)}" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm leading-snug">${esc(nama)}</h4>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-blue-300 font-semibold mb-4">${esc(jawatan)}</p>
+
+                    <div class="pt-3 border-t border-slate-800">
+                        <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider block mb-2">Sekolah Seliaan:</span>
+                        <ul class="space-y-1.5">${listSchools}</ul>
+                    </div>
+                </div>
+
+                <button onclick="editTeam(${i})" class="mt-5 w-full text-xs bg-blue-600/20 hover:bg-blue-600 border border-blue-500/40 text-blue-300 hover:text-white px-3 py-2 rounded-xl font-semibold transition-all flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-pen-to-square text-[10px]"></i> Edit Juruteknik
+                </button>
+            </div>
+        `;
+    }).join('');
+}
 
         // ================= OPERATIONS SIMPAN KE SUPABASE =================
         function editSchool(i) {
@@ -1650,26 +1728,36 @@ async function saveSchool() {
         btn.disabled = false;
     }
 }
-        function editTeam(i) {
-            const t = globalTeam[i];
-            if (!t) return;
+       
+// 1. Buka Modal Edit (Membaca URL Gambar)
+function editTeam(i) {
+    const t = globalTeam[i];
+    if (!t) return;
 
-            editingTeamId = t.id;
-            document.getElementById('editTeamName').value = t.name || t.nama || '';
-            document.getElementById('editTeamRole').value = t.jawatan || t.role || '';
-            document.getElementById('editTeamModal').classList.remove('hidden');
-        }
+    editingTeamId = t.id;
+    document.getElementById('editTeamName').value = t.name || t.nama || '';
+    document.getElementById('editTeamRole').value = t.jawatan || t.role || '';
+    
+    // Membaca URL gambar daripada Supabase (jika ada)
+    document.getElementById('editTeamImage').value = t.image_url || t.gambar || '';
+    
+    document.getElementById('editTeamModal').classList.remove('hidden');
+}
 
-        function addTeam() {
-            editingTeamId = null;
-            document.getElementById('editTeamName').value = '';
-            document.getElementById('editTeamRole').value = '';
-            document.getElementById('editTeamModal').classList.remove('hidden');
-        }
+// 2. Buka Modal Tambah Baru (Kosongkan Ruang)
+function addTeam() {
+    editingTeamId = null;
+    document.getElementById('editTeamName').value = '';
+    document.getElementById('editTeamRole').value = '';
+    document.getElementById('editTeamImage').value = '';
+    document.getElementById('editTeamModal').classList.remove('hidden');
+}
 
-        async function saveTeam() {
+// 3. Simpan Rekod ke Supabase (Termasuk image_url)
+async function saveTeam() {
     const name = document.getElementById('editTeamName').value.trim();
-    const role = document.getElementById('editTeamRole').value.trim() || 'Juruteknik FT19';
+    const role = document.getElementById('editTeamRole').value.trim() || 'Penolong Pegawai Teknologi Maklumat FA5';
+    const imageUrl = document.getElementById('editTeamImage').value.trim();
     const btn = document.getElementById('btnSaveTeam');
 
     if (!name) {
@@ -1682,23 +1770,29 @@ async function saveSchool() {
 
     try {
         const client = getSupabase();
+        
+        const payload = { 
+            name: name, 
+            jawatan: role,
+            image_url: imageUrl 
+        };
 
         if (editingTeamId) {
             const { error } = await client
                 .from('ptis_members')
-                .update({ name: name, jawatan: role }) // Dibuang 'nama: name'
+                .update(payload)
                 .eq('id', editingTeamId);
 
             if (error) throw error;
         } else {
             const { error } = await client
                 .from('ptis_members')
-                .insert([{ name: name, jawatan: role }]); // Dibuang 'nama: name'
+                .insert([payload]);
 
             if (error) throw error;
         }
 
-        alert('Data juruteknik berjaya disimpan ke Supabase!');
+        alert('Data juruteknik & URL gambar berjaya disimpan ke Supabase!');
         closeModal('editTeamModal');
         await loadPTISMembers();
 
@@ -1710,13 +1804,14 @@ async function saveSchool() {
         btn.disabled = false;
     }
 }
+
+// 4. Padam Rekod Juruteknik
 async function deleteTeam() {
     if (!editingTeamId) {
         alert('Tiada rekod juruteknik dipilih!');
         return;
     }
 
-    // Beri amaran pengesahan sebelum padam
     if (!confirm('Adakah anda pasti mahu memadam rekod juruteknik ini?')) {
         return;
     }
@@ -1733,13 +1828,14 @@ async function deleteTeam() {
         } else {
             alert('Rekod juruteknik berjaya dipadam!');
             closeModal('editTeamModal');
-            await loadPTISMembers(); // Muat semula senarai
+            await loadPTISMembers();
         }
     } catch (err) {
         console.error('Delete Team Error:', err);
         alert('Ralat semasa menyambung ke pangkalan data.');
     }
 }
+
 
 // Buka Modal Tambah Pengumuman
 function openAddAnnouncementModal() {
