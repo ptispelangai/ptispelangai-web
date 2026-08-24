@@ -556,49 +556,56 @@
         </div>
     </div>     
 
-    <!-- 2. Modal Pop-Up Senarai 12 Sekolah -->
-    <div id="schoolModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-5xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
-            <div class="p-6 border-b border-slate-800 flex justify-between items-center bg-slate-950/50">
-                <div class="flex items-center gap-3">
-                    <div class="p-2.5 bg-amber-400/10 rounded-xl text-amber-400">
-                        <i class="fa-solid fa-school text-xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-white">Senarai Data Sekolah Zon Pelangai</h3>
-                        <p class="text-xs text-slate-400">Rekod Guru ICT & Maklumat Hubungan Sekolah</p>
-                    </div>
+    <!-- 2. Modal Pop-Up Senarai 12 Sekolah (Gaya Formal/Kemaskini) -->
+<div id="schoolModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-5xl w-full max-h-[85vh] flex flex-col shadow-xl overflow-hidden">
+        
+        <!-- Header -->
+        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 bg-blue-50 border border-blue-100 rounded-lg text-blue-600">
+                    <i class="fa-solid fa-school text-lg"></i>
                 </div>
-                <button onclick="closeModal('schoolModal')" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-
-            <div class="p-6 overflow-y-auto space-y-4">
-                <div class="overflow-x-auto rounded-2xl border border-slate-800">
-                    <table class="w-full text-left text-sm text-slate-300">
-                        <thead class="bg-slate-950 text-xs uppercase text-slate-400 border-b border-slate-800">
-                            <tr>
-                                <th class="py-3 px-4">Bil</th>
-                                <th class="py-3 px-4">Kod</th>
-                                <th class="py-3 px-4">Nama Sekolah</th>
-                                <th class="py-3 px-4">Nama Pengetua / Guru Besar</th>
-                                <th class="py-3 px-4">Nama Guru ICT</th>
-                                <th class="py-3 px-4">No. Tel Sekolah</th>
-                            </tr>
-                        </thead>
-                        <tbody id="schoolTableBody" class="divide-y divide-slate-800/60 bg-slate-900/50">
-                            <!-- Data Sekolah dari Supabase -->
-                        </tbody>
-                    </table>
+                <div>
+                    <h3 class="text-base font-semibold text-slate-800">Senarai Data Sekolah Zon Pelangai</h3>
+                    <p class="text-xs text-slate-500">Rekod Guru ICT & Maklumat Hubungan Sekolah</p>
                 </div>
             </div>
+            <button onclick="closeModal('schoolModal')" class="w-8 h-8 rounded-lg bg-transparent hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
 
-            <div class="p-4 border-t border-slate-800 bg-slate-950/50 text-right">
-                <button onclick="closeModal('schoolModal')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs px-5 py-2.5 rounded-xl transition-all">Tutup</button>
-            </div>
+       <!-- Body / Table Container -->
+<div class="p-6">
+    <!-- Kontena jadual diberi ketinggian maksimum & overflow-y-auto -->
+    <div class="overflow-x-auto overflow-y-auto max-h-[60vh] rounded-xl border border-slate-200">
+        <table class="w-full text-left text-sm text-slate-700 border-collapse">
+            <!-- Header diletakkan sticky top-0 -->
+            <thead class="bg-slate-100 text-xs font-semibold text-slate-700 uppercase tracking-wider border-b border-slate-200 sticky top-0 z-20 shadow-sm">
+                <tr>
+                    <th class="py-3.5 px-4 w-12 text-center bg-slate-100">Bil</th>
+                    <th class="py-3.5 px-4 bg-slate-100">Kod</th>
+                    <th class="py-3.5 px-4 bg-slate-100">Nama Sekolah</th>
+                    <th class="py-3.5 px-4 bg-slate-100">Nama Pengetua / Guru Besar</th>
+                    <th class="py-3.5 px-4 bg-slate-100">Nama Guru ICT</th>
+                    <th class="py-3.5 px-4 bg-slate-100">No. Tel Sekolah</th>
+                </tr>
+            </thead>
+            <tbody id="schoolTableBody" class="divide-y divide-slate-100 bg-white">
+                <!-- Data Sekolah dari Supabase -->
+            </tbody>
+        </table>
+    </div>
+</div>
+        <!-- Footer -->
+        <div class="p-4 border-t border-slate-100 bg-slate-50/50 flex justify-end gap-3">
+            <button onclick="closeModal('schoolModal')" class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium text-xs px-4 py-2 rounded-lg shadow-sm transition-all">
+                Tutup
+            </button>
         </div>
     </div>
+</div>
 
     <!-- 3. Modal Pop-Up Dashboard Data Studio -->
     <div id="dashboardModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-2 sm:p-4">
@@ -1428,40 +1435,42 @@ async function loadAnnouncements() {
         }
 
         // ================= PAPARAN ADMIN & PUBLIC =================
-       
+  
 function renderPublicSchoolTable() {
     const tbody = document.getElementById('schoolTableBody');
     if (!tbody) return;
 
     if (globalSchools.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-slate-400 italic">Tiada data sekolah dijumpai.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-slate-500 italic">Tiada data sekolah dijumpai.</td></tr>`;
         return;
     }
 
     tbody.innerHTML = globalSchools.map((s, i) => {
-        // PENYESUAIAN LAJUR SUPABASE:
         const kod = s['KOD'] || s.kod_sekolah || s.code || '-';
         const nama = s['SEKOLAH'] || s.nama_sekolah || s.nama || '-';
-        const gb = s['GURU BESAR'] || s.guru_besar || s.nama_guru_besar || '-'; // DITAMBAH
+        const gb = s['GURU BESAR'] || s.guru_besar || s.nama_guru_besar || '-';
         const guru = s['GURU ICT'] || s.nama_guru_ict || s.guru_ict || '-';
         const tel = s['TELEFON'] || s.no_tel || s.phone || '-';
 
         return `
-            <tr class="hover:bg-slate-800/40 transition-colors">
-                <td class="py-3 px-4 font-medium text-slate-400">${i + 1}</td>
-                <td class="py-3 px-4">
-                    <span class="bg-amber-500/20 text-amber-300 font-bold text-sm px-2.5 py-1 rounded-md border border-amber-500/40 font-mono">
+            <tr class="hover:bg-slate-50 transition-colors border-b border-slate-100">
+                <td class="py-3.5 px-4 font-medium text-slate-500 text-center">${i + 1}</td>
+                
+                <!-- Kemaskini Kod Sekolah: Saiz fon dibesarkan (text-sm), tracking lebar, & border lebih kemas -->
+                <td class="py-3.5 px-4">
+                    <span class="bg-blue-50 text-blue-800 border border-blue-200/80 font-bold text-sm px-3 py-1 rounded-md font-mono tracking-wide inline-block shadow-sm">
                         ${esc(kod)}
                     </span>
                 </td>
-                <td class="py-3 px-4 font-bold text-white">${esc(nama)}</td>
-                <td class="py-3 px-4 text-emerald-300 font-medium">${esc(gb)}</td> <!-- DITAMBAH -->
-                <td class="py-3 px-4 text-cyan-300 font-medium">${esc(guru)}</td>
-                <td class="py-3 px-4 text-cyan-300 font-mono text-base">${esc(tel)}</td>
+                
+                <td class="py-3.5 px-4 font-semibold text-slate-800">${esc(nama)}</td>
+                <td class="py-3.5 px-4 text-slate-800 font-medium">${esc(gb)}</td>
+                <td class="py-3.5 px-4 text-slate-800 font-medium">${esc(guru)}</td>
+                <td class="py-3.5 px-4 text-slate-800 font-mono text-sm font-semibold">${esc(tel)}</td>
             </tr>
         `;
     }).join('');
-}
+}     
 
 function renderAdminSchools() {
     const q = (document.getElementById('adminSearch')?.value || '').toLowerCase();
@@ -1470,31 +1479,29 @@ function renderAdminSchools() {
 
     b.innerHTML = '';
     globalSchools.forEach((s, i) => {
-        // PENYESUAIAN LAJUR SUPABASE:
         const kod = s['KOD'] || s.kod_sekolah || s.code || '';
         const nama = s['SEKOLAH'] || s.nama_sekolah || s.nama || '';
-        const gb = s['GURU BESAR'] || s.guru_besar || s.nama_guru_besar || ''; // DITAMBAH
+        const gb = s['GURU BESAR'] || s.guru_besar || s.nama_guru_besar || '';
         const guru = s['GURU ICT'] || s.nama_guru_ict || s.guru_ict || '';
         const tel = s['TELEFON'] || s.no_tel || s.phone || '';
 
-        // Ditambah 'gb' dalam carian supaya boleh cari guna nama Guru Besar
         if (!(nama + ' ' + gb + ' ' + guru + ' ' + kod).toLowerCase().includes(q)) return;
 
         b.innerHTML += `
-            <tr class="border-t border-slate-800 hover:bg-slate-950/40">
-                <td class="p-4 text-slate-400">${i + 1}</td>
+            <tr class="border-b border-slate-800/80 hover:bg-slate-800/50 transition-colors">
+                <td class="p-4 text-slate-400 font-medium text-center">${i + 1}</td>
                 <td class="p-4">
-                    <span class="bg-amber-500/20 text-amber-300 font-bold text-sm px-2.5 py-1 rounded-md border border-amber-500/40 font-mono">
+                    <span class="bg-slate-800 text-slate-200 border border-slate-700 font-bold text-xs px-2.5 py-1 rounded-md font-mono inline-block shadow-sm">
                         ${esc(kod)}
                     </span>
                 </td>
                 <td class="p-4 text-white font-semibold">${esc(nama)}</td>
-                <td class="p-4 text-emerald-300 font-medium">${esc(gb)}</td> <!-- DITAMBAH -->
-                <td class="p-4 text-cyan-300">${esc(guru)}</td>
-                <td class="p-4 text-cyan-300 font-mono text-base">${esc(tel)}</td>
+                <td class="p-4 text-slate-200 font-medium">${esc(gb)}</td>
+                <td class="p-4 text-slate-200 font-medium">${esc(guru)}</td>
+                <td class="p-4 text-slate-300 font-mono text-sm font-semibold">${esc(tel)}</td>
                 <td class="p-4">
-                    <button onclick="editSchool(${i})" class="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors">
-                        Edit
+                    <button onclick="editSchool(${i})" class="bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/40 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all shadow-sm flex items-center gap-1.5">
+                        <i class="fa-solid fa-pen-to-square text-[10px]"></i> Edit
                     </button>
                 </td>
             </tr>
