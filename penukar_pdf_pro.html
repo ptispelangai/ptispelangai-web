@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penukar PDF ke Word CloudConvert (Fix Engine)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800 font-sans">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-10 shadow-sm">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-blue-600 text-white p-2.5 rounded-xl shadow-sm">
+                    <i data-lucide="sparkles" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-slate-900">Penukar PDF ke Word Cloud API</h1>
+                    <p class="text-xs text-slate-500">Hasil Format 100% Kemas & Sempurna</p>
+                </div>
+            </div>
+            <span class="bg-emerald-100 text-emerald-700 text-xs px-3 py-1.5 rounded-full font-medium flex items-center gap-1.5">
+                <i data-lucide="shield-check" class="w-4 h-4"></i> Cloud API Active
+            </span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        
+        <!-- Upload Section -->
+        <div id="upload-container" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 mb-6 text-center">
+            <div class="border-2 border-dashed border-slate-300 rounded-xl p-10 hover:border-blue-500 hover:bg-slate-50 transition">
+                <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="file-up" class="w-8 h-8"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-slate-800 mb-1">Muat Naik Fail PDF Anda</h3>
+                <p class="text-sm text-slate-500 mb-6">Enjin CloudConvert akan mengekalkan jadual, fon, dan susun atur dokumen asal anda.</p>
+                
+                <input type="file" id="file-input" accept=".pdf" class="hidden">
+                <button type="button" id="select-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3.5 rounded-xl font-medium transition shadow-md inline-flex items-center gap-2 cursor-pointer text-base">
+                    <i data-lucide="file-plus" class="w-5 h-5"></i> Pilih Fail PDF
+                </button>
+            </div>
+        </div>
+
+        <!-- Status & Progress Section -->
+        <div id="status-container" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6 hidden">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="p-3 bg-red-100 text-red-600 rounded-xl">
+                        <i data-lucide="file-text" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h4 id="file-name" class="font-medium text-slate-900 truncate max-w-xs">dokumen.pdf</h4>
+                        <p id="file-size" class="text-xs text-slate-500">0 KB</p>
+                    </div>
+                </div>
+                <button onclick="resetApp()" class="text-slate-400 hover:text-red-500 p-1.5 rounded-lg transition">
+                    <i data-lucide="x-circle" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Progress Bar -->
+            <div id="progress-wrapper" class="space-y-2">
+                <div class="flex justify-between text-xs font-medium text-slate-600">
+                    <span id="progress-status">Menghantar fail ke pelayan...</span>
+                    <span id="progress-percent">0%</span>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                    <div id="progress-bar" class="bg-blue-600 h-3 rounded-full w-0 transition-all duration-300"></div>
+                </div>
+            </div>
+
+            <!-- Download Button -->
+            <div id="complete-wrapper" class="hidden mt-6 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2 text-emerald-600 text-sm font-medium">
+                    <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                    Dokumen Word kemas sedia dimuat turun!
+                </div>
+                <a id="download-btn" href="#" target="_blank" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-medium transition shadow-sm flex items-center justify-center gap-2">
+                    <i data-lucide="download" class="w-5 h-5"></i> Muat Turun (.docx)
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        const API_KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNjA0MTBiN2RiZDA3YjAxNjczOTY0ZWUxOWQyY2RlNjc2OGI0N2YzNTZmYTE5ZDA4Nzk2ZmNjZmYyMjI3OTg2Zjc3Mjc3MjZiMjBhZWJhYzAiLCJpYXQiOjE3ODc5MDQzNzAuNDAzMTY3LCJuYmYiOjE3ODc5MDQzNzAuNDAzMTY5LCJleHAiOjQ5NDM1Nzc5NzAuMzk1MTM0LCJzdWIiOiI3Njc2OTQ1NyIsInNjb3BlcyI6WyJ1c2VyLnJlYWQiLCJ0YXNrLnJlYWQiLCJ0YXNrLndyaXRlIiwidXNlci53cml0ZSIsIndlYmhvb2sucmVhZCIsIndlYmhvb2sud3JpdGUiLCJwcmVzZXQucmVhZCIsInByZXNldC53cml0ZSJdfQ.Q2MrU13Q4PT7QCCCSkJ9Ce8bVCm3BcwfOJYBJqsZ4GHK2cU5nMsdPtONDjGH8hleW5orTwa98sZSIRrdGC0oDeTxOnE9eadyfT2s3pDs9LoOVeojLFEfgrjuLA99uQ3IZGdZSV9gMWuSSTXsI6s3quHe6iHuez96sTBWbOoc2x42IRpiBy11FGSqu7oAueb0pZcMRxjwlyKdPcivwk11OHS-_GQgvDJZncafKaMrm-MnyC4vBwsYfJNZFFnEfjnPgbkfg7XX-6WL5vY5rNtNp2HJ4GCMZ0kciKfhnLRrw4cQ46ARI9IRsdoJeFscmRDSz2DxVXyXtNKvNka-0toKnhkhOqKKEuqnVn-OB90Pf9wfv39iXwZZ7v76nUuEo8sHJq42eKYIiZynCQ-3esEbozCLYZzgSfKbdi5Koea72m87fKjUaMYsPAfaNrIUyJnyGkAfCJjARe4uA12mik-u60M3HDHIq95AwV4i7RqlxW1awMxN7L0COmxhuHjuy2ynKhg5H9e_BZbJdLoFs825RXtKgeUHCwgNi5ouqM2qUyYyj2sfAoIdXOBuCbvQUxmukrSF7EXnoUSO4p0oESQ-v33eu0QbXe6Z3WeEK72AnDJ7D5fL9vpvWDXoFJm39voaIe7Ev3iOgd8O6K5cCfqHg_Xcg2KCI-n288NCZjzTuPU";
+
+        lucide.createIcons();
+
+        const fileInput = document.getElementById('file-input');
+        const selectBtn = document.getElementById('select-btn');
+        const uploadContainer = document.getElementById('upload-container');
+        const statusContainer = document.getElementById('status-container');
+        const progressBar = document.getElementById('progress-bar');
+        const progressPercent = document.getElementById('progress-percent');
+        const progressStatus = document.getElementById('progress-status');
+        const completeWrapper = document.getElementById('complete-wrapper');
+        const downloadBtn = document.getElementById('download-btn');
+        const fileNameEl = document.getElementById('file-name');
+        const fileSizeEl = document.getElementById('file-size');
+
+        let currentFile = null;
+
+        selectBtn.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                currentFile = e.target.files[0];
+                handleFile(currentFile);
+            }
+        });
+
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function updateProgress(percent, text) {
+            progressBar.style.width = percent + '%';
+            progressPercent.textContent = percent + '%';
+            progressStatus.textContent = text;
+        }
+
+        async function handleFile(file) {
+            if (!file.name.toLowerCase().endsWith('.pdf')) {
+                alert('Sila pilih fail format PDF sahaja.');
+                return;
+            }
+
+            fileNameEl.textContent = file.name;
+            fileSizeEl.textContent = formatBytes(file.size);
+
+            uploadContainer.classList.add('hidden');
+            statusContainer.classList.remove('hidden');
+            completeWrapper.classList.add('hidden');
+
+            updateProgress(10, "Menyediakan tugasan penukaran...");
+
+            try {
+                // 1. Create Job with automatic engine selection
+                const jobResponse = await fetch('https://api.cloudconvert.com/v2/jobs', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "tasks": {
+                            "upload-my-file": {
+                                "operation": "import/upload"
+                            },
+                            "convert-to-docx": {
+                                "operation": "convert",
+                                "input": "upload-my-file",
+                                "output_format": "docx"
+                            },
+                            "export-my-file": {
+                                "operation": "export/url",
+                                "input": "convert-to-docx"
+                            }
+                        }
+                    })
+                });
+
+                const jobData = await jobResponse.json();
+                if (!jobResponse.ok) {
+                    throw new Error(jobData.message || (jobData.errors ? JSON.stringify(jobData.errors) : 'Gagal membuat tugasan API.'));
+                }
+
+                const tasks = jobData.data.tasks;
+                const uploadTask = tasks.find(t => t.name === 'upload-my-file');
+
+                updateProgress(30, "Memuat naik fail PDF ke pelayan Cloud...");
+
+                // 2. Upload File
+                const formData = new FormData();
+                for (const p in uploadTask.result.form.parameters) {
+                    formData.append(p, uploadTask.result.form.parameters[p]);
+                }
+                formData.append('file', file);
+
+                const uploadResponse = await fetch(uploadTask.result.form.url, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!uploadResponse.ok) throw new Error('Gagal memuat naik fail PDF ke pelayan.');
+
+                updateProgress(60, "Menukar PDF ke Word (mengekalkan susun atur & jadual)...");
+
+                // 3. Poll Job Status
+                const jobId = jobData.data.id;
+                pollJobStatus(jobId);
+
+            } catch (error) {
+                console.error(error);
+                alert('Ralat Pemprosesan: ' + error.message);
+                resetApp();
+            }
+        }
+
+        async function pollJobStatus(jobId) {
+            const interval = setInterval(async () => {
+                try {
+                    const response = await fetch(`https://api.cloudconvert.com/v2/jobs/${jobId}`, {
+                        headers: {
+                            'Authorization': `Bearer ${API_KEY}`
+                        }
+                    });
+                    const data = await response.json();
+                    const job = data.data;
+
+                    if (job.status === 'processing') {
+                        updateProgress(80, "Menjana fail Word (.docx) yang kemas...");
+                    } else if (job.status === 'finished') {
+                        clearInterval(interval);
+                        const exportTask = job.tasks.find(t => t.name === 'export-my-file');
+                        const fileUrl = exportTask.result.files[0].url;
+
+                        updateProgress(100, "Penukaran Selesai!");
+                        downloadBtn.href = fileUrl;
+                        downloadBtn.setAttribute('download', (currentFile ? currentFile.name.replace(/\.pdf$/i, '') : 'dokumen') + '_kemas.docx');
+                        completeWrapper.classList.remove('hidden');
+                    } else if (job.status === 'error') {
+                        clearInterval(interval);
+                        const failedTask = job.tasks.find(t => t.status === 'error');
+                        const errorMsg = failedTask && failedTask.message ? failedTask.message : 'Gagal memproses fail pada pelayan Cloud.';
+                        alert('Ralat Penukaran: ' + errorMsg);
+                        resetApp();
+                    }
+                } catch (err) {
+                    clearInterval(interval);
+                    console.error(err);
+                    alert('Ralat menyemak status penukaran: ' + err.message);
+                    resetApp();
+                }
+            }, 2000);
+        }
+
+        function resetApp() {
+            fileInput.value = '';
+            uploadContainer.classList.remove('hidden');
+            statusContainer.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
