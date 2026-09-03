@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tempahan Bilik Mesyuarat PKG Pelangai</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      background-color: #f4f6f9; 
+      margin: 0; 
+      padding: 20px; 
+    }
+    .main-wrapper {
+      max-width: 950px;
+      margin: 0 auto;
+    }
+    
+    /* STIL DASHBOARD JADUAL (TEMA BIRU KORPORAT) */
+    .dashboard-container {
+      background: #ffffff;
+      padding: 20px;
+      margin-bottom: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-top: 5px solid #0056b3;
+    }
+    .dashboard-container h3 {
+      text-align: center;
+      color: #0056b3;
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+      vertical-align: middle;
+    }
+    th {
+      background-color: #0056b3;
+      color: white;
+    }
+    tr:nth-child(even) { background-color: #f9f9f9; }
+    
+    /* TETAPAN LAJUR STATUS & TINDAKAN */
+    .badge-lulus {
+      background-color: #28a745;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 11px;
+      display: inline-block;
+      text-align: center;
+    }
+    .badge-proses {
+      background-color: #ffc107;
+      color: #333;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 11px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    /* REKA BENTUK BUTANG CETAK COMPACT */
+    .btn-table-print {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: background 0.2s;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .btn-table-print:hover {
+      background-color: #0056b3;
+    }
+
+    /* STIL BUTANG PAGINATION */
+    .pagination-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    .pagination-btn {
+      width: auto !important;
+      padding: 6px 16px !important;
+      font-size: 13px !important;
+      margin-top: 0 !important;
+      background-color: #0056b3;
+      color: white;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+    }
+    .pagination-btn:hover {
+      background-color: #003d80;
+    }
+    .pagination-btn:disabled {
+      background-color: #cccccc !important;
+      cursor: not-allowed;
+    }
+    #pageInfo {
+      font-size: 13px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    /* STIL BORANG TEMPAHAN */
+    .form-container { 
+      background: #ffffff; 
+      padding: 25px; 
+      border-radius: 8px; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+      border-top: 5px solid #0056b3; 
+    }
+    h2 { 
+      text-align: center; 
+      color: #0056b3; 
+      margin-bottom: 20px; 
+    }
+    .form-group { margin-bottom: 15px; }
+    label { 
+      display: block; 
+      font-weight: bold; 
+      margin-bottom: 5px; 
+      color: #333; 
+    }
+    input, select, textarea { 
+      width: 100%; 
+      padding: 10px; 
+      border: 1px solid #ccc; 
+      border-radius: 5px; 
+      box-sizing: border-box; 
+      font-size: 14px;
+    }
+    button[type="submit"] { 
+      width: 100%; 
+      padding: 12px; 
+      background-color: #0056b3; 
+      color: white; 
+      border: none; 
+      border-radius: 5px; 
+      font-size: 16px; 
+      cursor: pointer; 
+      font-weight: bold; 
+      margin-top: 10px;
+    }
+    button[type="submit"]:hover { background-color: #003d80; }
+    #statusMessage { 
+      margin-top: 15px; 
+      text-align: center; 
+      font-weight: bold; 
+    }
+    .loading-text { text-align: center; color: #666; font-style: italic; }
+
+    /* ----------------------------------------------------
+       REKA BENTUK SLIP CETAKAN REKOD (PRINT ONLY)
+    ---------------------------------------------------- */
+    #reportArea {
+      display: none;
+    }
+
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 15mm;
+      }
+
+      body * {
+        visibility: hidden;
+      }
+
+      #reportArea, #reportArea * {
+        visibility: visible;
+      }
+
+      #reportArea {
+        display: block !important;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        color: #000000 !important;
+        font-family: Arial, sans-serif;
+      }
+
+      /* Header Rasmi */
+      .report-header {
+        text-align: center;
+        border-bottom: 2px solid #000000;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+      }
+
+      .report-header h3 {
+        margin: 0;
+        font-size: 14pt;
+        text-transform: uppercase;
+        color: #000000;
+      }
+
+      .report-header h2 {
+        margin: 5px 0;
+        font-size: 16pt;
+        color: #000000;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+
+      .report-header p {
+        margin: 2px 0;
+        font-size: 10pt;
+        color: #000000;
+      }
+
+      /* Bar Slogan/Rujukan */
+      .report-subhead {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10pt;
+        margin-bottom: 15px;
+        color: #000000;
+      }
+
+      /* Jadual Rasmi - Hitam Jelas */
+      .report-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+      }
+
+      .report-table th, .report-table td {
+        border: 1px solid #000000;
+        padding: 10px 12px;
+        font-size: 11pt;
+        vertical-align: middle;
+        color: #000000 !important;
+      }
+
+      .report-table th {
+        background-color: transparent !important;
+        width: 32%;
+        text-align: left;
+        font-weight: bold;
+        color: #000000 !important;
+      }
+
+      .status-text-lulus {
+        font-weight: bold;
+        color: #000000;
+        text-transform: uppercase;
+      }
+
+      /* Petak Pengesahan PKG Pelangai (Sebelah Kiri) */
+      .signature-section {
+        width: 100%;
+        margin-top: 40px;
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      .sig-box {
+        width: 45%;
+        text-align: left;
+        color: #000000;
+      }
+
+      .sig-title {
+        font-size: 10pt;
+        font-weight: bold;
+        margin-bottom: 70px;
+      }
+
+      .sig-line {
+        border-top: 1px solid #000000;
+        width: 100%;
+        margin-bottom: 5px;
+      }
+
+      .sig-detail {
+        font-size: 10pt;
+        line-height: 1.5;
+      }
+
+      .footer-note {
+        margin-top: 50px;
+        font-size: 8pt;
+        text-align: center;
+        border-top: 1px dashed #000000;
+        padding-top: 5px;
+        font-style: italic;
+        color: #000000;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+
+  <!-- BAHAGIAN 1: LIVE DASHBOARD TEMPAHAN WITH PAGINATION -->
+  <div class="dashboard-container">
+    <h3>📌 REKOD TEMPAHAN BILIK MESYUARAT TERKINI</h3>
+    <div style="overflow-x:auto;">
+      <table id="jadualTempahan">
+        <thead>
+          <tr>
+            <th style="width: 15%;">Tarikh</th>
+            <th style="width: 18%;">Masa</th>
+            <th style="width: 27%;">Sekolah / Agensi</th>
+            <th style="width: 20%;">Tujuan / Program</th>
+            <th style="width: 10%; text-align: center;">Status</th>
+            <th style="width: 10%; text-align: center;">Tindakan</th>
+          </tr>
+        </thead>
+        <tbody id="jadualBody">
+          <tr><td colspan="6" class="loading-text">Memuatkan data tempahan terkini...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- KAWALAN PAGINATION -->
+    <div class="pagination-container">
+      <button id="btnPrev" class="pagination-btn" onclick="prevPage()" disabled>◀ Sebelum</button>
+      <span id="pageInfo">Halaman 1</span>
+      <button id="btnNext" class="pagination-btn" onclick="nextPage()" disabled>Seterusnya ▶</button>
+    </div>
+  </div>
+
+  <!-- BAHAGIAN 2: BORANG TEMPAHAN -->
+  <div class="form-container">
+    <h2>Permohonan Tempahan Bilik Mesyuarat PKG Pelangai</h2>
+    
+    <form id="bookingForm">
+      <div class="form-group">
+        <label for="nama">Nama Pemohon:</label>
+        <input type="text" id="nama" required placeholder="Contoh: Cikgu Ahmad Bin Ali">
+      </div>
+
+      <div class="form-group">
+        <label for="sekolah">Sekolah / Agensi:</label>
+        <select id="sekolah" required>
+          <option value="">-- PILIH SEKOLAH / AGENSI --</option>
+          <option value="SK FELDA SG. KEMAHAL">SK FELDA SG. KEMAHAL</option>
+          <option value="SK FELDA CHEMOMOI">SK FELDA CHEMOMOI</option>
+          <option value="SMK FELDA CHEMOMOI">SMK FELDA CHEMOMOI</option>
+          <option value="SK FELDA KEMASUL">SK FELDA KEMASUL</option>
+          <option value="SK PELANGAI">SK PELANGAI</option>
+          <option value="SMK SERI PELANGAI">SMK SERI PELANGAI</option>
+          <option value="SK SIMPANG PELANGAI">SK SIMPANG PELANGAI</option>
+          <option value="SJKC MANCHIS">SJKC MANCHIS</option>
+          <option value="SK KG SHAFIE">SK KG SHAFIE</option>
+          <option value="SMK TELEMONG">SMK TELEMONG</option>
+          <option value="SJKC TELEMONG">SJKC TELEMONG</option>
+          <option value="SJKT LADANG RENJOK">SJKT LADANG RENJOK</option>
+          <option value="LAIN-LAIN">LAIN-LAIN (NYATAKAN DALAM TUJUAN)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">No. Telefon (WhatsApp):</label>
+        <input type="tel" id="phone" required placeholder="Contoh: 019-1234567">
+      </div>
+
+      <div class="form-group">
+        <label for="tarikh">Tarikh Tempahan:</label>
+        <input type="date" id="tarikh" required>
+      </div>
+
+      <div class="form-group">
+        <label for="masaMula">Masa Mula:</label>
+        <input type="time" id="masaMula" required>
+      </div>
+
+      <div class="form-group">
+        <label for="masaTamat">Masa Tamat:</label>
+        <input type="time" id="masaTamat" required>
+      </div>
+
+      <div class="form-group">
+        <label for="tujuan">Tujuan / Nama Program:</label>
+        <textarea id="tujuan" rows="3" required placeholder="Nyatakan tujuan mesyuarat, bengkel, atau aktiviti..."></textarea>
+      </div>
+
+      <button type="submit" id="btnSubmit">HANTAR PERMOHONAN</button>
+    </form>
+
+    <div id="statusMessage"></div>
+  </div>
+
+</div>
+
+<!-- STRUKTUR KERTAS CETAKAN RASMI (PRINT ONLY) -->
+<div id="reportArea">
+  <div class="report-header">
+    <h3>PUSAT KEGIATAN GURU PELANGAI</h3>
+    <h2>REKOD PENGGUNAAN BILIK MESYUARAT</h2>
+    <p>Kementerian Pendidikan Malaysia</p>
+  </div>
+
+  <div class="report-subhead">
+    <span><b>No. Rujukan:</b> PKGP/BM/<span id="rptTarikhRef">20260915</span></span>
+    <span><b>Tarikh Cetakan:</b> <span id="rptPrintDate">-</span></span>
+  </div>
+
+  <table class="report-table">
+    <tr>
+      <th>Nama Pemohon</th>
+      <td id="rptNama">-</td>
+    </tr>
+    <tr>
+      <th>Sekolah / Agensi</th>
+      <td id="rptSekolah">-</td>
+    </tr>
+    <tr>
+      <th>No. Telefon (WhatsApp)</th>
+      <td id="rptPhone">-</td>
+    </tr>
+    <tr>
+      <th>Tarikh Tempahan</th>
+      <td id="rptTarikh">-</td>
+    </tr>
+    <tr>
+      <th>Masa Penggunaan</th>
+      <td id="rptMasa">-</td>
+    </tr>
+    <tr>
+      <th>Tujuan / Nama Program</th>
+      <td id="rptTujuan">-</td>
+    </tr>
+    <tr>
+      <th>Status Permohonan</th>
+      <td id="rptStatus" class="status-text-lulus">-</td>
+    </tr>
+  </table>
+
+  <!-- Ruang Pengesahan PKG Pelangai (Sebelah Kiri) -->
+  <div class="signature-section">
+    <div class="sig-box">
+      <div class="sig-title">DISAHKAN OLEH (PKG PELANGAI):</div>
+      <div class="sig-line"></div>
+      <div class="sig-detail">
+        <b>Tandatangan & Cop Rasmi</b><br>
+        Pegawai PKG Pelangai<br>
+        Tarikh:
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    * Slip ini dijana secara automatik melalui Sistem Tempahan Bilik Mesyuarat PKG Pelangai untuk tujuan rekod fail penggunaan.
+  </div>
+</div>
+
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzc3Nb48dyjarbGLicfXxZ0BjuJNGDcaNI-a8QnZqeU1MQUtqTeefMVoNwe3UeIz5HU/exec';
+
+  const form = document.getElementById('bookingForm');
+  const statusMessage = document.getElementById('statusMessage');
+  const btnSubmit = document.getElementById('btnSubmit');
+  const jadualBody = document.getElementById('jadualBody');
+
+  let allData = [];
+  let currentPage = 1;
+  const rowsPerPage = 3;
+
+  function loadJadual() {
+    fetch(scriptURL)
+      .then(res => res.json())
+      .then(data => {
+        allData = data || [];
+        if (allData.length === 0) {
+          jadualBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Tiada tempahan direkodkan lagi.</td></tr>';
+          document.getElementById('pageInfo').innerText = "Halaman 0 dari 0";
+          return;
+        }
+
+        // Susun mengikut tarikh (Ascending Order)
+        allData.sort((a, b) => new Date(a.tarikh) - new Date(b.tarikh));
+        
+        currentPage = 1;
+        renderTable();
+      })
+      .catch(err => {
+        console.error(err);
+        jadualBody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:red;">Gagal memuatkan jadual. Sila muat semula halaman.</td></tr>';
+      });
+  }
+
+  function renderTable() {
+    jadualBody.innerHTML = '';
+
+    let start = (currentPage - 1) * rowsPerPage;
+    let end = start + rowsPerPage;
+    let paginatedItems = allData.slice(start, end);
+
+    paginatedItems.forEach((item, index) => {
+      const realIndex = start + index;
+      const row = document.createElement('tr');
+      
+      let statusBadge = item.status === "DILULUSKAN" 
+        ? `<span class="badge-lulus">${item.status}</span>` 
+        : `<span class="badge-proses">${item.status}</span>`;
+
+      let actionBtn = item.status === "DILULUSKAN"
+        ? `<button type="button" class="btn-table-print" onclick="cetakRowData(${realIndex})">🖨️ Cetak</button>`
+        : `-`;
+
+      row.innerHTML = `
+        <td><b>${item.tarikh}</b></td>
+        <td>${item.masaMula} - ${item.masaTamat}</td>
+        <td>${item.sekolah}</td>
+        <td>${item.tujuan}</td>
+        <td style="text-align: center;">${statusBadge}</td>
+        <td style="text-align: center;">${actionBtn}</td>
+      `;
+      jadualBody.appendChild(row);
+    });
+
+    let totalPages = Math.ceil(allData.length / rowsPerPage);
+    document.getElementById('pageInfo').innerText = `Halaman ${currentPage} dari ${totalPages}`;
+    
+    document.getElementById('btnPrev').disabled = (currentPage === 1);
+    document.getElementById('btnNext').disabled = (currentPage === totalPages || totalPages === 0);
+  }
+
+  function prevPage() {
+    if (currentPage > 1) {
+      currentPage--;
+      renderTable();
+    }
+  }
+
+  function nextPage() {
+    let totalPages = Math.ceil(allData.length / rowsPerPage);
+    if (currentPage < totalPages) {
+      currentPage++;
+      renderTable();
+    }
+  }
+
+  window.onload = loadJadual;
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    
+    btnSubmit.disabled = true;
+    btnSubmit.innerText = "Sedang Dihantar...";
+    statusMessage.style.color = "#333";
+    statusMessage.innerText = "Menyemak kekosongan tarikh...";
+
+    const formData = {
+      nama: document.getElementById('nama').value,
+      sekolah: document.getElementById('sekolah').value,
+      phone: document.getElementById('phone').value,
+      tarikh: document.getElementById('tarikh').value,
+      masaMula: document.getElementById('masaMula').value,
+      masaTamat: document.getElementById('masaTamat').value,
+      tujuan: document.getElementById('tujuan').value
+    };
+
+    fetch(scriptURL, {
+      method: 'POST',
+      body: JSON.stringify(formData)
+    })
+    .then(res => res.json())
+    .then(response => {
+      if (response.result === 'success') {
+        statusMessage.style.color = "green";
+        statusMessage.innerText = "✅ Permohonan DILULUSKAN! Data telah dikemaskini pada jadual.";
+        form.reset();
+        loadJadual();
+      } else if (response.result === 'conflict') {
+        statusMessage.style.color = "red";
+        statusMessage.innerText = "❌ TEMPAHAN GAGAL: " + response.message;
+      } else {
+        statusMessage.style.color = "red";
+        statusMessage.innerText = "❌ Ralat sistem. Sila cuba lagi.";
+      }
+      btnSubmit.disabled = false;
+      btnSubmit.innerText = "HANTAR PERMOHONAN";
+    })
+    .catch(error => {
+      statusMessage.style.color = "red";
+      statusMessage.innerText = "❌ Ralat rangkaian! Tempahan gagal dihantar.";
+      btnSubmit.disabled = false;
+      btnSubmit.innerText = "HANTAR PERMOHONAN";
+    });
+  });
+
+  // FUNGSI CETAK REKOD (CARI LAJUR PHONE DENGAN TEPAT)
+  function cetakRowData(index) {
+    const record = allData[index];
+    if (!record) return;
+
+    let noTelFinal = '-';
+
+    // Cari secara khusus nama-nama lajur telefon yang biasa dipulangkan Apps Script
+    const possibleKeys = ['phone', 'noTel', 'noHp', 'telefon', 'whatsapp', 'No. Telefon', 'No Telefon', 'No. Telefon (WhatsApp)'];
+    
+    for (let k of possibleKeys) {
+      if (record[k] !== undefined && record[k] !== null && record[k].toString().trim() !== '') {
+        let val = record[k].toString().trim();
+        if (!/^\d{4}-\d{2}-\d{2}/.test(val)) {
+          noTelFinal = val;
+          break;
+        }
+      }
+    }
+
+    // Format Tarikh Tempahan (DD/MM/YYYY)
+    let formattedTarikh = record.tarikh || '-';
+    if (record.tarikh && record.tarikh.includes('-')) {
+      const parts = record.tarikh.split('-');
+      if (parts.length === 3) formattedTarikh = `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
+
+    // Tarikh Cetakan Hari Ini
+    const today = new Date();
+    const datePrinted = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
+
+    // Masukkan Data Ke Templat Report Cetakan
+    document.getElementById('rptNama').innerText = record.nama || '-';
+    document.getElementById('rptSekolah').innerText = record.sekolah || '-';
+    document.getElementById('rptPhone').innerText = noTelFinal;
+    document.getElementById('rptTarikh').innerText = formattedTarikh;
+    document.getElementById('rptMasa').innerText = `${record.masaMula || ''} - ${record.masaTamat || ''}`;
+    document.getElementById('rptTujuan').innerText = record.tujuan || '-';
+    document.getElementById('rptStatus').innerText = record.status || '-';
+    
+    document.getElementById('rptTarikhRef').innerText = (record.tarikh || '0000').replace(/-/g, '');
+    document.getElementById('rptPrintDate').innerText = datePrinted;
+
+    // Buka Dialog Cetakan
+    window.print();
+  }
+</script>
+
+</body>
+</html>
