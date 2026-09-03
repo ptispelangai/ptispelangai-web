@@ -12,11 +12,11 @@
       padding: 20px; 
     }
     .main-wrapper {
-      max-width: 950px;
+      max-width: 900px;
       margin: 0 auto;
     }
     
-    /* STIL DASHBOARD JADUAL (TEMA BIRU KORPORAT) */
+    /* STIL DASHBOARD JADUAL (TEMA BIRU KORPORAT FORMAL) */
     .dashboard-container {
       background: #ffffff;
       padding: 20px;
@@ -49,7 +49,12 @@
     }
     tr:nth-child(even) { background-color: #f9f9f9; }
     
-    /* TETAPAN LAJUR STATUS & TINDAKAN */
+    .status-cell {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
     .badge-lulus {
       background-color: #28a745;
       color: white;
@@ -57,8 +62,6 @@
       border-radius: 4px;
       font-weight: bold;
       font-size: 11px;
-      display: inline-block;
-      text-align: center;
     }
     .badge-proses {
       background-color: #ffc107;
@@ -67,30 +70,22 @@
       border-radius: 4px;
       font-weight: bold;
       font-size: 11px;
-      display: inline-block;
-      text-align: center;
     }
 
-    /* REKA BENTUK BUTANG CETAK COMPACT */
+    /* BUTANG CETAK MINI DALAM LAJUR STATUS */
     .btn-table-print {
       background-color: #007bff;
       color: white;
       border: none;
-      padding: 5px 10px;
+      padding: 4px 8px;
       border-radius: 4px;
       cursor: pointer;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: bold;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
       transition: background 0.2s;
-      width: 100%;
-      box-sizing: border-box;
     }
     .btn-table-print:hover {
-      background-color: #0056b3;
+      background-color: #004085;
     }
 
     /* STIL BUTANG PAGINATION */
@@ -173,27 +168,13 @@
     }
     .loading-text { text-align: center; color: #666; font-style: italic; }
 
-    /* ----------------------------------------------------
-       REKA BENTUK SLIP CETAKAN REKOD (PRINT ONLY)
-    ---------------------------------------------------- */
-    #reportArea {
-      display: none;
-    }
+    /* REKA BENTUK SLIP CETAKAN REKOD (PRINT ONLY) */
+    #reportArea { display: none; }
 
     @media print {
-      @page {
-        size: A4 portrait;
-        margin: 15mm;
-      }
-
-      body * {
-        visibility: hidden;
-      }
-
-      #reportArea, #reportArea * {
-        visibility: visible;
-      }
-
+      @page { size: A4 portrait; margin: 15mm; }
+      body * { visibility: hidden; }
+      #reportArea, #reportArea * { visibility: visible; }
       #reportArea {
         display: block !important;
         position: absolute;
@@ -203,114 +184,17 @@
         color: #000000 !important;
         font-family: Arial, sans-serif;
       }
-
-      /* Header Rasmi */
-      .report-header {
-        text-align: center;
-        border-bottom: 2px solid #000000;
-        padding-bottom: 10px;
-        margin-bottom: 15px;
-      }
-
-      .report-header h3 {
-        margin: 0;
-        font-size: 14pt;
-        text-transform: uppercase;
-        color: #000000;
-      }
-
-      .report-header h2 {
-        margin: 5px 0;
-        font-size: 16pt;
-        color: #000000;
-        text-transform: uppercase;
-        font-weight: bold;
-      }
-
-      .report-header p {
-        margin: 2px 0;
-        font-size: 10pt;
-        color: #000000;
-      }
-
-      /* Bar Slogan/Rujukan */
-      .report-subhead {
-        display: flex;
-        justify-content: space-between;
-        font-size: 10pt;
-        margin-bottom: 15px;
-        color: #000000;
-      }
-
-      /* Jadual Rasmi - Hitam Jelas */
-      .report-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 30px;
-      }
-
-      .report-table th, .report-table td {
-        border: 1px solid #000000;
-        padding: 10px 12px;
-        font-size: 11pt;
-        vertical-align: middle;
-        color: #000000 !important;
-      }
-
-      .report-table th {
-        background-color: transparent !important;
-        width: 32%;
-        text-align: left;
-        font-weight: bold;
-        color: #000000 !important;
-      }
-
-      .status-text-lulus {
-        font-weight: bold;
-        color: #000000;
-        text-transform: uppercase;
-      }
-
-      /* Petak Pengesahan PKG Pelangai (Sebelah Kiri) */
-      .signature-section {
-        width: 100%;
-        margin-top: 40px;
-        display: flex;
-        justify-content: flex-start;
-      }
-
-      .sig-box {
-        width: 45%;
-        text-align: left;
-        color: #000000;
-      }
-
-      .sig-title {
-        font-size: 10pt;
-        font-weight: bold;
-        margin-bottom: 70px;
-      }
-
-      .sig-line {
-        border-top: 1px solid #000000;
-        width: 100%;
-        margin-bottom: 5px;
-      }
-
-      .sig-detail {
-        font-size: 10pt;
-        line-height: 1.5;
-      }
-
-      .footer-note {
-        margin-top: 50px;
-        font-size: 8pt;
-        text-align: center;
-        border-top: 1px dashed #000000;
-        padding-top: 5px;
-        font-style: italic;
-        color: #000000;
-      }
+      .report-header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 15px; }
+      .report-header h3 { margin: 0; font-size: 14pt; }
+      .report-header h2 { margin: 5px 0; font-size: 16pt; font-weight: bold; }
+      .report-subhead { display: flex; justify-content: space-between; font-size: 10pt; margin-bottom: 15px; }
+      .report-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+      .report-table th, .report-table td { border: 1px solid #000; padding: 10px; font-size: 11pt; }
+      .report-table th { width: 32%; text-align: left; }
+      .signature-section { width: 100%; margin-top: 40px; }
+      .sig-box { width: 45%; text-align: left; }
+      .sig-line { border-top: 1px solid #000; margin-top: 60px; margin-bottom: 5px; }
+      .footer-note { margin-top: 50px; font-size: 8pt; text-align: center; border-top: 1px dashed #000; padding-top: 5px; font-style: italic; }
     }
   </style>
 </head>
@@ -320,21 +204,20 @@
 
   <!-- BAHAGIAN 1: LIVE DASHBOARD TEMPAHAN WITH PAGINATION -->
   <div class="dashboard-container">
-    <h3>📌 REKOD TEMPAHAN BILIK MESYUARAT TERKINI</h3>
+    <h3>📌 REKOD TEMPAHAN BILIK MESYUARAT PKG PELANGAI TERKINI</h3>
     <div style="overflow-x:auto;">
       <table id="jadualTempahan">
         <thead>
           <tr>
             <th style="width: 15%;">Tarikh</th>
-            <th style="width: 18%;">Masa</th>
-            <th style="width: 27%;">Sekolah / Agensi</th>
+            <th style="width: 20%;">Masa</th>
+            <th style="width: 25%;">Sekolah / Agensi</th>
             <th style="width: 20%;">Tujuan / Program</th>
-            <th style="width: 10%; text-align: center;">Status</th>
-            <th style="width: 10%; text-align: center;">Tindakan</th>
+            <th style="width: 20%;">Status</th>
           </tr>
         </thead>
         <tbody id="jadualBody">
-          <tr><td colspan="6" class="loading-text">Memuatkan data tempahan terkini...</td></tr>
+          <tr><td colspan="5" class="loading-text">Memuatkan data tempahan terkini...</td></tr>
         </tbody>
       </table>
     </div>
@@ -360,20 +243,20 @@
       <div class="form-group">
         <label for="sekolah">Sekolah / Agensi:</label>
         <select id="sekolah" required>
-          <option value="">-- PILIH SEKOLAH / AGENSI --</option>
-          <option value="SK FELDA SG. KEMAHAL">SK FELDA SG. KEMAHAL</option>
-          <option value="SK FELDA CHEMOMOI">SK FELDA CHEMOMOI</option>
-          <option value="SMK FELDA CHEMOMOI">SMK FELDA CHEMOMOI</option>
-          <option value="SK FELDA KEMASUL">SK FELDA KEMASUL</option>
-          <option value="SK PELANGAI">SK PELANGAI</option>
-          <option value="SMK SERI PELANGAI">SMK SERI PELANGAI</option>
-          <option value="SK SIMPANG PELANGAI">SK SIMPANG PELANGAI</option>
-          <option value="SJKC MANCHIS">SJKC MANCHIS</option>
-          <option value="SK KG SHAFIE">SK KG SHAFIE</option>
-          <option value="SMK TELEMONG">SMK TELEMONG</option>
-          <option value="SJKC TELEMONG">SJKC TELEMONG</option>
-          <option value="SJKT LADANG RENJOK">SJKT LADANG RENJOK</option>
-          <option value="LAIN-LAIN">LAIN-LAIN (NYATAKAN DALAM TUJUAN)</option>
+          <option value="">-- Pilih Sekolah / Agensi --</option>
+          <option value="SK Felda Sg. Kemahal">SK Felda Sg. Kemahal</option>
+          <option value="SK Felda Chemomoi">SK Felda Chemomoi</option>
+          <option value="SMK Felda Chemomoi">SMK Felda Chemomoi</option>
+          <option value="SK Felda Kemasul">SK Felda Kemasul</option>
+          <option value="SK Pelangai">SK Pelangai</option>
+          <option value="SMK Seri Pelangai">SMK Seri Pelangai</option>
+          <option value="SK Simpang Pelangai">SK Simpang Pelangai</option>
+          <option value="SJKC Manchis">SJKC Manchis</option>
+          <option value="SK Kg Shafie">SK Kg Shafie</option>
+          <option value="SMK Telemong">SMK Telemong</option>
+          <option value="SJKC Telemong">SJKC Telemong</option>
+          <option value="SJKT Ladang Renjok">SJKT Ladang Renjok</option>
+          <option value="Lain-lain">Lain-lain (Nyatakan dalam Tujuan)</option>
         </select>
       </div>
 
@@ -424,51 +307,25 @@
   </div>
 
   <table class="report-table">
-    <tr>
-      <th>Nama Pemohon</th>
-      <td id="rptNama">-</td>
-    </tr>
-    <tr>
-      <th>Sekolah / Agensi</th>
-      <td id="rptSekolah">-</td>
-    </tr>
-    <tr>
-      <th>No. Telefon (WhatsApp)</th>
-      <td id="rptPhone">-</td>
-    </tr>
-    <tr>
-      <th>Tarikh Tempahan</th>
-      <td id="rptTarikh">-</td>
-    </tr>
-    <tr>
-      <th>Masa Penggunaan</th>
-      <td id="rptMasa">-</td>
-    </tr>
-    <tr>
-      <th>Tujuan / Nama Program</th>
-      <td id="rptTujuan">-</td>
-    </tr>
-    <tr>
-      <th>Status Permohonan</th>
-      <td id="rptStatus" class="status-text-lulus">-</td>
-    </tr>
+    <tr><th>Nama Pemohon</th><td id="rptNama">-</td></tr>
+    <tr><th>Sekolah / Agensi</th><td id="rptSekolah">-</td></tr>
+    <tr><th>No. Telefon (WhatsApp)</th><td id="rptPhone">-</td></tr>
+    <tr><th>Tarikh Tempahan</th><td id="rptTarikh">-</td></tr>
+    <tr><th>Masa Penggunaan</th><td id="rptMasa">-</td></tr>
+    <tr><th>Tujuan / Nama Program</th><td id="rptTujuan">-</td></tr>
+    <tr><th>Status Permohonan</th><td id="rptStatus">-</td></tr>
   </table>
 
-  <!-- Ruang Pengesahan PKG Pelangai (Sebelah Kiri) -->
   <div class="signature-section">
     <div class="sig-box">
-      <div class="sig-title">DISAHKAN OLEH (PKG PELANGAI):</div>
+      <div><b>DISAHKAN OLEH (PKG PELANGAI):</b></div>
       <div class="sig-line"></div>
-      <div class="sig-detail">
-        <b>Tandatangan & Cop Rasmi</b><br>
-        Pegawai PKG Pelangai<br>
-        Tarikh:
-      </div>
+      <div><b>Tandatangan & Cop Rasmi</b><br>Pegawai PKG Pelangai<br>Tarikh:</div>
     </div>
   </div>
 
   <div class="footer-note">
-    * Slip ini dijana secara automatik melalui Sistem Tempahan Bilik Mesyuarat PKG Pelangai untuk tujuan rekod fail penggunaan.
+    * Slip ini dijana secara automatik melalui counter Tempahan Bilik Mesyuarat PKG Pelangai.
   </div>
 </div>
 
@@ -485,25 +342,23 @@
   const rowsPerPage = 3;
 
   function loadJadual() {
-    fetch(scriptURL)
+    fetch(scriptURL, { redirect: "follow" })
       .then(res => res.json())
       .then(data => {
         allData = data || [];
         if (allData.length === 0) {
-          jadualBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Tiada tempahan direkodkan lagi.</td></tr>';
+          jadualBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Tiada tempahan direkodkan lagi.</td></tr>';
           document.getElementById('pageInfo').innerText = "Halaman 0 dari 0";
           return;
         }
 
-        // Susun mengikut tarikh (Ascending Order)
         allData.sort((a, b) => new Date(a.tarikh) - new Date(b.tarikh));
-        
         currentPage = 1;
         renderTable();
       })
       .catch(err => {
         console.error(err);
-        jadualBody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:red;">Gagal memuatkan jadual. Sila muat semula halaman.</td></tr>';
+        jadualBody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">Gagal memuatkan jadual. Sila muat semula halaman.</td></tr>';
       });
   }
 
@@ -518,21 +373,26 @@
       const realIndex = start + index;
       const row = document.createElement('tr');
       
-      let statusBadge = item.status === "DILULUSKAN" 
+      let isLulus = item.status === "DILULUSKAN";
+      let statusBadge = isLulus 
         ? `<span class="badge-lulus">${item.status}</span>` 
         : `<span class="badge-proses">${item.status}</span>`;
 
-      let actionBtn = item.status === "DILULUSKAN"
-        ? `<button type="button" class="btn-table-print" onclick="cetakRowData(${realIndex})">🖨️ Cetak</button>`
-        : `-`;
+      let printBtn = isLulus 
+        ? `<button type="button" class="btn-table-print" onclick="cetakRowData(${realIndex})">🖨️ Cetak</button>` 
+        : ``;
 
       row.innerHTML = `
         <td><b>${item.tarikh}</b></td>
         <td>${item.masaMula} - ${item.masaTamat}</td>
         <td>${item.sekolah}</td>
         <td>${item.tujuan}</td>
-        <td style="text-align: center;">${statusBadge}</td>
-        <td style="text-align: center;">${actionBtn}</td>
+        <td>
+          <div class="status-cell">
+            ${statusBadge}
+            ${printBtn}
+          </div>
+        </td>
       `;
       jadualBody.appendChild(row);
     });
@@ -581,7 +441,9 @@
 
     fetch(scriptURL, {
       method: 'POST',
-      body: JSON.stringify(formData)
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(formData),
+      redirect: "follow"
     })
     .then(res => res.json())
     .then(response => {
@@ -608,41 +470,22 @@
     });
   });
 
-  // FUNGSI CETAK REKOD (CARI LAJUR PHONE DENGAN TEPAT)
   function cetakRowData(index) {
     const record = allData[index];
     if (!record) return;
 
-    let noTelFinal = '-';
-
-    // Cari secara khusus nama-nama lajur telefon yang biasa dipulangkan Apps Script
-    const possibleKeys = ['phone', 'noTel', 'noHp', 'telefon', 'whatsapp', 'No. Telefon', 'No Telefon', 'No. Telefon (WhatsApp)'];
-    
-    for (let k of possibleKeys) {
-      if (record[k] !== undefined && record[k] !== null && record[k].toString().trim() !== '') {
-        let val = record[k].toString().trim();
-        if (!/^\d{4}-\d{2}-\d{2}/.test(val)) {
-          noTelFinal = val;
-          break;
-        }
-      }
-    }
-
-    // Format Tarikh Tempahan (DD/MM/YYYY)
     let formattedTarikh = record.tarikh || '-';
     if (record.tarikh && record.tarikh.includes('-')) {
       const parts = record.tarikh.split('-');
       if (parts.length === 3) formattedTarikh = `${parts[2]}/${parts[1]}/${parts[0]}`;
     }
 
-    // Tarikh Cetakan Hari Ini
     const today = new Date();
     const datePrinted = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
 
-    // Masukkan Data Ke Templat Report Cetakan
     document.getElementById('rptNama').innerText = record.nama || '-';
     document.getElementById('rptSekolah').innerText = record.sekolah || '-';
-    document.getElementById('rptPhone').innerText = noTelFinal;
+    document.getElementById('rptPhone').innerText = record.phone || '-';
     document.getElementById('rptTarikh').innerText = formattedTarikh;
     document.getElementById('rptMasa').innerText = `${record.masaMula || ''} - ${record.masaTamat || ''}`;
     document.getElementById('rptTujuan').innerText = record.tujuan || '-';
@@ -651,7 +494,6 @@
     document.getElementById('rptTarikhRef').innerText = (record.tarikh || '0000').replace(/-/g, '');
     document.getElementById('rptPrintDate').innerText = datePrinted;
 
-    // Buka Dialog Cetakan
     window.print();
   }
 </script>
