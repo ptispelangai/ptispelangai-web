@@ -171,7 +171,7 @@
     /* REKA BENTUK SLIP CETAKAN REKOD (PRINT ONLY) */
     #reportArea { display: none; }
 
-    @media print {
+   @media print {
       @page { size: A4 portrait; margin: 15mm; }
       body * { visibility: hidden; }
       #reportArea, #reportArea * { visibility: visible; }
@@ -185,16 +185,33 @@
         font-family: Arial, sans-serif;
       }
       .report-header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 15px; }
-      .report-header h3 { margin: 0; font-size: 14pt; }
-      .report-header h2 { margin: 5px 0; font-size: 16pt; font-weight: bold; }
-      .report-subhead { display: flex; justify-content: space-between; font-size: 10pt; margin-bottom: 15px; }
+      .report-header h3 { margin: 0; font-size: 14pt; color: #000000 !important; }
+      .report-header h2 { margin: 5px 0; font-size: 16pt; font-weight: bold; color: #000000 !important; }
+      .report-header p { margin: 0; font-size: 11pt; color: #000000 !important; }
+      .report-subhead { display: flex; justify-content: space-between; font-size: 10pt; margin-bottom: 15px; color: #000000 !important; }
+      
       .report-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
-      .report-table th, .report-table td { border: 1px solid #000; padding: 10px; font-size: 11pt; }
-      .report-table th { width: 32%; text-align: left; }
+      .report-table th, .report-table td { 
+        border: 1px solid #000000 !important; 
+        padding: 10px !important; 
+        font-size: 11pt !important; 
+        color: #000000 !important;
+      }
+      .report-table th { 
+        width: 35% !important; 
+        text-align: left !important; 
+        background-color: #f2f2f2 !important; 
+        font-weight: bold !important; 
+        color: #000000 !important;
+      }
+      .report-table td {
+        background-color: #ffffff !important;
+      }
+
       .signature-section { width: 100%; margin-top: 40px; }
-      .sig-box { width: 45%; text-align: left; }
+      .sig-box { width: 45%; text-align: left; color: #000000 !important; }
       .sig-line { border-top: 1px solid #000; margin-top: 60px; margin-bottom: 5px; }
-      .footer-note { margin-top: 50px; font-size: 8pt; text-align: center; border-top: 1px dashed #000; padding-top: 5px; font-style: italic; }
+      .footer-note { margin-top: 50px; font-size: 8pt; text-align: center; border-top: 1px dashed #000; padding-top: 5px; font-style: italic; color: #000000 !important; }
     }
   </style>
 </head>
