@@ -57,42 +57,40 @@
     </style>
 </head>
 
-<body class="bg-slate-50 text-slate-800 min-h-screen">
+<!-- HEADER / NAVBAR FORMAL -->
+<header id="utamanya" class="bg-white border-b border-slate-200 sticky top-0 z-50 py-3 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        
+        <!-- LOGO PTIS PELANGAI -->
+        <a href="#" class="flex items-center gap-3 group">
+            <div class="w-11 h-11 bg-blue-900 border border-blue-800 rounded-xl flex items-center justify-center text-white text-lg font-bold shadow-sm group-hover:bg-blue-800 transition-colors">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="text-slate-900 font-extrabold text-xl tracking-wide">PTIS</span>
+                    <span class="bg-blue-100 text-blue-900 border border-blue-200 text-[11px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">PELANGAI</span>
+                </div>
+                <p class="text-[11px] text-slate-700 font-bold tracking-wide uppercase">PASUKAN TEKNIKAL ICT SEKOLAH</p>
+            </div>
+        </a>
 
-    <!-- HEADER / NAVBAR FORMAL -->
-    <header id="utamanya" class="bg-white border-b border-slate-200 sticky top-0 z-50 py-4 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        <!-- MENU NAVIGASI (GAYA TAB SOFT - SANGAT KEMAS) -->
+        <nav class="hidden md:flex items-center gap-1 bg-slate-100/80 p-1.5 rounded-xl border border-slate-200/80 text-sm font-semibold text-slate-700">
+            <a href="#perkhidmatan" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Perkhidmatan</a>
+            <a href="#sekolah-zon" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sekolah Zon</a>
+            <a href="https://isd.moe.gov.my" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sistem Aduan ISD</a>
+            <a href="tempahan.html" target="_blank" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Tempahan Bilik Mesyuarat</a>
+            <a href="#sumber-digital" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sumber Digital</a>
+            <a href="#hubungi" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Hubungi Kami</a>
             
-            <!-- LOGO PTIS PELANGAI -->
-            <a href="#" class="flex items-center gap-3 group">
-                <div class="w-11 h-11 bg-blue-900 border border-blue-800 rounded-xl flex items-center justify-center text-white text-lg font-bold shadow-sm">
-                    <i class="fa-solid fa-shield-halved"></i>
-                </div>
-                <div>
-                    <div class="flex items-center gap-2">
-                        <span class="text-slate-900 font-extrabold text-xl tracking-wide">PTIS</span>
-                        <span class="bg-blue-100 text-blue-900 border border-blue-200 text-[11px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">PELANGAI</span>
-                    </div>
-                    <p class="text-[10px] text-slate-500 font-semibold tracking-wider uppercase">PASUKAN TEKNIKAL ICT SEKOLAH</p>
-                </div>
-            </a>
+            <button onclick="openAdminLogin()" class="ml-2 bg-blue-900 hover:bg-blue-800 text-white font-bold px-3.5 py-1.5 rounded-lg transition-colors text-xs flex items-center gap-1.5 shadow-sm">
+                <i class="fa-solid fa-lock text-white/80"></i> Admin
+            </button>
+        </nav>
 
-            <!-- MENU NAVIGASI -->
-            <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-600">
-                <a href="#perkhidmatan" class="hover:text-blue-700 transition-colors py-1">Perkhidmatan</a>
-                <a href="#sekolah-zon" class="hover:text-blue-700 transition-colors py-1">Sekolah Zon</a>
-                <a href="https://isd.moe.gov.my" target="_blank" rel="noopener noreferrer" class="hover:text-blue-700 transition-colors py-1">Sistem Aduan ISD</a>
-                <a href="tempahan.html" target="_blank" class="hover:text-blue-700 transition-colors py-1">Tempahan Bilik Mesyuarat</a>
-                <a href="#sumber-digital" class="hover:text-blue-700 transition-colors py-1">Sumber Digital</a>
-                <a href="#hubungi" class="hover:text-blue-700 transition-colors py-1">Hubungi Kami</a>
-                <button onclick="openAdminLogin()" class="bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 font-bold px-3 py-1.5 rounded-lg transition-colors text-xs flex items-center gap-1.5">
-                    <i class="fa-solid fa-lock text-slate-500"></i> Admin
-                </button>
-            </nav>
-
-        </div>
-    </header>
-
+    </div>
+</header>
     <!-- HERO SECTION FORMAL -->
     <section class="hero-corporate relative py-16 px-6 text-center border-b border-slate-800">
         <div class="max-w-4xl mx-auto relative z-10 space-y-6">
@@ -623,16 +621,16 @@
             <div class="overflow-x-auto overflow-y-auto max-h-[60vh] rounded-xl border border-slate-200">
                 <table class="w-full text-left text-xs text-slate-700 border-collapse">
                     <!-- HEADER JADUAL DITUKAR KEPADA WARNA BIRU KORPORAT FORMAL (bg-blue-900) -->
-                    <thead class="bg-blue-900 text-white uppercase font-bold sticky top-0 z-20">
-                        <tr>
-                            <th class="py-3.5 px-4 text-center">Bil</th>
-                            <th class="py-3.5 px-4">Kod</th>
-                            <th class="py-3.5 px-4">Nama Sekolah</th>
-                            <th class="py-3.5 px-4">Nama Pengetua / Guru Besar</th>
-                            <th class="py-3.5 px-4">Nama Guru ICT</th>
-                            <th class="py-3.5 px-4">No. Tel Sekolah</th>
-                        </tr>
-                    </thead>
+                    <thead class="bg-blue-900 text-white uppercase font-bold text-xs tracking-wider sticky top-0 z-20">
+    <tr>
+        <th class="py-3 px-4 text-center">Bil</th>
+        <th class="py-3 px-4">Kod</th>
+        <th class="py-3 px-4">Nama Sekolah</th>
+        <th class="py-3 px-4">Nama Pengetua / Guru Besar</th>
+        <th class="py-3 px-4">Nama Guru ICT</th>
+        <th class="py-3 px-4">No. Tel Sekolah</th>
+    </tr>
+</thead>
                     <tbody id="schoolTableBody" class="divide-y divide-slate-100 bg-white"></tbody>
                 </table>
             </div>
@@ -1260,7 +1258,7 @@ function renderPublicSchoolTable() {
     if (!tbody) return;
 
     if (globalSchools.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-slate-600 font-medium italic">Tiada data sekolah dijumpai.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-slate-600 font-medium italic text-xs">Tiada data sekolah dijumpai.</td></tr>`;
         return;
     }
 
@@ -1273,28 +1271,32 @@ function renderPublicSchoolTable() {
 
         return `
             <tr class="hover:bg-slate-50 transition-colors border-b border-slate-200">
-                <td class="py-3 px-4 font-bold text-slate-600 text-center text-sm">${i + 1}</td>
+                <!-- BIL (12px) -->
+                <td class="py-3 px-4 font-bold text-slate-600 text-center text-xs">${i + 1}</td>
+                
+                <!-- KOD (12px Badge) -->
                 <td class="py-3 px-4">
-                    <span class="bg-blue-50 text-blue-900 border border-blue-200 font-bold text-xs px-2.5 py-1 rounded-md font-mono">
+                    <span class="bg-blue-50 text-blue-900 border border-blue-200 font-bold text-xs px-2 py-0.5 rounded-md font-mono">
                         ${esc(kod)}
                     </span>
                 </td>
                 
-                <!-- NAMA SEKOLAH (DISERAGAMKAN: font-medium & text-sm) -->
-                <td class="py-3 px-4 font-medium text-slate-900 text-sm">${esc(nama)}</td>
+                <!-- NAMA SEKOLAH (12px) -->
+                <td class="py-3 px-4 font-medium text-slate-900 text-xs">${esc(nama)}</td>
                 
-                <!-- NAMA PENGETUA / GURU BESAR -->
-                <td class="py-3 px-4 font-medium text-slate-900 text-sm">${esc(gb)}</td>
+                <!-- GURU BESAR (12px) -->
+                <td class="py-3 px-4 font-medium text-slate-800 text-xs">${esc(gb)}</td>
                 
-                <!-- NAMA GURU ICT -->
-                <td class="py-3 px-4 font-medium text-slate-900 text-sm">${esc(guru)}</td>
+                <!-- GURU ICT (12px) -->
+                <td class="py-3 px-4 font-medium text-slate-800 text-xs">${esc(guru)}</td>
                 
-                <!-- NO. TELEFON -->
-                <td class="py-3 px-4 font-semibold text-slate-900 font-mono text-sm tracking-wide">${esc(tel)}</td>
+                <!-- NO TELEFON (12px) -->
+                <td class="py-3 px-4 font-semibold text-slate-900 font-mono text-xs tracking-wide">${esc(tel)}</td>
             </tr>
         `;
     }).join('');
 }
+
         function renderAdminSchools() {
             const q = (document.getElementById('adminSearch')?.value || '').toLowerCase();
             const b = document.getElementById('adminSchoolBody');
@@ -1500,14 +1502,63 @@ function renderPublicSchoolTable() {
             }
         }
 
+       // Pembolehubah global untuk menyimpan ID pengumuman yang sedang diedit (null jika mod Tambah Baru)
+        let currentEditAnnouncementId = null;
+
         function openAddAnnouncementModal() {
+            currentEditAnnouncementId = null; // Set ke mod Tambah Baru
+            
+            // Tukar Tajuk Modal (jika ada id elemen tajuk) & Butang Simpan
+            const modalTitle = document.querySelector('#addAnnouncementModal h3');
+            if (modalTitle) modalTitle.innerText = "Tambah Pengumuman Baru";
+
             document.getElementById('newAnnDate').value = new Date().toISOString().split('T')[0];
             document.getElementById('newAnnCategory').value = '';
             document.getElementById('newAnnTitle').value = '';
             document.getElementById('newAnnDesc').value = '';
+            
+            const imageInput = document.getElementById('newAnnImageFile');
+            if (imageInput) imageInput.value = '';
+
             document.getElementById('addAnnouncementModal').classList.remove('hidden');
         }
 
+        // FUNGSI BARU: Buka Modal & Muat Data Sedia Ada Untuk Diedit
+        async function openEditAnnouncementModal(id) {
+            try {
+                const client = getSupabase();
+                const { data, error } = await client.from('announcements').select('*').eq('id', id).single();
+
+                if (error) throw error;
+
+                if (data) {
+                    currentEditAnnouncementId = id; // Simpan ID yang sedang diedit
+
+                    // Tukar Tajuk Modal
+                    const modalTitle = document.querySelector('#addAnnouncementModal h3');
+                    if (modalTitle) modalTitle.innerText = "Edit Pengumuman";
+
+                    // Asingkan Teks Kandungan jika ada tag [IMG:...]
+                    let rawContent = data.kandungan || '';
+                    if (rawContent.includes('[IMG:') && rawContent.includes(']')) {
+                        rawContent = rawContent.split('[IMG:')[0].trim();
+                    }
+
+                    // Isikan data ke dalam petak input borang modal
+                    document.getElementById('newAnnDate').value = data.tarikh || '';
+                    document.getElementById('newAnnCategory').value = data.kategori || '';
+                    document.getElementById('newAnnTitle').value = data.tajuk || '';
+                    document.getElementById('newAnnDesc').value = rawContent;
+
+                    // Buka Modal
+                    document.getElementById('addAnnouncementModal').classList.remove('hidden');
+                }
+            } catch (err) {
+                alert('Gagal memuatkan data untuk diedit: ' + err.message);
+            }
+        }
+
+        // FUNGSI DIKEMASKINI: Menyokong Tambah Baru ATAU Kemaskini (Edit)
         async function saveNewAnnouncement() {
             const tarikh = document.getElementById('newAnnDate').value;
             const kategori = document.getElementById('newAnnCategory').value.trim();
@@ -1521,6 +1572,7 @@ function renderPublicSchoolTable() {
                 const client = getSupabase();
                 let imageUrl = '';
 
+                // Proses muat naik imej jika ada imej baru dipilih
                 if (imageInput && imageInput.files.length > 0) {
                     const file = imageInput.files[0];
                     const filePath = `announcements/${Date.now()}.${file.name.split('.').pop()}`;
@@ -1532,19 +1584,42 @@ function renderPublicSchoolTable() {
                 }
 
                 let finalKandungan = kandunganText;
-                if (imageUrl) finalKandungan = `${kandunganText} [IMG:${imageUrl}]`;
-
-                const { error } = await client.from('announcements').insert([{ 
-                    tarikh, kategori, tajuk, kandungan: finalKandungan, penulis: 'Admin PTIS' 
-                }]);
-
-                if (!error) {
-                    closeModal('addAnnouncementModal');
-                    await loadAnnouncements();
-                    await loadAdminAnnouncements();
+                if (imageUrl) {
+                    finalKandungan = `${kandunganText} [IMG:${imageUrl}]`;
                 }
+
+                if (currentEditAnnouncementId) {
+                    // --- MOD EDIT (UPDATE) ---
+                    const updatePayload = { tarikh, kategori, tajuk };
+                    
+                    // Hanya kemaskini kandungan jika ada perubahan teks atau imej baharu
+                    if (finalKandungan) {
+                        updatePayload.kandungan = finalKandungan;
+                    }
+
+                    const { error } = await client
+                        .from('announcements')
+                        .update(updatePayload)
+                        .eq('id', currentEditAnnouncementId);
+
+                    if (error) throw error;
+                } else {
+                    // --- MOD TAMBAH BARU (INSERT) ---
+                    const { error } = await client.from('announcements').insert([{ 
+                        tarikh, kategori, tajuk, kandungan: finalKandungan, penulis: 'Admin PTIS' 
+                    }]);
+
+                    if (error) throw error;
+                }
+
+                // Selesai: Tutup Modal & Muat Semula Data
+                closeModal('addAnnouncementModal');
+                currentEditAnnouncementId = null; // Reset ID
+                await loadAnnouncements();
+                await loadAdminAnnouncements();
+
             } catch (err) {
-                alert('Gagal: ' + err.message);
+                alert('Gagal menyimpan: ' + err.message);
             }
         }
 
@@ -1574,6 +1649,7 @@ function renderPublicSchoolTable() {
                     return;
                 }
 
+                // DITAMBAH: Butang Edit berwarna biru di sebelah butang Padam
                 tbody.innerHTML = data.map((item, index) => `
                     <tr class="border-b border-slate-100 hover:bg-slate-50">
                         <td class="p-3 text-slate-500">${index + 1}</td>
@@ -1581,7 +1657,10 @@ function renderPublicSchoolTable() {
                         <td class="p-3 font-bold text-blue-800">${esc(item.kategori || '')}</td>
                         <td class="p-3 font-bold text-slate-900">${esc(item.tajuk || '')}</td>
                         <td class="p-3">
-                            <button onclick="deleteAnnouncement('${item.id}')" class="bg-rose-100 text-rose-700 text-xs px-2.5 py-1 rounded font-bold hover:bg-rose-200">Padam</button>
+                            <div class="flex items-center gap-1.5">
+                                <button onclick="openEditAnnouncementModal('${item.id}')" class="bg-blue-100 text-blue-700 text-xs px-2.5 py-1 rounded font-bold hover:bg-blue-200 transition-colors">Edit</button>
+                                <button onclick="deleteAnnouncement('${item.id}')" class="bg-rose-100 text-rose-700 text-xs px-2.5 py-1 rounded font-bold hover:bg-rose-200 transition-colors">Padam</button>
+                            </div>
                         </td>
                     </tr>
                 `).join('');
