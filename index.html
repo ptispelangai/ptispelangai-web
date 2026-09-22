@@ -76,19 +76,38 @@
         </a>
 
         <!-- MENU NAVIGASI (GAYA TAB SOFT - SANGAT KEMAS) -->
-        <nav class="hidden md:flex items-center gap-1 bg-slate-100/80 p-1.5 rounded-xl border border-slate-200/80 text-sm font-semibold text-slate-700">
-            <a href="#perkhidmatan" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Perkhidmatan</a>
-            <a href="#sekolah-zon" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sekolah Zon</a>
-            <a href="https://isd.moe.gov.my" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sistem Aduan ISD</a>
-            <a href="tempahan.html" target="_blank" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Tempahan Bilik Mesyuarat</a>
-            <a href="#sumber-digital" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sumber Digital</a>
-            <a href="#hubungi" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Hubungi Kami</a>
-            
-            <button onclick="openAdminLogin()" class="ml-2 bg-blue-900 hover:bg-blue-800 text-white font-bold px-3.5 py-1.5 rounded-lg transition-colors text-xs flex items-center gap-1.5 shadow-sm">
-                <i class="fa-solid fa-lock text-white/80"></i> Admin
-            </button>
-        </nav>
+<nav class="hidden md:flex items-center gap-1 bg-slate-100/80 p-1.5 rounded-xl border border-slate-200/80 text-sm font-semibold text-slate-700">
+    <a href="#perkhidmatan" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Perkhidmatan</a>
+    <a href="#sekolah-zon" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sekolah Zon</a>
+    <a href="https://isd.moe.gov.my" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sistem Aduan ISD</a>
+    
+    <!-- DROPDOWN TAB TEMPAHAN (GAYA SOFT TAB) -->
+    <div class="relative group">
+        <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all flex items-center gap-1.5 font-semibold text-slate-700 group-hover:bg-white group-hover:text-blue-700 group-hover:shadow-sm">
+            <span>Tempahan</span>
+            <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 group-hover:rotate-180"></i>
+        </button>
 
+        <!-- SUB TAB DROPDOWN MENU -->
+        <div class="absolute left-0 top-full mt-2 w-60 bg-white/95 backdrop-blur-md border border-slate-200 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-1.5 flex flex-col gap-1">
+            <a href="tempahan.html" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all text-xs font-semibold">
+                <i class="fa-solid fa-calendar-check text-blue-600 w-4"></i>
+                <span>Tempahan Bilik Mesyuarat</span>
+            </a>
+            <a href="tempahan_studio.html" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all text-xs font-semibold">
+                <i class="fa-solid fa-video text-blue-600 w-4"></i>
+                <span>Tempahan Studio / 3D Printer</span>
+            </a>
+        </div>
+    </div>
+
+    <a href="#sumber-digital" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sumber Digital</a>
+    <a href="#hubungi" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Hubungi Kami</a>
+    
+    <button onclick="openAdminLogin()" class="ml-2 bg-blue-900 hover:bg-blue-800 text-white font-bold px-3.5 py-1.5 rounded-lg transition-colors text-xs flex items-center gap-1.5 shadow-sm">
+        <i class="fa-solid fa-lock text-white/80"></i> Admin
+    </button>
+</nav>
     </div>
 </header>
     <!-- HERO SECTION FORMAL -->
@@ -108,16 +127,23 @@
                 Pusat pengurusan infrastruktur makmal komputer, pemantauan rangkaian peranti, dan khidmat sokongan teknikal bersepadu bagi sekolah seliaan PKG Pelangai.
             </p>
 
-          <div class="flex flex-wrap justify-center gap-4 pt-2">
-    <a href="https://isd.moe.gov.my" target="_blank" rel="noopener noreferrer" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-xl shadow-md transition-all flex items-center gap-2 text-sm">
+      <div class="flex flex-wrap justify-center gap-3 pt-2">
+    <!-- BUTANG 1: TIKET ADUAN ISD -->
+    <a href="https://isd.moe.gov.my" target="_blank" rel="noopener noreferrer" class="w-full lg:w-[260px] h-11 bg-blue-600 hover:bg-blue-500 text-white font-bold px-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-xs whitespace-nowrap">
         <i class="fa-solid fa-headset"></i>
         <span>Hantar Tiket Aduan ISD</span>
     </a>
     
-    <!-- DISERAGAMKAN WARNA BIRU & GAYA SAMA SEPERTI TIKET ADUAN -->
-    <a href="tempahan.html" target="_blank" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-xl shadow-md transition-all flex items-center gap-2 text-sm">
+    <!-- BUTANG 2: TEMPAHAN BILIK MESYUARAT -->
+    <a href="tempahan.html" target="_blank" class="w-full lg:w-[260px] h-11 bg-blue-600 hover:bg-blue-500 text-white font-bold px-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-xs whitespace-nowrap">
         <i class="fa-solid fa-calendar-check"></i>
         <span>Tempahan Bilik Mesyuarat</span>
+    </a>
+
+    <!-- BUTANG 3: TEMPAHAN STUDIO / 3D PRINTER -->
+    <a href="tempahan_studio.html" target="_blank" class="w-full lg:w-[260px] h-11 bg-blue-600 hover:bg-blue-500 text-white font-bold px-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-xs whitespace-nowrap">
+        <i class="fa-solid fa-video"></i>
+        <span>Tempahan Studio / 3D Printer</span>
     </a>
 </div>
 
@@ -766,12 +792,15 @@
                 </div>
             </div>
             
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
-                <button onclick="showAdminSection('schools')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">🏫</div><div class="text-slate-900 font-bold mt-1">Sekolah</div><div id="statSchoolCount" class="text-xs text-slate-500">Loading...</div></button>
-                <button onclick="showAdminSection('team')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">👨‍💻</div><div class="text-slate-900 font-bold mt-1">Geng PTIS</div><div id="statTeamCount" class="text-xs text-slate-500">Loading...</div></button>
-                <button onclick="showAdminSection('announcements')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">📢</div><div class="text-slate-900 font-bold mt-1">Pengumuman</div><div id="statAnnouncementCount" class="text-xs text-slate-500">Loading...</div></button>
-                <button onclick="showAdminSection('inventory')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">📦</div><div class="text-slate-900 font-bold mt-1">Inventori Aset</div><div class="text-xs text-slate-500">Pengurusan Data</div></button>
-            </div>
+           <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-5">
+    <button onclick="showAdminSection('schools')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">🏫</div><div class="text-slate-900 font-bold mt-1">Sekolah</div><div id="statSchoolCount" class="text-xs text-slate-500">Loading...</div></button>
+    <button onclick="showAdminSection('team')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">👨‍💻</div><div class="text-slate-900 font-bold mt-1">Geng PTIS</div><div id="statTeamCount" class="text-xs text-slate-500">Loading...</div></button>
+    <button onclick="showAdminSection('announcements')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">📢</div><div class="text-slate-900 font-bold mt-1">Pengumuman</div><div id="statAnnouncementCount" class="text-xs text-slate-500">Loading...</div></button>
+    <button onclick="showAdminSection('inventory')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">📦</div><div class="text-slate-900 font-bold mt-1">Inventori Aset</div><div class="text-xs text-slate-500">Pengurusan Data</div></button>
+    
+    <!-- BUTANG MODUL TEMPAHAN BAHARU -->
+    <button onclick="showAdminSection('bookings')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">📅</div><div class="text-slate-900 font-bold mt-1">Tempahan</div><div id="statBookingCount" class="text-xs text-slate-500">Loading...</div></button>
+</div>
           
             <!-- ADMIN SCHOOLS SECTION -->
             <div id="adminSchoolsSection" class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
@@ -890,6 +919,40 @@
 
                 <div class="mt-4">
                     <button id="adminBtnAddAsset" onclick="openAdminAssetModal()" disabled class="bg-slate-200 text-slate-500 cursor-not-allowed px-4 py-2 rounded-lg font-bold text-xs">+ TAMBAH ASET</button>
+                </div>
+            </div>
+
+            <!-- ADMIN BOOKINGS SECTION (MODUL TEMPAHAN BAHARU) -->
+            <div id="adminBookingsSection" class="hidden bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm mt-4">
+                <div class="p-4 border-b border-slate-200 flex flex-wrap gap-3 justify-between items-center bg-slate-50">
+                    <div class="flex items-center gap-2">
+                        <h3 class="font-bold text-slate-800 text-sm">📅 Pengurusan Tempahan Kemudahan (Supabase Live)</h3>
+                        <select id="adminBookingFilterType" onchange="loadAdminBookings()" class="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 outline-none font-semibold shadow-sm">
+                            <option value="mesyuarat">Bilik Mesyuarat (tempahan_mesyuarat)</option>
+                            <option value="pkg">Studio / 3D Printer (tempahan_pkg)</option>
+                        </select>
+                    </div>
+                    <button onclick="loadAdminBookings()" class="bg-blue-900 hover:bg-blue-800 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-rotate"></i> Refresh Tempahan
+                    </button>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-100 text-slate-700 font-bold uppercase border-b border-slate-200">
+                            <tr>
+                                <th class="p-3 text-center">Bil</th>
+                                <th class="p-3">Pemohon / Sekolah</th>
+                                <th class="p-3">Tujuan / Aktiviti</th>
+                                <th class="p-3">Tarikh & Masa</th>
+                                <th class="p-3">Status</th>
+                                <th class="p-3 text-center">Tindakan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminBookingBody" class="divide-y divide-slate-100">
+                            <tr><td colspan="6" class="p-6 text-center text-slate-400">Sila pilih kategori tempahan di atas.</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -1103,7 +1166,7 @@
             document.getElementById('adminDashboard').classList.add('hidden');
         }
 
-        function showAdminSection(which) {
+       function showAdminSection(which) {
             document.getElementById('adminSchoolsSection').classList.toggle('hidden', which !== 'schools');
             document.getElementById('adminTeamSection').classList.toggle('hidden', which !== 'team');
             
@@ -1115,6 +1178,99 @@
 
             const invSec = document.getElementById('adminInventorySection');
             if (invSec) invSec.classList.toggle('hidden', which !== 'inventory');
+
+            // TAB TEMPAHAN BAHARU
+            const bookSec = document.getElementById('adminBookingsSection');
+            if (bookSec) {
+                bookSec.classList.toggle('hidden', which !== 'bookings');
+                if (which === 'bookings') loadAdminBookings();
+            }
+        }
+
+        // FUNGSI MEMUATKAN DATA TEMPAHAN SUPABASE
+        async function loadAdminBookings() {
+            const tbody = document.getElementById('adminBookingBody');
+            const typeSelect = document.getElementById('adminBookingFilterType');
+            if (!tbody || !typeSelect) return;
+
+            const bookingType = typeSelect.value;
+            const tableName = bookingType === 'mesyuarat' ? 'tempahan_mesyuarat' : 'tempahan_pkg';
+
+            tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-blue-700 font-semibold animate-pulse"><i class="fa-solid fa-spinner fa-spin"></i> Memuatkan rekod tempahan dari Supabase...</td></tr>`;
+
+            try {
+                const client = getSupabase();
+                const { data, error } = await client
+                    .from(tableName)
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                // Kemaskini Bilangan Rekod Pada Kaunter
+                const statEl = document.getElementById('statBookingCount');
+                if (statEl) statEl.textContent = (data || []).length + ' rekod';
+
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400 italic">Tiada rekod tempahan dijumpai dalam jadual ini.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = data.map((item, index) => {
+                    const pemohon = item.nama_pemohon || item.nama || '-';
+                    const sekolah = item.sekolah || item.agensi || '-';
+                    const tujuan = item.tujuan || item.tujuan_penggunaan || item.item_pilihan || '-';
+                    const tarikh = item.tarikh || item.tarikh_guna || '-';
+                    const masa = item.sesi_masa || item.masa || '-';
+                    const status = item.status || 'DILULUSKAN';
+
+                    return `
+                        <tr class="hover:bg-slate-50 border-b border-slate-100 transition-colors">
+                            <td class="p-3 text-slate-500 text-center font-bold">${index + 1}</td>
+                            <td class="p-3">
+                                <p class="font-bold text-slate-900">${esc(pemohon)}</p>
+                                <p class="text-[11px] text-slate-500 font-semibold">${esc(sekolah)}</p>
+                            </td>
+                            <td class="p-3 font-medium text-slate-800">${esc(tujuan)}</td>
+                            <td class="p-3">
+                                <p class="font-bold text-blue-900">${esc(tarikh)}</p>
+                                <p class="text-[11px] text-slate-500 font-mono">${esc(masa)}</p>
+                            </td>
+                            <td class="p-3">
+                                <span class="bg-emerald-100 text-emerald-800 border border-emerald-200 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
+                                    ${esc(status)}
+                                </span>
+                            </td>
+                            <td class="p-3 text-center">
+                                <button onclick="deleteBooking('${tableName}', '${item.id}')" class="bg-rose-50 text-rose-700 border border-rose-200 px-2.5 py-1 rounded text-xs font-bold hover:bg-rose-100 transition-colors cursor-pointer">
+                                    Padam
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+
+            } catch (err) {
+                console.error('Load Bookings Error:', err);
+                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-rose-600 font-semibold">Gagal memuatkan data: ${err.message}</td></tr>`;
+            }
+        }
+
+        // FUNGSI MEMADAM TEMPAHAN
+        async function deleteBooking(tableName, id) {
+            if (!confirm('Adakah anda pasti mahu memadam rekod tempahan ini secara kekal?')) return;
+
+            try {
+                const client = getSupabase();
+                const { error } = await client.from(tableName).delete().eq('id', id);
+
+                if (error) throw error;
+
+                alert('Rekod tempahan berjaya dipadam!');
+                await loadAdminBookings();
+            } catch (err) {
+                alert('Gagal memadam: ' + err.message);
+            }
         }
 
         function openAduanModal() {
