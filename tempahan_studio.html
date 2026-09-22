@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Tempahan Kemudahan PKG Pelangai</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --border: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); margin: 0; padding: 20px 15px; }
+
+    .container { max-width: 850px; margin: 0 auto; }
+
+    .header {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: white;
+      padding: 25px;
+      text-align: center;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .header h2 { margin: 0; font-size: 22px; font-weight: 700; }
+    .header p { margin: 4px 0 0; font-size: 13px; opacity: 0.8; }
+
+    /* DASHBOARD JADUAL TEMPAHAN */
+    .dashboard-card {
+      background: var(--card-bg);
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      padding: 20px;
+    }
+
+    .dashboard-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .badge-lulus { background: #dcfce7; color: #166534; padding: 4px 8px; border-radius: 6px; font-weight: 600; font-size: 11px; display: inline-block; }
+
+    .table-responsive { overflow-x: auto; margin-bottom: 10px; }
+    .booking-table { width: 100%; border-collapse: collapse; font-size: 12px; text-align: left; }
+    .booking-table th { background: #f1f5f9; color: #475569; padding: 10px; font-weight: 700; border-bottom: 2px solid var(--border); }
+    .booking-table td { padding: 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+
+    .btn-print-row {
+      background: #059669;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-print-row:hover { background: #047857; }
+
+    /* PAGINATION STYLES */
+    .pagination-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #64748b;
+      padding-top: 10px;
+    }
+
+    .pagination-btn {
+      background: #e2e8f0;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .pagination-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .pagination-btn:hover:not(:disabled) { background: #cbd5e1; }
+
+    /* UI BORANG TEMPAHAN WEB */
+    .form-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 0 0 16px 16px;
+      padding: 25px;
+      border-top: 2px solid var(--border);
+    }
+
+    .form-section-title { font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+
+    .form-group { margin-bottom: 18px; }
+    label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #475569; }
+    
+    input[type="text"], input[type="tel"], input[type="date"], textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+      background: #f8fafc;
+    }
+
+    input:focus, textarea:focus { border-color: var(--primary); background: #fff; }
+
+    .facility-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .facility-card {
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+    }
+
+    .facility-card.selected { border-color: var(--primary); background: #eff6ff; }
+    .facility-card input { display: none; }
+    .facility-icon { font-size: 24px; display: block; margin-bottom: 4px; }
+    .facility-title { font-size: 12px; font-weight: 700; color: #334155; }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn-submit:hover { background: var(--primary-dark); }
+
+    .date-time-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .date-time-grid.single-col { grid-template-columns: 1fr; }
+
+    /* SURAT REKOD A4 FOR PRINT */
+    .a4-document {
+      display: none;
+      width: 210mm;
+      min-height: 297mm;
+      padding: 20mm;
+      margin: 0 auto;
+      background: white;
+      color: #000;
+      font-family: 'Roboto', sans-serif;
+      box-sizing: border-box;
+    }
+
+    .letter-head { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; }
+    .letter-head h3 { margin: 0; font-size: 18px; text-transform: uppercase; }
+    .letter-head p { margin: 4px 0 0 0; font-size: 12px; }
+    .doc-title { text-align: center; font-weight: bold; font-size: 15px; text-decoration: underline; margin-bottom: 20px; text-transform: uppercase; }
+
+    .details-table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 12px; }
+    .details-table th, .details-table td { border: 1px solid #000; padding: 8px; text-align: left; }
+    .details-table th { background-color: #f2f2f2; }
+
+    .terms-box { font-size: 11px; border: 1px solid #888; padding: 10px; margin-top: 20px; background: #fafafa; }
+    .signature-section { margin-top: 40px; display: flex; justify-content: space-between; font-size: 12px; }
+    .sig-box { width: 45%; text-align: center; }
+    .sig-line { margin-top: 50px; border-top: 1px dashed #000; padding-top: 5px; }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .container { display: none !important; }
+      .a4-document { display: block !important; border: none; padding: 0; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container" id="mainContainer">
+  <div class="header">
+    <h2>PKG PELANGAI</h2>
+    <p>Sistem Tempahan Kemudahan Studio & 3D Printing</p>
+  </div>
+
+  <!-- DASHBOARD JADUAL TEMPAHAN -->
+  <div class="dashboard-card">
+    <div class="dashboard-title">
+      <span>📅 Jadual Tempahan Diluluskan</span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="booking-table">
+        <thead>
+          <tr>
+            <th>Tarikh & Masa</th>
+            <th>Pemohon / Sekolah</th>
+            <th>Kemudahan</th>
+            <th>Status</th>
+            <th>Tindakan</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Data dipanggil dari Supabase -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination-container">
+      <span id="pageIndicator">Halaman 1 daripada 1</span>
+      <div>
+        <button class="pagination-btn" id="prevBtn" onclick="changePage(-1)">« Sebelum</button>
+        <button class="pagination-btn" id="nextBtn" onclick="changePage(1)">Selepas »</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BORANG PERMOHONAN -->
+  <div class="form-card">
+    <div class="form-section-title">📝 Borang Permohonan Tempahan Baru</div>
+
+    <form id="mainForm" onsubmit="event.preventDefault(); processForm();">
+      
+      <div class="form-group">
+        <label>Pilih Kemudahan Required</label>
+        <div class="facility-grid">
+          <div class="facility-card" onclick="toggleSelect(this)" id="card-studio">
+            <input type="checkbox" id="chk-studio">
+            <span class="facility-icon">🎬</span>
+            <div class="facility-title">Studio Green Screen</div>
+          </div>
+          <div class="facility-card" onclick="toggleSelect(this)" id="card-3d">
+            <input type="checkbox" id="chk-3d">
+            <span class="facility-icon">🖨️</span>
+            <div class="facility-title">3D Printer Creality</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="nama">Nama Guru / Pemohon</label>
+        <input type="text" id="nama" required placeholder="Contoh: Cikgu Ahmad Razali">
+      </div>
+
+      <div class="form-group">
+        <label for="sekolah">Nama Sekolah / Agensi</label>
+        <input type="text" id="sekolah" required placeholder="Contoh: SK Pelangai">
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Nombor Telefon (WhatsApp)</label>
+        <input type="tel" id="phone" required placeholder="012-3456789">
+      </div>
+
+      <div class="date-time-grid single-col" id="dateTimeContainer">
+        <div class="form-group">
+          <label for="tarikh">Tarikh Penggunaan</label>
+          <input type="date" id="tarikh" required>
+        </div>
+        
+        <div class="form-group" id="group-masa" style="display: none;">
+          <label for="masa">Sesi Masa (Khusus Studio)</label>
+          <input type="text" id="masa" placeholder="Cth: 9.00 AM - 12.00 PM">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="tujuan">Tujuan & Butiran Ringkas Projek</label>
+        <textarea id="tujuan" rows="2" placeholder="Cth: Rakaman PdP Sains / Cetak Model STEM" required></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit">Hantar Permohonan & Semak Tempahan</button>
+    </form>
+  </div>
+</div>
+
+<!-- DOKUMEN SURAT RASMI A4 (CETAKAN) -->
+<div class="a4-document" id="a4View">
+  <div class="letter-head">
+    <h3>Pusat Kegiatan Guru Pelangai</h3>
+    <p>Kementerian Pendidikan Malaysia | Rekod Penggunaan Kemudahan Digital</p>
+  </div>
+
+  <div class="doc-title">Borang Rekod Penggunaan Kemudahan PKG</div>
+
+  <table class="details-table">
+    <tr>
+      <th colspan="2">A. MAKLUMAT PEMOHON</th>
+    </tr>
+    <tr>
+      <td style="width: 35%;"><strong>Nama Penuh Guru:</strong></td>
+      <td id="outNama">-</td>
+    </tr>
+    <tr>
+      <td><strong>Sekolah / Agensi:</strong></td>
+      <td id="outSekolah">-</td>
+    </tr>
+    <tr>
+      <td><strong>Nombor Telefon:</strong></td>
+      <td id="outPhone">-</td>
+    </tr>
+  </table>
+
+  <table class="details-table">
+    <tr>
+      <th colspan="2">B. BUTIRAN TEMPAHAN KEMUDAHAN</th>
+    </tr>
+    <tr>
+      <td style="width: 35%;"><strong>Jenis Kemudahan:</strong></td>
+      <td id="outKemudahan">-</td>
+    </tr>
+    <tr>
+      <td><strong>Tarikh Penggunaan:</strong></td>
+      <td id="outTarikh">-</td>
+    </tr>
+    <tr id="rowOutMasa" style="display:none;">
+      <td><strong>Sesi Masa (Studio):</strong></td>
+      <td id="outMasa">-</td>
+    </tr>
+    <tr>
+      <td><strong>Tujuan / Tajuk Projek:</strong></td>
+      <td id="outTujuan">-</td>
+    </tr>
+    <tr>
+      <td><strong>Status Permohonan:</strong></td>
+      <td><strong style="color: green;">DILULUSKAN AUTOMATIK</strong></td>
+    </tr>
+  </table>
+
+  <div class="terms-box">
+    <strong>SYARAT & AKUAN PENGGUNAAN:</strong>
+    <ol style="margin: 5px 0 0 15px; padding: 0;">
+      <li>Pengguna bertanggungjawab memastikan kebersihan dan keselamatan studio / peralatan pencetak 3D.</li>
+      <li>Sebarang kerosakan hendaklah dilaporkan dengan kadar segera kepada pihak pentadbiran PKG Pelangai.</li>
+    </ol>
+  </div>
+
+  <div class="signature-section">
+    <div class="sig-box">
+      <div class="sig-line">
+        <strong>(Tandatangan Pemohon)</strong><br>
+        Tarikh: _______________
+      </div>
+    </div>
+    <div class="sig-box">
+      <div class="sig-line">
+        <strong>(Pengesahan / Pegawai PKG Pelangai)</strong><br>
+        Tarikh: _______________
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // MAKUMAT AKUAN SUPABASE PROJEK PTIS PELANGAI
+  const SUPABASE_URL = 'https://jvqpilyqybhyoromzgez.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp2cXBpbHlxeWJoeW9yb216Z2V6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYzMDE1NzcsImV4cCI6MjEwMTg3NzU3N30.m1pcLzq2zfB5sI3EU0E8JGhixMS6SGhqO0q1gOO-ljI';
+  
+  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  let bookings = [];
+  let currentPage = 1;
+  const rowsPerPage = 4;
+
+  // 1. AMBIL DATA DARI DATABASE SUPABASE
+  async function fetchBookings() {
+    const { data, error } = await _supabase
+      .from('tempahan_pkg')
+      .select('*')
+      .eq('status', 'DILULUSKAN')
+      .order('tarikh', { ascending: true });
+
+    if (error) {
+      console.error('Ralat Supabase:', error);
+    } else {
+      bookings = data || [];
+      renderTable();
+    }
+  }
+
+  // 2. FUNGSI RENDER JADUAL
+  function renderTable() {
+    const tableBody = document.getElementById('tableBody');
+    tableBody.innerHTML = '';
+
+    let start = (currentPage - 1) * rowsPerPage;
+    let end = start + rowsPerPage;
+    let paginatedItems = bookings.slice(start, end);
+
+    if (paginatedItems.length === 0) {
+      tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#94a3b8; padding: 15px;">Tiada tempahan diluluskan buat masa ini.</td></tr>`;
+    } else {
+      paginatedItems.forEach(item => {
+        let row = `<tr>
+          <td><strong>${item.tarikh}</strong><br><small style="color:#64748b">${item.masa}</small></td>
+          <td><strong>${item.nama}</strong><br><small style="color:#64748b">${item.sekolah}</small></td>
+          <td>${item.kemudahan}</td>
+          <td><span class="badge-lulus">DILULUSKAN</span></td>
+          <td><button class="btn-print-row" onclick="printDoc(${item.id})">🖨️ Cetak</button></td>
+        </tr>`;
+        tableBody.innerHTML += row;
+      });
+    }
+
+    let totalPages = Math.ceil(bookings.length / rowsPerPage);
+    document.getElementById('pageIndicator').innerText = `Halaman ${currentPage} daripada ${totalPages || 1}`;
+    
+    document.getElementById('prevBtn').disabled = (currentPage === 1);
+    document.getElementById('nextBtn').disabled = (currentPage === totalPages || totalPages === 0);
+  }
+
+  function changePage(direction) {
+    currentPage += direction;
+    renderTable();
+  }
+
+  function toggleSelect(element) {
+    element.classList.toggle('selected');
+    let chk = element.querySelector('input');
+    chk.checked = !chk.checked;
+    updateFormLogic();
+  }
+
+  function updateFormLogic() {
+    let isStudio = document.getElementById('chk-studio').checked;
+    let masaGroup = document.getElementById('group-masa');
+    let masaInput = document.getElementById('masa');
+    let container = document.getElementById('dateTimeContainer');
+
+    if (isStudio) {
+      masaGroup.style.display = 'block';
+      masaInput.setAttribute('required', 'required');
+      container.classList.remove('single-col');
+    } else {
+      masaGroup.style.display = 'none';
+      masaInput.removeAttribute('required');
+      masaInput.value = '';
+      container.classList.add('single-col');
+    }
+  }
+
+  // 3. SEMAK PERTINDIHAN & SIMPAN KE SUPABASE
+  async function processForm() {
+    let facilities = [];
+    let isStudio = document.getElementById('chk-studio').checked;
+    let is3D = document.getElementById('chk-3d').checked;
+
+    if(isStudio) facilities.push('Studio Green Screen');
+    if(is3D) facilities.push('3D Printer Creality');
+
+    if(facilities.length === 0) {
+      alert('Sila pilih sekurang-kurangnya satu kemudahan!');
+      return;
+    }
+
+    let tarikhInput = document.getElementById('tarikh').value;
+    let masaInput = isStudio ? document.getElementById('masa').value : 'Sepanjang Hari';
+    let requestedFacilityStr = facilities.join(', ');
+
+    let btnSubmit = document.querySelector('.btn-submit');
+    btnSubmit.innerText = '⏳ Menyemak Pangkalan Data...';
+    btnSubmit.disabled = true;
+
+    try {
+      // Semak tarikh bertindih terus dari server Supabase
+      const { data: existingBookings, error: checkErr } = await _supabase
+        .from('tempahan_pkg')
+        .select('kemudahan')
+        .eq('tarikh', tarikhInput)
+        .eq('status', 'DILULUSKAN');
+
+      if (checkErr) throw checkErr;
+
+      let isConflict = false;
+      if (existingBookings && existingBookings.length > 0) {
+        for (let b of existingBookings) {
+          if (isStudio && b.kemudahan.includes('Studio Green Screen')) isConflict = true;
+          if (is3D && b.kemudahan.includes('3D Printer Creality')) isConflict = true;
+        }
+      }
+
+      if (isConflict) {
+        alert('❌ MAAF: Tarikh dan kemudahan ini telah pun diluluskan kepada tempahan lain.');
+        return;
+      }
+
+      // Simpan ke Supabase
+      const { error: insertErr } = await _supabase
+        .from('tempahan_pkg')
+        .insert([{
+          nama: document.getElementById('nama').value,
+          sekolah: document.getElementById('sekolah').value,
+          phone: document.getElementById('phone').value,
+          kemudahan: requestedFacilityStr,
+          tarikh: tarikhInput,
+          masa: masaInput,
+          tujuan: document.getElementById('tujuan').value,
+          status: 'DILULUSKAN'
+        }]);
+
+      if (insertErr) throw insertErr;
+
+      alert('✅ PERMOHONAN DILULUSKAN! Rekod telah disimpan ke dalam pangkalan data.');
+
+      document.getElementById('mainForm').reset();
+      document.getElementById('card-studio').classList.remove('selected');
+      document.getElementById('card-3d').classList.remove('selected');
+      updateFormLogic();
+      
+      // Muat semula jadual dari Supabase
+      fetchBookings();
+
+    } catch (err) {
+      alert('Ralat Pangkalan Data: ' + err.message);
+    } finally {
+      btnSubmit.innerText = 'Hantar Permohonan & Semak Tempahan';
+      btnSubmit.disabled = false;
+    }
+  }
+
+  // 4. CETAK SURAT A4
+  function printDoc(id) {
+    let item = bookings.find(b => b.id === id);
+    if (!item) return;
+
+    document.getElementById('outNama').innerText = item.nama;
+    document.getElementById('outSekolah').innerText = item.sekolah;
+    document.getElementById('outPhone').innerText = item.phone;
+    document.getElementById('outKemudahan').innerText = item.kemudahan;
+    document.getElementById('outTarikh').innerText = item.tarikh;
+    
+    if(item.kemudahan.includes('Studio Green Screen')) {
+      document.getElementById('rowOutMasa').style.display = 'table-row';
+      document.getElementById('outMasa').innerText = item.masa;
+    } else {
+      document.getElementById('rowOutMasa').style.display = 'none';
+    }
+
+    document.getElementById('outTujuan').innerText = item.tujuan;
+    window.print();
+  }
+
+  // Panggil data dari Supabase semasa web mula dibuka
+  window.onload = fetchBookings;
+</script>
+
+</body>
+</html>
