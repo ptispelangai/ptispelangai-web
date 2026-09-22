@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tempahan Bilik Mesyuarat PKG Pelangai</title>
+  <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     body { 
       font-family: Arial, sans-serif; 
@@ -58,14 +60,6 @@
     .badge-lulus {
       background-color: #28a745;
       color: white;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-weight: bold;
-      font-size: 11px;
-    }
-    .badge-proses {
-      background-color: #ffc107;
-      color: #333;
       padding: 4px 8px;
       border-radius: 4px;
       font-weight: bold;
@@ -168,10 +162,10 @@
     }
     .loading-text { text-align: center; color: #666; font-style: italic; }
 
-    /* REKA BENTUK SLIP CETAKAN REKOD (PRINT ONLY) */
+    /* REKA BENTUK SLIP CETAKAN REKOD A4 (PRINT ONLY) */
     #reportArea { display: none; }
 
-   @media print {
+    @media print {
       @page { size: A4 portrait; margin: 15mm; }
       body * { visibility: hidden; }
       #reportArea, #reportArea * { visibility: visible; }
@@ -190,7 +184,7 @@
       .report-header p { margin: 0; font-size: 11pt; color: #000000 !important; }
       .report-subhead { display: flex; justify-content: space-between; font-size: 10pt; margin-bottom: 15px; color: #000000 !important; }
       
-      .report-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+      .report-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
       .report-table th, .report-table td { 
         border: 1px solid #000000 !important; 
         padding: 10px !important; 
@@ -208,10 +202,40 @@
         background-color: #ffffff !important;
       }
 
-      .signature-section { width: 100%; margin-top: 40px; }
-      .sig-box { width: 45%; text-align: left; color: #000000 !important; }
-      .sig-line { border-top: 1px solid #000; margin-top: 60px; margin-bottom: 5px; }
-      .footer-note { margin-top: 50px; font-size: 8pt; text-align: center; border-top: 1px dashed #000; padding-top: 5px; font-style: italic; color: #000000 !important; }
+      .terms-box {
+        font-size: 10pt !important;
+        border: 1px solid #000 !important;
+        padding: 12px !important;
+        margin-bottom: 30px !important;
+        background: #fff !important;
+      }
+
+      .signature-section { 
+        width: 100%; 
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px; 
+      }
+      .sig-box { 
+        width: 45%; 
+        text-align: left; 
+        color: #000000 !important; 
+        font-size: 10pt;
+      }
+      .sig-line { 
+        border-top: 1px solid #000; 
+        margin-top: 50px; 
+        margin-bottom: 5px; 
+      }
+      .footer-note { 
+        margin-top: 40px; 
+        font-size: 8pt; 
+        text-align: center; 
+        border-top: 1px dashed #000; 
+        padding-top: 5px; 
+        font-style: italic; 
+        color: #000000 !important; 
+      }
     }
   </style>
 </head>
@@ -310,7 +334,7 @@
 
 </div>
 
-<!-- STRUKTUR KERTAS CETAKAN RASMI (PRINT ONLY) -->
+<!-- STRUKTUR KERTAS CETAKAN RASMI A4 (PRINT ONLY) -->
 <div id="reportArea">
   <div class="report-header">
     <h3>PUSAT KEGIATAN GURU PELANGAI</h3>
@@ -319,7 +343,7 @@
   </div>
 
   <div class="report-subhead">
-    <span><b>No. Rujukan:</b> PKGP/BM/<span id="rptTarikhRef">20260915</span></span>
+    <span><b>No. Rujukan:</b> PKGP/BM/<span id="rptTarikhRef">20260922</span></span>
     <span><b>Tarikh Cetakan:</b> <span id="rptPrintDate">-</span></span>
   </div>
 
@@ -330,24 +354,50 @@
     <tr><th>Tarikh Tempahan</th><td id="rptTarikh">-</td></tr>
     <tr><th>Masa Penggunaan</th><td id="rptMasa">-</td></tr>
     <tr><th>Tujuan / Nama Program</th><td id="rptTujuan">-</td></tr>
-    <tr><th>Status Permohonan</th><td id="rptStatus">-</td></tr>
+    <tr><th>Status Permohonan</th><td id="rptStatus">DILULUSKAN</td></tr>
   </table>
 
+  <!-- SYARAT & AKUAN PENGGUNAAN -->
+  <div class="terms-box">
+    <b>SYARAT & AKUAN PENGGUNAAN BILIK MESYUARAT:</b>
+    <ol style="margin: 5px 0 0 18px; padding: 0;">
+      <li>Pengguna dikehendaki memastikan susunan kerusi dan meja dikembalikan ke keadaan asal selepas mesyuarat/aktiviti selesai.</li>
+      <li>Kebersihan di dalam bilik mesyuarat hendaklah sentiasa dijaga. Sisa makanan dan minuman hendaklah dibuang ke tempat sampah yang disediakan.</li>
+      <li>Pastikan semua suis lampu, alat pendingin udara (aircond), dan projektor dimatikan sebelum meninggalkan bilik mesyuarat.</li>
+    </ol>
+  </div>
+
+  <!-- PETAK TANDATANGAN & PENGESAHAN -->
   <div class="signature-section">
     <div class="sig-box">
-      <div><b>DISAHKAN OLEH (PKG PELANGAI):</b></div>
+      <div><b>(Tandatangan Pemohon)</b></div>
       <div class="sig-line"></div>
-      <div><b>Tandatangan & Cop Rasmi</b><br>Pegawai PKG Pelangai<br>Tarikh:</div>
+      <div>
+        Nama:<br>
+        Tarikh: _______________
+      </div>
+    </div>
+    <div class="sig-box">
+      <div><b>(Pengesahan / Pegawai PKG Pelangai)</b></div>
+      <div class="sig-line"></div>
+      <div>
+        Cop Rasmi & Jawatan:<br>
+        Tarikh: _______________
+      </div>
     </div>
   </div>
 
   <div class="footer-note">
-    * Slip ini dijana secara automatik melalui counter Tempahan Bilik Mesyuarat PKG Pelangai.
+    * Slip ini dijana secara automatik melalui Portal Pengurusan ICT PTIS Zon Pelangai.
   </div>
 </div>
 
 <script>
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbzc3Nb48dyjarbGLicfXxZ0BjuJNGDcaNI-a8QnZqeU1MQUtqTeefMVoNwe3UeIz5HU/exec';
+  // MAKUMAT SUPABASE PROJEK PTIS PELANGAI
+  const SUPABASE_URL = 'https://jvqpilyqybhyoromzgez.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp2cXBpbHlxeWJoeW9yb216Z2V6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYzMDE1NzcsImV4cCI6MjEwMTg3NzU3N30.m1pcLzq2zfB5sI3EU0E8JGhixMS6SGhqO0q1gOO-ljI';
+  
+  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   const form = document.getElementById('bookingForm');
   const statusMessage = document.getElementById('statusMessage');
@@ -358,25 +408,30 @@
   let currentPage = 1;
   const rowsPerPage = 3;
 
-  function loadJadual() {
-    fetch(scriptURL, { redirect: "follow" })
-      .then(res => res.json())
-      .then(data => {
-        allData = data || [];
-        if (allData.length === 0) {
-          jadualBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Tiada tempahan direkodkan lagi.</td></tr>';
-          document.getElementById('pageInfo').innerText = "Halaman 0 dari 0";
-          return;
-        }
+  // AMBIL DATA DARI SUPABASE (PANTAS)
+  async function loadJadual() {
+    try {
+      const { data, error } = await _supabase
+        .from('tempahan_mesyuarat')
+        .select('*')
+        .eq('status', 'DILULUSKAN')
+        .order('tarikh', { ascending: true });
 
-        allData.sort((a, b) => new Date(a.tarikh) - new Date(b.tarikh));
-        currentPage = 1;
-        renderTable();
-      })
-      .catch(err => {
-        console.error(err);
-        jadualBody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">Gagal memuatkan jadual. Sila muat semula halaman.</td></tr>';
-      });
+      if (error) throw error;
+
+      allData = data || [];
+      if (allData.length === 0) {
+        jadualBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Tiada tempahan direkodkan lagi.</td></tr>';
+        document.getElementById('pageInfo').innerText = "Halaman 0 dari 0";
+        return;
+      }
+
+      currentPage = 1;
+      renderTable();
+    } catch (err) {
+      console.error(err);
+      jadualBody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">Gagal memuatkan jadual. Sila muat semula halaman.</td></tr>';
+    }
   }
 
   function renderTable() {
@@ -390,18 +445,12 @@
       const realIndex = start + index;
       const row = document.createElement('tr');
       
-      let isLulus = item.status === "DILULUSKAN";
-      let statusBadge = isLulus 
-        ? `<span class="badge-lulus">${item.status}</span>` 
-        : `<span class="badge-proses">${item.status}</span>`;
-
-      let printBtn = isLulus 
-        ? `<button type="button" class="btn-table-print" onclick="cetakRowData(${realIndex})">🖨️ Cetak</button>` 
-        : ``;
+      let statusBadge = `<span class="badge-lulus">${item.status}</span>`;
+      let printBtn = `<button type="button" class="btn-table-print" onclick="cetakRowData(${realIndex})">🖨️ Cetak</button>`;
 
       row.innerHTML = `
         <td><b>${item.tarikh}</b></td>
-        <td>${item.masaMula} - ${item.masaTamat}</td>
+        <td>${item.masa_mula} - ${item.masa_tamat}</td>
         <td>${item.sekolah}</td>
         <td>${item.tujuan}</td>
         <td>
@@ -415,7 +464,8 @@
     });
 
     let totalPages = Math.ceil(allData.length / rowsPerPage);
-    document.getElementById('pageInfo').innerText = `Halaman ${currentPage} dari ${totalPages}`;
+    document.getElementById('pageIndicator') ? '' : ''; 
+    document.getElementById('pageInfo').innerText = `Halaman ${currentPage} dari ${totalPages || 1}`;
     
     document.getElementById('btnPrev').disabled = (currentPage === 1);
     document.getElementById('btnNext').disabled = (currentPage === totalPages || totalPages === 0);
@@ -438,55 +488,69 @@
 
   window.onload = loadJadual;
 
-  form.addEventListener('submit', e => {
+  // PROSES PERMOHONAN & SEMAKAN BERTINDIH AUTOMATIK
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     
     btnSubmit.disabled = true;
-    btnSubmit.innerText = "Sedang Dihantar...";
+    btnSubmit.innerText = "Sedang Menyemak Database...";
     statusMessage.style.color = "#333";
     statusMessage.innerText = "Menyemak kekosongan tarikh...";
 
-    const formData = {
-      nama: document.getElementById('nama').value,
-      sekolah: document.getElementById('sekolah').value,
-      phone: document.getElementById('phone').value,
-      tarikh: document.getElementById('tarikh').value,
-      masaMula: document.getElementById('masaMula').value,
-      masaTamat: document.getElementById('masaTamat').value,
-      tujuan: document.getElementById('tujuan').value
-    };
+    let tarikhInput = document.getElementById('tarikh').value;
+    let masaMulaInput = document.getElementById('masaMula').value;
+    let masaTamatInput = document.getElementById('masaTamat').value;
 
-    fetch(scriptURL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(formData),
-      redirect: "follow"
-    })
-    .then(res => res.json())
-    .then(response => {
-      if (response.result === 'success') {
-        statusMessage.style.color = "green";
-        statusMessage.innerText = "✅ Permohonan DILULUSKAN! Data telah dikemaskini pada jadual.";
-        form.reset();
-        loadJadual();
-      } else if (response.result === 'conflict') {
+    try {
+      // Semakan pertindihan tarikh terus pada pelayan Supabase
+      const { data: existingBookings, error: checkErr } = await _supabase
+        .from('tempahan_mesyuarat')
+        .select('*')
+        .eq('tarikh', tarikhInput)
+        .eq('status', 'DILULUSKAN');
+
+      if (checkErr) throw checkErr;
+
+      if (existingBookings && existingBookings.length > 0) {
         statusMessage.style.color = "red";
-        statusMessage.innerText = "❌ TEMPAHAN GAGAL: " + response.message;
-      } else {
-        statusMessage.style.color = "red";
-        statusMessage.innerText = "❌ Ralat sistem. Sila cuba lagi.";
+        statusMessage.innerText = "❌ TEMPAHAN GAGAL: Bilik Mesyuarat telah pun diluluskan kepada permohonan lain pada tarikh ini.";
+        btnSubmit.disabled = false;
+        btnSubmit.innerText = "HANTAR PERMOHONAN";
+        return;
       }
-      btnSubmit.disabled = false;
-      btnSubmit.innerText = "HANTAR PERMOHONAN";
-    })
-    .catch(error => {
+
+      // Simpan ke Supabase
+      const { error: insertErr } = await _supabase
+        .from('tempahan_mesyuarat')
+        .insert([{
+          nama: document.getElementById('nama').value,
+          sekolah: document.getElementById('sekolah').value,
+          phone: document.getElementById('phone').value,
+          tarikh: tarikhInput,
+          masa_mula: masaMulaInput,
+          masa_tamat: masaTamatInput,
+          tujuan: document.getElementById('tujuan').value,
+          status: 'DILULUSKAN'
+        }]);
+
+      if (insertErr) throw insertErr;
+
+      statusMessage.style.color = "green";
+      statusMessage.innerText = "✅ Permohonan DILULUSKAN! Data telah dikemaskini pada jadual.";
+      form.reset();
+      loadJadual();
+
+    } catch (err) {
+      console.error(err);
       statusMessage.style.color = "red";
-      statusMessage.innerText = "❌ Ralat rangkaian! Tempahan gagal dihantar.";
+      statusMessage.innerText = "❌ Ralat sistem: " + err.message;
+    } finally {
       btnSubmit.disabled = false;
       btnSubmit.innerText = "HANTAR PERMOHONAN";
-    });
+    }
   });
 
+  // FUNGSI CETAK SLIP A4
   function cetakRowData(index) {
     const record = allData[index];
     if (!record) return;
@@ -504,9 +568,9 @@
     document.getElementById('rptSekolah').innerText = record.sekolah || '-';
     document.getElementById('rptPhone').innerText = record.phone || '-';
     document.getElementById('rptTarikh').innerText = formattedTarikh;
-    document.getElementById('rptMasa').innerText = `${record.masaMula || ''} - ${record.masaTamat || ''}`;
+    document.getElementById('rptMasa').innerText = `${record.masa_mula || ''} - ${record.masa_tamat || ''}`;
     document.getElementById('rptTujuan').innerText = record.tujuan || '-';
-    document.getElementById('rptStatus').innerText = record.status || '-';
+    document.getElementById('rptStatus').innerText = record.status || 'DILULUSKAN';
     
     document.getElementById('rptTarikhRef').innerText = (record.tarikh || '0000').replace(/-/g, '');
     document.getElementById('rptPrintDate').innerText = datePrinted;
