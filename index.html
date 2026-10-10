@@ -75,39 +75,70 @@
             </div>
         </a>
 
-        <!-- MENU NAVIGASI (GAYA TAB SOFT - SANGAT KEMAS) -->
-<nav class="hidden md:flex items-center gap-1 bg-slate-100/80 p-1.5 rounded-xl border border-slate-200/80 text-sm font-semibold text-slate-700">
-    <a href="#perkhidmatan" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Perkhidmatan</a>
-    <a href="#sekolah-zon" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sekolah Zon</a>
-    <a href="https://isd.moe.gov.my" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sistem Aduan ISD</a>
-    
-    <!-- DROPDOWN TAB TEMPAHAN (GAYA SOFT TAB) -->
-    <div class="relative group">
-        <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all flex items-center gap-1.5 font-semibold text-slate-700 group-hover:bg-white group-hover:text-blue-700 group-hover:shadow-sm">
-            <span>Tempahan</span>
-            <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 group-hover:rotate-180"></i>
+        <!-- MENU NAVIGASI DESKTOP (GAYA TAB SOFT) -->
+        <nav class="hidden md:flex items-center gap-1 bg-slate-100/80 p-1.5 rounded-xl border border-slate-200/80 text-sm font-semibold text-slate-700">
+            <a href="#perkhidmatan" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Perkhidmatan</a>
+            <a href="#sekolah-zon" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sekolah Zon</a>
+            <a href="https://isd.moe.gov.my" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sistem Aduan ISD</a>
+            
+            <!-- DROPDOWN TAB TEMPAHAN -->
+            <div class="relative group">
+                <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all flex items-center gap-1.5 font-semibold text-slate-700 group-hover:bg-white group-hover:text-blue-700 group-hover:shadow-sm">
+                    <span>Tempahan</span>
+                    <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 group-hover:rotate-180"></i>
+                </button>
+
+                <!-- SUB TAB DROPDOWN MENU -->
+                <div class="absolute left-0 top-full mt-2 w-60 bg-white/95 backdrop-blur-md border border-slate-200 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-1.5 flex flex-col gap-1">
+                    <a href="tempahan.html" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all text-xs font-semibold">
+                        <i class="fa-solid fa-calendar-check text-blue-600 w-4"></i>
+                        <span>Tempahan Bilik Mesyuarat</span>
+                    </a>
+                    <a href="tempahan_studio.html" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all text-xs font-semibold">
+                        <i class="fa-solid fa-video text-blue-600 w-4"></i>
+                        <span>Tempahan Studio / 3D Printer</span>
+                    </a>
+                </div>
+            </div>
+
+            <a href="#sumber-digital" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sumber Digital</a>
+            <a href="#hubungi" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Hubungi Kami</a>
+            
+            <button onclick="openAdminLogin()" class="ml-2 bg-blue-900 hover:bg-blue-800 text-white font-bold px-3.5 py-1.5 rounded-lg transition-colors text-xs flex items-center gap-1.5 shadow-sm">
+                <i class="fa-solid fa-lock text-white/80"></i> Admin
+            </button>
+        </nav>
+
+        <!-- BUTANG MENU MOBILE (HAMBURGER BUTTON - DIPAPARKAN DI TELEFON) -->
+        <button onclick="toggleMobileMenu()" type="button" class="md:hidden flex items-center justify-center p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-800 hover:bg-blue-50 hover:text-blue-900 focus:outline-none transition-all">
+            <i class="fa-solid fa-bars text-lg"></i>
         </button>
 
-        <!-- SUB TAB DROPDOWN MENU -->
-        <div class="absolute left-0 top-full mt-2 w-60 bg-white/95 backdrop-blur-md border border-slate-200 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-1.5 flex flex-col gap-1">
-            <a href="tempahan.html" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all text-xs font-semibold">
-                <i class="fa-solid fa-calendar-check text-blue-600 w-4"></i>
-                <span>Tempahan Bilik Mesyuarat</span>
-            </a>
-            <a href="tempahan_studio.html" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all text-xs font-semibold">
-                <i class="fa-solid fa-video text-blue-600 w-4"></i>
-                <span>Tempahan Studio / 3D Printer</span>
-            </a>
-        </div>
     </div>
 
-    <a href="#sumber-digital" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sumber Digital</a>
-    <a href="#hubungi" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Hubungi Kami</a>
-    
-    <button onclick="openAdminLogin()" class="ml-2 bg-blue-900 hover:bg-blue-800 text-white font-bold px-3.5 py-1.5 rounded-lg transition-colors text-xs flex items-center gap-1.5 shadow-sm">
-        <i class="fa-solid fa-lock text-white/80"></i> Admin
-    </button>
-</nav>
+    <!-- PANEL DROPDOWN MENU MOBILE -->
+    <div id="mobileMenuNav" class="hidden md:hidden max-w-7xl mx-auto px-4 pt-3 pb-2 space-y-1.5 border-t border-slate-100 mt-2 text-xs font-semibold text-slate-700">
+        <a href="#perkhidmatan" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-blue-50 hover:text-blue-700">Perkhidmatan</a>
+        <a href="#sekolah-zon" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-blue-50 hover:text-blue-700">Sekolah Zon</a>
+        <a href="https://isd.moe.gov.my" target="_blank" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-blue-50 hover:text-blue-700">Sistem Aduan ISD</a>
+        
+        <!-- SUB MENU TEMPAHAN MOBILE -->
+        <div class="bg-slate-50 p-2 rounded-xl space-y-1 my-1 border border-slate-200/60">
+            <span class="text-[10px] uppercase font-bold text-slate-400 px-2">Modul Tempahan</span>
+            <a href="tempahan.html" target="_blank" onclick="toggleMobileMenu()" class="flex items-center gap-2 py-1.5 px-2 rounded-lg text-slate-700 hover:text-blue-700">
+                <i class="fa-solid fa-calendar-check text-blue-600"></i> Tempahan Bilik Mesyuarat
+            </a>
+            <a href="tempahan_studio.html" target="_blank" onclick="toggleMobileMenu()" class="flex items-center gap-2 py-1.5 px-2 rounded-lg text-slate-700 hover:text-blue-700">
+                <i class="fa-solid fa-video text-blue-600"></i> Tempahan Studio / 3D Printer
+            </a>
+        </div>
+
+        <a href="#sumber-digital" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-blue-50 hover:text-blue-700">Sumber Digital</a>
+        <a href="#hubungi" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-blue-50 hover:text-blue-700">Hubungi Kami</a>
+        
+        <button onclick="toggleMobileMenu(); openAdminLogin();" class="w-full text-left py-2 px-3 rounded-lg bg-blue-900 text-white font-bold flex items-center gap-2 mt-2">
+            <i class="fa-solid fa-lock"></i> Log Masuk Admin
+        </button>
     </div>
 </header>
     <!-- HERO SECTION FORMAL -->
@@ -1347,18 +1378,21 @@
             }
         }
 
-        function renderTakwimCalendarGrid(yearMonth) {
+      function renderTakwimCalendarGrid(yearMonth) {
             const container = document.getElementById('takwimListContainer');
             if (!container) return;
 
             const [year, month] = yearMonth.split('-').map(Number);
             
             // Pengiraan hari
-            const firstDay = new Date(year, month - 1, 1).getDay(); // Day of week (0-6)
+            const firstDay = new Date(year, month - 1, 1).getDay();
             const daysInMonth = new Date(year, month, 0).getDate();
 
             const monthNames = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
-            const dayLabels = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"];
+            
+            // Label Hari: Singkatan untuk Mobile, Penuh untuk Desktop
+            const dayLabelsShort = ["A", "I", "S", "R", "K", "J", "S"];
+            const dayLabelsFull = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"];
 
             // Tapis data bagi bulan terpilih
             const monthlyEvents = currentTakwimData.filter(item => item.tarikh && item.tarikh.startsWith(yearMonth));
@@ -1373,21 +1407,26 @@
 
             // Pembinaan HTML Grid
             let gridHTML = `
-                <div class="bg-white border border-slate-200 rounded-xl p-3 sm:p-4 shadow-sm space-y-4">
+                <div class="bg-white border border-slate-200 rounded-xl p-2 sm:p-4 shadow-sm space-y-3">
                     <!-- HEADER NAMA BULAN & TAJUK -->
-                    <div class="flex justify-between items-center border-b border-slate-200 pb-3">
-                        <h4 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                    <div class="flex flex-wrap justify-between items-center border-b border-slate-200 pb-2.5 gap-2">
+                        <h4 class="text-sm sm:text-base font-extrabold text-slate-900 flex items-center gap-2">
                             <i class="fa-solid fa-calendar-day text-purple-700"></i>
                             <span>${monthNames[month - 1]} ${year}</span>
                         </h4>
-                        <span class="bg-purple-100 text-purple-800 border border-purple-200 text-[11px] font-bold px-2.5 py-0.5 rounded-full">
+                        <span class="bg-purple-100 text-purple-800 border border-purple-200 text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-full">
                             ${monthlyEvents.length} Aktiviti Dijadualkan
                         </span>
                     </div>
 
-                    <!-- GRID HEADER (AHAD - SABTU) -->
-                    <div class="grid grid-cols-7 gap-1 text-center font-bold text-[11px] text-slate-600 uppercase bg-slate-100 py-2 rounded-lg">
-                        ${dayLabels.map(d => `<div>${d}</div>`).join('')}
+                    <!-- GRID HEADER (AHAD - SABTU): RESPONSIF -->
+                    <div class="grid grid-cols-7 gap-1 text-center font-bold text-[10px] sm:text-[11px] text-slate-600 uppercase bg-slate-100 py-1.5 rounded-lg">
+                        ${dayLabelsFull.map((d, idx) => `
+                            <div>
+                                <span class="hidden sm:inline">${d}</span>
+                                <span class="sm:hidden">${dayLabelsShort[idx]}</span>
+                            </div>
+                        `).join('')}
                     </div>
 
                     <!-- GRID PETAK TARIKH -->
@@ -1395,7 +1434,7 @@
 
             // Petak Kosong Sebelum Hari Pertama
             for (let i = 0; i < firstDay; i++) {
-                gridHTML += `<div class="h-16 sm:h-20 bg-slate-50/50 border border-slate-100 rounded-lg"></div>`;
+                gridHTML += `<div class="h-11 sm:h-20 bg-slate-50/50 border border-slate-100 rounded-lg"></div>`;
             }
 
             // Petak Tarikh 1 sehingga DaysInMonth
@@ -1408,17 +1447,17 @@
                 const hasEvents = dayEvents.length > 0;
 
                 let cellBg = isToday ? 'bg-purple-50 border-purple-400 font-bold' : 'bg-white border-slate-200';
-                if (hasEvents && !isToday) cellBg = 'bg-slate-50 border-purple-200 hover:border-purple-400';
+                if (hasEvents && !isToday) cellBg = 'bg-slate-50 border-purple-300 hover:border-purple-500';
 
                 gridHTML += `
-                    <div onclick="showTakwimDayDetail('${currentDayFormatted}')" class="h-16 sm:h-20 border ${cellBg} rounded-lg p-1.5 flex flex-col justify-between cursor-pointer transition-all hover:shadow-md relative overflow-hidden group">
-                        <div class="flex justify-between items-center">
-                            <span class="font-mono ${isToday ? 'bg-purple-900 text-white px-1.5 py-0.5 rounded-md text-[10px]' : 'text-slate-700 text-xs font-bold'}">${day}</span>
-                            ${hasEvents ? `<span class="bg-purple-600 text-white text-[9px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center">${dayEvents.length}</span>` : ''}
+                    <div onclick="showTakwimDayDetail('${currentDayFormatted}')" class="h-11 sm:h-20 border ${cellBg} rounded-lg p-1 sm:p-1.5 flex flex-col justify-between cursor-pointer transition-all hover:shadow-md relative overflow-hidden group">
+                        <div class="flex justify-between items-center w-full">
+                            <span class="font-mono ${isToday ? 'bg-purple-900 text-white px-1 sm:px-1.5 py-0.2 rounded text-[9px] sm:text-[10px]' : 'text-slate-700 text-[10px] sm:text-xs font-bold'}">${day}</span>
+                            ${hasEvents ? `<span class="bg-purple-600 text-white text-[8px] sm:text-[9px] font-extrabold w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full flex items-center justify-center">${dayEvents.length}</span>` : ''}
                         </div>
                         
-                        <!-- LENCANA RINGKASAN AKTIVITI DALAM PETAK -->
-                        <div class="space-y-0.5 overflow-hidden">
+                        <!-- LENCANA RINGKASAN AKTIVITI DALAM PETAK (TERSEMBUNYI DI MOBILE, TAMPIL DI DESKTOP) -->
+                        <div class="hidden sm:block space-y-0.5 overflow-hidden w-full">
                             ${dayEvents.slice(0, 2).map(ev => {
                                 let badgeColor = 'bg-blue-600';
                                 if (ev.kategori === 'PPD / JPN') badgeColor = 'bg-purple-600';
@@ -1429,13 +1468,18 @@
                             }).join('')}
                             ${dayEvents.length > 2 ? `<div class="text-[8px] text-slate-500 font-bold">+${dayEvents.length - 2} lagi</div>` : ''}
                         </div>
+
+                        <!-- TITIK INDIKATOR RINGKAS UNTUK SKRIN MOBILE -->
+                        ${hasEvents ? `<div class="sm:hidden flex justify-center gap-0.5 w-full mt-0.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-purple-600"></span>
+                        </div>` : ''}
                     </div>`;
             }
 
             gridHTML += `</div></div>
                 <!-- RUANGAN BUTIRAN AKTIVITI BILA PETAK DIKLIK -->
-                <div id="takwimDayDetailContainer" class="mt-4">
-                    <p class="text-center py-4 text-slate-500 text-xs italic bg-slate-50 rounded-xl border border-slate-200">Klik pada mana-mana tarikh di atas untuk melihat butiran aktiviti.</p>
+                <div id="takwimDayDetailContainer" class="mt-3">
+                    <p class="text-center py-3 text-slate-500 text-[11px] sm:text-xs italic bg-slate-50 rounded-xl border border-slate-200">Klik mana-mana tarikh di atas untuk melihat butiran aktiviti.</p>
                 </div>`;
 
             container.innerHTML = gridHTML;
@@ -2664,6 +2708,13 @@ function bukaDetailPengumuman(id) {
             };
             return schools[code] || code;
         }
+
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenuNav');
+    if (menu) {
+        menu.classList.toggle('hidden');
+    }
+}
     </script>
 
     <!-- MODAL BORANG EDIT / TAMBAH INVENTORI ADMIN -->
