@@ -75,82 +75,39 @@
             </div>
         </a>
 
-        <!-- MENU NAVIGASI DESKTOP (GAYA TAB SOFT - SANGAT KEMAS) -->
-        <nav class="hidden md:flex items-center gap-1 bg-slate-100/80 p-1.5 rounded-xl border border-slate-200/80 text-sm font-semibold text-slate-700">
-            <a href="#perkhidmatan" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Perkhidmatan</a>
-            <a href="#sekolah-zon" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sekolah Zon</a>
-            <a href="https://isd.moe.gov.my" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sistem Aduan ISD</a>
-            
-            <!-- DROPDOWN TAB TEMPAHAN (GAYA SOFT TAB) -->
-            <div class="relative group">
-                <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all flex items-center gap-1.5 font-semibold text-slate-700 group-hover:bg-white group-hover:text-blue-700 group-hover:shadow-sm">
-                    <span>Tempahan</span>
-                    <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 group-hover:rotate-180"></i>
-                </button>
-
-                <!-- SUB TAB DROPDOWN MENU -->
-                <div class="absolute left-0 top-full mt-2 w-60 bg-white/95 backdrop-blur-md border border-slate-200 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-1.5 flex flex-col gap-1">
-                    <a href="tempahan.html" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all text-xs font-semibold">
-                        <i class="fa-solid fa-calendar-check text-blue-600 w-4"></i>
-                        <span>Tempahan Bilik Mesyuarat</span>
-                    </a>
-                    <a href="tempahan_studio.html" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all text-xs font-semibold">
-                        <i class="fa-solid fa-video text-blue-600 w-4"></i>
-                        <span>Tempahan Studio / 3D Printer</span>
-                    </a>
-                </div>
-            </div>
-
-            <a href="#sumber-digital" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sumber Digital</a>
-            <a href="#hubungi" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Hubungi Kami</a>
-            
-            <button onclick="openAdminLogin()" class="ml-2 bg-blue-900 hover:bg-blue-800 text-white font-bold px-3.5 py-1.5 rounded-lg transition-colors text-xs flex items-center gap-1.5 shadow-sm">
-                <i class="fa-solid fa-lock text-white/80"></i> Admin
-            </button>
-        </nav>
-
-        <!-- BUTANG HAMBURGER MOBILE -->
-        <button id="mobileMenuBtn" onclick="toggleMobileMenu()" type="button" class="md:hidden p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-all focus:outline-none">
-            <i id="mobileMenuIcon" class="fa-solid fa-bars text-lg"></i>
+        <!-- MENU NAVIGASI (GAYA TAB SOFT - SANGAT KEMAS) -->
+<nav class="hidden md:flex items-center gap-1 bg-slate-100/80 p-1.5 rounded-xl border border-slate-200/80 text-sm font-semibold text-slate-700">
+    <a href="#perkhidmatan" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Perkhidmatan</a>
+    <a href="#sekolah-zon" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sekolah Zon</a>
+    <a href="https://isd.moe.gov.my" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sistem Aduan ISD</a>
+    
+    <!-- DROPDOWN TAB TEMPAHAN (GAYA SOFT TAB) -->
+    <div class="relative group">
+        <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all flex items-center gap-1.5 font-semibold text-slate-700 group-hover:bg-white group-hover:text-blue-700 group-hover:shadow-sm">
+            <span>Tempahan</span>
+            <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 group-hover:rotate-180"></i>
         </button>
 
+        <!-- SUB TAB DROPDOWN MENU -->
+        <div class="absolute left-0 top-full mt-2 w-60 bg-white/95 backdrop-blur-md border border-slate-200 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-1.5 flex flex-col gap-1">
+            <a href="tempahan.html" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all text-xs font-semibold">
+                <i class="fa-solid fa-calendar-check text-blue-600 w-4"></i>
+                <span>Tempahan Bilik Mesyuarat</span>
+            </a>
+            <a href="tempahan_studio.html" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all text-xs font-semibold">
+                <i class="fa-solid fa-video text-blue-600 w-4"></i>
+                <span>Tempahan Studio / 3D Printer</span>
+            </a>
+        </div>
     </div>
 
-    <!-- PANEL MENU MOBILE (MUNCUL APABILA HAMBURGER DITEKAN) -->
-    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-5 space-y-1.5 mt-3 shadow-md">
-        <a href="#perkhidmatan" onclick="toggleMobileMenu()" class="block px-3.5 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 font-semibold text-sm transition-all">
-            <i class="fa-solid fa-screwdriver-wrench w-5 text-blue-600"></i> Perkhidmatan
-        </a>
-        <a href="#sekolah-zon" onclick="toggleMobileMenu()" class="block px-3.5 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 font-semibold text-sm transition-all">
-            <i class="fa-solid fa-school w-5 text-blue-600"></i> Sekolah Zon
-        </a>
-        <a href="https://isd.moe.gov.my" target="_blank" rel="noopener noreferrer" class="block px-3.5 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 font-semibold text-sm transition-all">
-            <i class="fa-solid fa-headset w-5 text-blue-600"></i> Sistem Aduan ISD
-        </a>
-
-        <!-- SUB-MENU TEMPAHAN MOBILE -->
-        <div class="pt-1.5 pb-1.5 border-y border-slate-100 my-1 bg-slate-50/60 rounded-xl px-1">
-            <span class="px-3 text-[11px] font-bold text-slate-600 uppercase tracking-wider block mb-1">Tempahan Kemudahan</span>
-            <a href="tempahan.html" target="_blank" class="block px-3 py-1.5 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 font-semibold text-xs transition-all">
-                <i class="fa-solid fa-calendar-check w-4 text-blue-600"></i> Tempahan Bilik Mesyuarat
-            </a>
-            <a href="tempahan_studio.html" target="_blank" class="block px-3 py-1.5 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 font-semibold text-xs transition-all">
-                <i class="fa-solid fa-video w-4 text-blue-600"></i> Tempahan Studio / 3D Printer
-            </a>
-        </div>
-
-        <a href="#sumber-digital" onclick="toggleMobileMenu()" class="block px-3.5 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 font-semibold text-sm transition-all">
-            <i class="fa-solid fa-folder-open w-5 text-blue-600"></i> Sumber Digital
-        </a>
-        <a href="#hubungi" onclick="toggleMobileMenu()" class="block px-3.5 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 font-semibold text-sm transition-all">
-            <i class="fa-solid fa-phone w-5 text-blue-600"></i> Hubungi Kami
-        </a>
-
-        <div class="pt-2">
-            <button onclick="toggleMobileMenu(); openAdminLogin();" class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold px-3.5 py-2.5 rounded-xl transition-colors text-xs flex items-center justify-center gap-2 shadow-sm">
-                <i class="fa-solid fa-lock text-white/80"></i> Admin Login
-            </button>
-        </div>
+    <a href="#sumber-digital" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sumber Digital</a>
+    <a href="#hubungi" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Hubungi Kami</a>
+    
+    <button onclick="openAdminLogin()" class="ml-2 bg-blue-900 hover:bg-blue-800 text-white font-bold px-3.5 py-1.5 rounded-lg transition-colors text-xs flex items-center gap-1.5 shadow-sm">
+        <i class="fa-solid fa-lock text-white/80"></i> Admin
+    </button>
+</nav>
     </div>
 </header>
     <!-- HERO SECTION FORMAL -->
@@ -190,52 +147,71 @@
     </a>
 </div>
 
-            <!-- STATS GRID FORMAL -->
-            <div class="pt-8 grid grid-cols-2 md:grid-cols-4 gap-4 text-left max-w-3xl mx-auto">
-                <button onclick="openModal('schoolModal')" class="bg-slate-800/80 hover:bg-slate-800 p-4 rounded-xl border border-slate-700/80 transition-all cursor-pointer block text-left w-full shadow-sm">
+         <!-- STATS GRID FORMAL (5 KOTAK DENGAN TAKWIM PTIS) -->
+            <div class="pt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 text-left max-w-5xl mx-auto">
+                
+                <!-- 1. SEKOLAH -->
+                <button onclick="openModal('schoolModal')" class="bg-slate-800/80 hover:bg-slate-800 p-3.5 rounded-xl border border-slate-700/80 transition-all cursor-pointer block text-left w-full shadow-sm">
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-xs font-bold text-slate-400 uppercase">Sekolah</span>
                         <div class="p-1.5 bg-blue-500/20 text-blue-300 rounded-lg"><i class="fa-solid fa-school text-xs"></i></div>
                     </div>
-                    <div class="text-xl font-bold text-white">Zon Pelangai</div>
+                    <div class="text-lg font-bold text-white">Zon Pelangai</div>
                     <p class="text-[11px] text-blue-400 mt-0.5 font-semibold flex items-center gap-1">
-                        <span>12 Sekolah Seliaan</span>
+                        <span>12 Sekolah</span>
                         <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                     </p>
                 </button>
 
-                <div class="bg-slate-800/80 hover:bg-slate-800 p-4 rounded-xl border border-slate-700/80 transition-all cursor-pointer block text-left w-full shadow-sm" onclick="openInternetModal()">
+                <!-- 2. TAKWIM PTIS (BARU) -->
+                <button onclick="openTakwimModal()" class="bg-slate-800/80 hover:bg-slate-800 p-3.5 rounded-xl border border-slate-700/80 transition-all cursor-pointer block text-left w-full shadow-sm">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold text-slate-400 uppercase">Takwim</span>
+                        <div class="p-1.5 bg-purple-500/20 text-purple-300 rounded-lg"><i class="fa-solid fa-calendar-days text-xs"></i></div>
+                    </div>
+                    <div class="text-lg font-bold text-white">Takwim PTIS</div>
+                    <p class="text-[11px] text-purple-400 mt-0.5 font-semibold flex items-center gap-1">
+                        <span>Jadual & Aktiviti</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                    </p>
+                </button>
+
+                <!-- 3. INTERNET -->
+                <div class="bg-slate-800/80 hover:bg-slate-800 p-3.5 rounded-xl border border-slate-700/80 transition-all cursor-pointer block text-left w-full shadow-sm" onclick="openInternetModal()">
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-xs font-bold text-slate-400 uppercase">Internet</span>
                         <div class="p-1.5 bg-emerald-500/20 text-emerald-400 rounded-lg"><i class="fa-solid fa-wifi text-xs"></i></div>
                     </div>
-                    <div class="text-xl font-bold text-emerald-400">99.8%</div>
+                    <div class="text-lg font-bold text-emerald-400">99.8%</div>
                     <p class="text-[11px] text-slate-400 mt-0.5">Ketersediaan Talian</p>
                 </div>
 
-                <button onclick="openAduanModal()" class="bg-slate-800/80 hover:bg-slate-800 p-4 rounded-xl border border-slate-700/80 transition-all cursor-pointer block text-left w-full shadow-sm">
+                <!-- 4. ADUAN TALIAN -->
+                <button onclick="openAduanModal()" class="bg-slate-800/80 hover:bg-slate-800 p-3.5 rounded-xl border border-slate-700/80 transition-all cursor-pointer block text-left w-full shadow-sm">
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-xs font-bold text-slate-400 uppercase">Aduan Talian</span>
                         <div class="p-1.5 bg-amber-500/20 text-amber-300 rounded-lg"><i class="fa-solid fa-screwdriver-wrench text-xs"></i></div>
                     </div>
-                    <div class="text-lg font-bold text-amber-300">TM & Maxis</div>
-                    <p class="text-[11px] text-slate-400 mt-0.5">Infografik Saluran Aduan</p>
+                    <div class="text-base font-bold text-amber-300">TM & Maxis</div>
+                    <p class="text-[11px] text-slate-400 mt-0.5">Infografik Aduan</p>
                 </button>
 
-                <button onclick="openModal('ptisModal')" class="bg-slate-800/80 hover:bg-slate-800 p-4 rounded-xl border border-slate-700/80 transition-all cursor-pointer block text-left w-full shadow-sm">
+                <!-- 5. PASUKAN -->
+                <button onclick="openModal('ptisModal')" class="bg-slate-800/80 hover:bg-slate-800 p-3.5 rounded-xl border border-slate-700/80 transition-all cursor-pointer block text-left w-full shadow-sm">
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-xs font-bold text-slate-400 uppercase">Pasukan</span>
                         <div class="p-1.5 bg-indigo-500/20 text-indigo-300 rounded-lg"><i class="fa-solid fa-user-shield text-xs"></i></div>
                     </div>
-                    <div class="text-xl font-bold text-white">Geng PTIS</div>
+                    <div class="text-lg font-bold text-white">Geng PTIS</div>
                     <p class="text-[11px] text-blue-400 mt-0.5 font-semibold flex items-center gap-1">
-                        <span>3 Juruteknik Seliaan</span>
+                        <span>3 Juruteknik</span>
                         <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                     </p>
                 </button>
+
             </div>
         </div>
-    </section>
+    </section> 
 
     <!-- BAHAGIAN PENGUMUMAN FORMAL -->
     <section class="max-w-7xl mx-auto px-6 pt-10">
@@ -666,7 +642,51 @@
     </div>
 </div>
 
-<!-- 2. Modal Pop-Up Senarai 12 Sekolah -->
+<!-- 2. MODAL TAKWIM PTIS (BAHARU) -->
+    <div id="takwimModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 rounded-2xl max-w-4xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            
+            <!-- HEADER MODAL TAKWIM -->
+            <div class="p-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-purple-100 text-purple-700 rounded-lg"><i class="fa-solid fa-calendar-days text-lg"></i></div>
+                    <div>
+                        <h3 class="text-base font-extrabold text-slate-900">Takwim & Perancangan PTIS</h3>
+                        <p class="text-xs font-semibold text-slate-700">Jadual Aktiviti, Lawatan Sekolah & Program Rasmi Pasukan</p>
+                    </div>
+                </div>
+                <button onclick="closeModal('takwimModal')" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- ISI KANDUNGAN TAKWIM -->
+            <div class="p-6 overflow-y-auto max-h-[65vh] space-y-4">
+                <!-- BAR PENAPIS BULAN -->
+                <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-slate-600 uppercase">Pilih Bulan:</span>
+                        <input type="month" id="takwimFilterMonth" onchange="loadTakwimSchedules()" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 font-bold outline-none shadow-sm">
+                    </div>
+                    <button onclick="loadTakwimSchedules()" class="text-xs bg-purple-50 text-purple-700 border border-purple-200 px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 hover:bg-purple-100 transition-colors">
+                        <i class="fa-solid fa-rotate"></i> Muat Semula
+                    </button>
+                </div>
+
+                <!-- SENARAI KAD JADUAL TAKWIM -->
+                <div id="takwimListContainer" class="space-y-3">
+                    <p class="text-center py-8 text-slate-500 text-xs italic"><i class="fa-solid fa-spinner fa-spin"></i> Memuatkan Takwim PTIS...</p>
+                </div>
+            </div>
+
+            <!-- FOOTER MODAL -->
+            <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-end">
+                <button onclick="closeModal('takwimModal')" class="bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-bold text-xs px-4 py-2 rounded-lg shadow-sm">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+<!-- 3. Modal Pop-Up Senarai 12 Sekolah -->
 <div id="schoolModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white border border-slate-200 rounded-2xl max-w-5xl w-full max-h-[85vh] flex flex-col shadow-xl overflow-hidden">
         
@@ -710,7 +730,7 @@
         </div>
     </div>
 </div>
-    <!-- 3. Modal Dashboard Data Studio -->
+    <!-- 4. Modal Dashboard Data Studio -->
     <div id="dashboardModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-2 sm:p-4">
         <div class="bg-white border border-slate-200 rounded-2xl max-w-6xl w-full h-[90vh] flex flex-col shadow-2xl overflow-hidden">
             <div class="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
@@ -735,7 +755,7 @@
         </div>
     </div>
 
-    <!-- 4. Modal Pop-Up Inventori Aset Sekolah -->
+    <!-- 5. Modal Pop-Up Inventori Aset Sekolah -->
     <div id="inventoryModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-4">
         <div class="bg-white border border-slate-200 rounded-2xl max-w-4xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
             <div class="p-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
@@ -759,7 +779,7 @@
         </div>
     </div>
 
-    <!-- 5. MODAL PAPARAN DETAIL PENGUMUMAN -->
+    <!-- 6. MODAL PAPARAN DETAIL PENGUMUMAN -->
     <div id="modalPaparDetail" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4">
         <div class="bg-white border border-slate-200 rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
             <div class="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
@@ -835,15 +855,16 @@
                 </div>
             </div>
             
-           <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-5">
-    <button onclick="showAdminSection('schools')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">🏫</div><div class="text-slate-900 font-bold mt-1">Sekolah</div><div id="statSchoolCount" class="text-xs text-slate-500">Loading...</div></button>
-    <button onclick="showAdminSection('team')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">👨‍💻</div><div class="text-slate-900 font-bold mt-1">Geng PTIS</div><div id="statTeamCount" class="text-xs text-slate-500">Loading...</div></button>
-    <button onclick="showAdminSection('announcements')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">📢</div><div class="text-slate-900 font-bold mt-1">Pengumuman</div><div id="statAnnouncementCount" class="text-xs text-slate-500">Loading...</div></button>
-    <button onclick="showAdminSection('inventory')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">📦</div><div class="text-slate-900 font-bold mt-1">Inventori Aset</div><div class="text-xs text-slate-500">Pengurusan Data</div></button>
-    
-    <!-- BUTANG MODUL TEMPAHAN BAHARU -->
-    <button onclick="showAdminSection('bookings')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">📅</div><div class="text-slate-900 font-bold mt-1">Tempahan</div><div id="statBookingCount" class="text-xs text-slate-500">Loading...</div></button>
-</div>
+            <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-5">
+                <button onclick="showAdminSection('schools')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">🏫</div><div class="text-slate-900 font-bold mt-1">Sekolah</div><div id="statSchoolCount" class="text-xs text-slate-500">Loading...</div></button>
+                <button onclick="showAdminSection('team')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">👨‍💻</div><div class="text-slate-900 font-bold mt-1">Geng PTIS</div><div id="statTeamCount" class="text-xs text-slate-500">Loading...</div></button>
+                <button onclick="showAdminSection('announcements')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">📢</div><div class="text-slate-900 font-bold mt-1">Pengumuman</div><div id="statAnnouncementCount" class="text-xs text-slate-500">Loading...</div></button>
+                <button onclick="showAdminSection('inventory')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">📦</div><div class="text-slate-900 font-bold mt-1">Inventori Aset</div><div class="text-xs text-slate-500">Pengurusan Data</div></button>
+                <button onclick="showAdminSection('bookings')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-blue-500 shadow-sm"><div class="text-2xl">📅</div><div class="text-slate-900 font-bold mt-1">Tempahan</div><div id="statBookingCount" class="text-xs text-slate-500">Loading...</div></button>
+                
+                <!-- KAD ADMIN TAKWIM PTIS BAHARU -->
+                <button onclick="showAdminSection('schedules')" class="bg-white border border-slate-200 rounded-2xl p-4 text-left hover:border-purple-500 shadow-sm transition-all"><div class="text-2xl">📆</div><div class="text-slate-900 font-bold mt-1">Takwim PTIS</div><div id="statScheduleCount" class="text-xs text-slate-500">Loading...</div></button>
+            </div>
           
             <!-- ADMIN SCHOOLS SECTION -->
             <div id="adminSchoolsSection" class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
@@ -941,29 +962,29 @@
                     </div>
                 </div>
 
-                <div class="overflow-x-auto rounded-lg border border-slate-200">
-                    <table class="w-full text-left border-collapse text-xs">
-                        <thead>
-                            <tr class="bg-slate-100 text-slate-700 uppercase border-b border-slate-200 font-bold">
-                                <th class="p-3 border-r border-slate-200">Nama Aset / Item</th>
-                                <th class="p-3 border-r border-slate-200">Fasa</th>
-                                <th class="p-3 border-r border-slate-200 text-center">Jumlah (J)</th>
-                                <th class="p-3 border-r border-slate-200 text-center">Baik (B)</th>
-                                <th class="p-3 border-r border-slate-200 text-center">Rosak (R)</th>
-                                <th class="p-3 border-r border-slate-200 text-center">Hilang (H)</th>
-                                <th class="p-3 text-center">Tindakan</th>
-                            </tr>
-                        </thead>
-                        <tbody id="adminInvTableBody" class="divide-y divide-slate-200">
-                            <tr><td colspan="7" class="p-6 text-center text-slate-400">Sila masukkan Kod atau pilih Sekolah.</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+               <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+    <table class="w-full text-left border-collapse text-xs">
+        <thead class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white font-bold uppercase tracking-wider text-[11px]">
+            <tr>
+                <th class="p-3.5 border-r border-blue-800/40 text-left">Nama Aset / Item</th>
+                <th class="p-3.5 border-r border-blue-800/40 text-left">Fasa</th>
+                <th class="p-3.5 border-r border-blue-800/40 text-center">Jumlah (J)</th>
+                <th class="p-3.5 border-r border-blue-800/40 text-center">Baik (B)</th>
+                <th class="p-3.5 border-r border-blue-800/40 text-center">Rosak (R)</th>
+                <th class="p-3.5 border-r border-blue-800/40 text-center">Hilang (H)</th>
+                <th class="p-3.5 text-center">Tindakan</th>
+            </tr>
+        </thead>
+        <tbody id="adminInvTableBody" class="divide-y divide-slate-200 bg-white">
+            <tr><td colspan="7" class="p-6 text-center text-slate-400 italic">Sila masukkan Kod atau pilih Sekolah.</td></tr>
+        </tbody>
+    </table>
+</div>
 
-                <div class="mt-4">
-                    <button id="adminBtnAddAsset" onclick="openAdminAssetModal()" disabled class="bg-slate-200 text-slate-500 cursor-not-allowed px-4 py-2 rounded-lg font-bold text-xs">+ TAMBAH ASET</button>
-                </div>
-            </div>
+<div class="mt-4">
+    <button id="adminBtnAddAsset" onclick="openAdminAssetModal()" disabled class="bg-slate-200 text-slate-500 cursor-not-allowed px-4 py-2 rounded-lg font-bold text-xs">+ TAMBAH ASET</button>
+</div>
+</div>
 
             <!-- ADMIN BOOKINGS SECTION (MODUL TEMPAHAN BAHARU) -->
             <div id="adminBookingsSection" class="hidden bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm mt-4">
@@ -998,6 +1019,39 @@
                     </table>
                 </div>
             </div>
+
+            <!-- ADMIN SCHEDULES SECTION (TAKWIM PTIS BAHARU) -->
+            <div id="adminSchedulesSection" class="hidden bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm mt-4">
+                <div class="p-4 border-b border-slate-200 flex flex-wrap gap-3 justify-between items-center bg-slate-50">
+                    <div class="flex items-center gap-2">
+                        <div class="p-2 bg-purple-100 text-purple-700 rounded-lg"><i class="fa-solid fa-calendar-days"></i></div>
+                        <h3 class="font-bold text-slate-800 text-sm">📆 Pengurusan Takwim & Perancangan PTIS (Supabase Live)</h3>
+                    </div>
+                    <button onclick="openAddScheduleModal()" class="bg-purple-900 hover:bg-purple-800 text-white px-3.5 py-1.5 rounded-lg font-bold text-xs shadow-sm transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-plus"></i> Tambah Aktiviti Takwim
+                    </button>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-100 text-slate-700 font-bold uppercase border-b border-slate-200">
+                            <tr>
+                                <th class="p-3 text-center">Bil</th>
+                                <th class="p-3">Tarikh</th>
+                                <th class="p-3">Kategori</th>
+                                <th class="p-3">Tajuk Aktiviti / Tugas</th>
+                                <th class="p-3">Lokasi / Premis</th>
+                                <th class="p-3">Pegawai Bertugas</th>
+                                <th class="p-3 text-center">Tindakan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminScheduleBody" class="divide-y divide-slate-100">
+                            <tr><td colspan="7" class="p-6 text-center text-slate-400">Memuatkan data takwim...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -1048,6 +1102,48 @@
         </div>
     </div>
 
+    <!-- MODAL TAMBAH / EDIT TAKWIM (ADMIN BAHARU) -->
+    <div id="addScheduleModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm z-[95] hidden flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 rounded-2xl max-w-lg w-full shadow-2xl p-6 space-y-3">
+            <h3 id="scheduleModalTitle" class="text-base font-bold text-slate-900 border-b border-slate-200 pb-2">Tambah Aktiviti Takwim</h3>
+            <input type="hidden" id="editScheduleId">
+            <div>
+                <label class="block text-xs font-bold text-slate-500 mb-1">Tarikh Aktiviti *</label>
+                <input id="schDate" type="date" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-500 mb-1">Kategori Aktiviti *</label>
+                <select id="schCategory" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800">
+                    <option value="Lawatan Sekolah">Lawatan Sekolah</option>
+                    <option value="Program PKG / PTIS">Program PKG / PTIS</option>
+                    <option value="PPD / JPN">PPD / JPN</option>
+                    <option value="Kursus / Bengkel">Kursus / Bengkel</option>
+                    <option value="Umum">Umum / Lain-lain</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-500 mb-1">Tajuk Aktiviti / Tugas *</label>
+                <input id="schTitle" placeholder="Cth: Penyelenggaraan Makmal Komputer & Wi-Fi" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-900">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-500 mb-1">Lokasi / Premis *</label>
+                <input id="schLocation" placeholder="Cth: SK Pelangai / PKG Pelangai" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs text-slate-800">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-500 mb-1">Pegawai Bertugas</label>
+                <select id="schOfficer" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800">
+                    <option value="Semua Pasukan PTIS">Semua Pasukan PTIS</option>
+                    <option value="Amirulakbar bin Amir">Amirulakbar bin Amir</option>
+                    <option value="Mohd Huszaini bin Zakaria">Mohd Huszaini bin Zakaria</option>
+                    <option value="Mohd Shahrul Izad bin Shahbani">Mohd Shahrul Izad bin Shahbani</option>
+                </select>
+            </div>
+            <div class="flex gap-2 pt-2 border-t border-slate-200">
+                <button onclick="closeModal('addScheduleModal')" class="flex-1 bg-slate-100 text-slate-700 py-2 rounded-xl text-xs font-bold border border-slate-300">Batal</button>
+                <button id="btnSaveSchedule" onclick="saveSchedule()" class="flex-1 bg-purple-900 hover:bg-purple-800 text-white py-2 rounded-xl text-xs font-bold shadow-sm">Simpan Takwim</button>
+            </div>
+        </div>
+    </div>
     <!-- FOOTER SECTION FORMAL -->
     <footer class="bg-slate-900 text-slate-400 py-10 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1098,26 +1194,8 @@
         </div>
     </footer>
 
-   <!-- SKRIP JAVASCRIPT UTAMA (KEKALKAN LOGIK SUPABASE) -->
+    <!-- SKRIP JAVASCRIPT UTAMA (KEKALKAN LOGIK SUPABASE) -->
     <script>
-        // FUNGSI BUKA / TUTUP MENU MOBILE
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            const icon = document.getElementById('mobileMenuIcon');
-            
-            if (!menu || !icon) return;
-
-            menu.classList.toggle('hidden');
-
-            if (menu.classList.contains('hidden')) {
-                icon.classList.remove('fa-xmark');
-                icon.classList.add('fa-bars');
-            } else {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-xmark');
-            }
-        }
-
         let globalSchools = [];
         let globalTeam = [];
         let editingSchoolId = null;
@@ -1215,6 +1293,7 @@
             }
         }
 
+
         async function finishLogin() {
             document.getElementById('adminLoginModal').classList.add('hidden');
             document.getElementById('adminDashboard').classList.remove('hidden');
@@ -1227,7 +1306,195 @@
             document.getElementById('adminDashboard').classList.add('hidden');
         }
 
-       function showAdminSection(which) {
+
+// ==================== FUNGSI TAKWIM PTIS ====================
+     function openTakwimModal() {
+            const modal = document.getElementById('takwimModal');
+            if (!modal) return;
+            
+            // Sentiasa reset ke bulan semasa setiap kali dibuka
+            const filterInput = document.getElementById('takwimFilterMonth');
+            if (filterInput) {
+                filterInput.value = new Date().toISOString().slice(0, 7);
+            }
+
+            modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+            loadTakwimSchedules();
+        }
+
+       let currentTakwimData = [];
+
+        async function loadTakwimSchedules() {
+            const container = document.getElementById('takwimListContainer');
+            const filterInput = document.getElementById('takwimFilterMonth');
+            if (!container || !filterInput) return;
+
+            const selectedMonthStr = filterInput.value || new Date().toISOString().slice(0, 7);
+            container.innerHTML = `<p class="text-center py-8 text-purple-700 text-xs font-semibold animate-pulse"><i class="fa-solid fa-spinner fa-spin"></i> Memuatkan Kalendar Takwim...</p>`;
+
+            try {
+                const client = getSupabase();
+                const { data, error } = await client.from('ptis_schedules').select('*').order('tarikh', { ascending: true });
+                if (error) throw error;
+
+                currentTakwimData = data || [];
+                renderTakwimCalendarGrid(selectedMonthStr);
+
+            } catch (err) {
+                console.error('Takwim Load Error:', err);
+                container.innerHTML = `<p class="text-center py-6 text-rose-600 text-xs font-semibold">Gagal memuatkan takwim: ${err.message}</p>`;
+            }
+        }
+
+        function renderTakwimCalendarGrid(yearMonth) {
+            const container = document.getElementById('takwimListContainer');
+            if (!container) return;
+
+            const [year, month] = yearMonth.split('-').map(Number);
+            
+            // Pengiraan hari
+            const firstDay = new Date(year, month - 1, 1).getDay(); // Day of week (0-6)
+            const daysInMonth = new Date(year, month, 0).getDate();
+
+            const monthNames = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
+            const dayLabels = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"];
+
+            // Tapis data bagi bulan terpilih
+            const monthlyEvents = currentTakwimData.filter(item => item.tarikh && item.tarikh.startsWith(yearMonth));
+
+            // Petakan aktiviti mengikut tarikh (day number)
+            const eventsByDay = {};
+            monthlyEvents.forEach(item => {
+                const dayNum = parseInt(item.tarikh.split('-')[2], 10);
+                if (!eventsByDay[dayNum]) eventsByDay[dayNum] = [];
+                eventsByDay[dayNum].push(item);
+            });
+
+            // Pembinaan HTML Grid
+            let gridHTML = `
+                <div class="bg-white border border-slate-200 rounded-xl p-3 sm:p-4 shadow-sm space-y-4">
+                    <!-- HEADER NAMA BULAN & TAJUK -->
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-3">
+                        <h4 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-calendar-day text-purple-700"></i>
+                            <span>${monthNames[month - 1]} ${year}</span>
+                        </h4>
+                        <span class="bg-purple-100 text-purple-800 border border-purple-200 text-[11px] font-bold px-2.5 py-0.5 rounded-full">
+                            ${monthlyEvents.length} Aktiviti Dijadualkan
+                        </span>
+                    </div>
+
+                    <!-- GRID HEADER (AHAD - SABTU) -->
+                    <div class="grid grid-cols-7 gap-1 text-center font-bold text-[11px] text-slate-600 uppercase bg-slate-100 py-2 rounded-lg">
+                        ${dayLabels.map(d => `<div>${d}</div>`).join('')}
+                    </div>
+
+                    <!-- GRID PETAK TARIKH -->
+                    <div class="grid grid-cols-7 gap-1 text-xs">`;
+
+            // Petak Kosong Sebelum Hari Pertama
+            for (let i = 0; i < firstDay; i++) {
+                gridHTML += `<div class="h-16 sm:h-20 bg-slate-50/50 border border-slate-100 rounded-lg"></div>`;
+            }
+
+            // Petak Tarikh 1 sehingga DaysInMonth
+            const todayStr = new Date().toISOString().slice(0, 10);
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const currentDayFormatted = `${yearMonth}-${String(day).padStart(2, '0')}`;
+                const isToday = (currentDayFormatted === todayStr);
+                const dayEvents = eventsByDay[day] || [];
+                const hasEvents = dayEvents.length > 0;
+
+                let cellBg = isToday ? 'bg-purple-50 border-purple-400 font-bold' : 'bg-white border-slate-200';
+                if (hasEvents && !isToday) cellBg = 'bg-slate-50 border-purple-200 hover:border-purple-400';
+
+                gridHTML += `
+                    <div onclick="showTakwimDayDetail('${currentDayFormatted}')" class="h-16 sm:h-20 border ${cellBg} rounded-lg p-1.5 flex flex-col justify-between cursor-pointer transition-all hover:shadow-md relative overflow-hidden group">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono ${isToday ? 'bg-purple-900 text-white px-1.5 py-0.5 rounded-md text-[10px]' : 'text-slate-700 text-xs font-bold'}">${day}</span>
+                            ${hasEvents ? `<span class="bg-purple-600 text-white text-[9px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center">${dayEvents.length}</span>` : ''}
+                        </div>
+                        
+                        <!-- LENCANA RINGKASAN AKTIVITI DALAM PETAK -->
+                        <div class="space-y-0.5 overflow-hidden">
+                            ${dayEvents.slice(0, 2).map(ev => {
+                                let badgeColor = 'bg-blue-600';
+                                if (ev.kategori === 'PPD / JPN') badgeColor = 'bg-purple-600';
+                                else if (ev.kategori === 'Kursus / Bengkel') badgeColor = 'bg-amber-600';
+                                else if (ev.kategori === 'Program PKG / PTIS') badgeColor = 'bg-emerald-600';
+
+                                return `<div class="${badgeColor} text-white text-[9px] font-semibold truncate px-1 rounded-sm leading-tight" title="${esc(ev.tajuk)}">${esc(ev.tajuk)}</div>`;
+                            }).join('')}
+                            ${dayEvents.length > 2 ? `<div class="text-[8px] text-slate-500 font-bold">+${dayEvents.length - 2} lagi</div>` : ''}
+                        </div>
+                    </div>`;
+            }
+
+            gridHTML += `</div></div>
+                <!-- RUANGAN BUTIRAN AKTIVITI BILA PETAK DIKLIK -->
+                <div id="takwimDayDetailContainer" class="mt-4">
+                    <p class="text-center py-4 text-slate-500 text-xs italic bg-slate-50 rounded-xl border border-slate-200">Klik pada mana-mana tarikh di atas untuk melihat butiran aktiviti.</p>
+                </div>`;
+
+            container.innerHTML = gridHTML;
+        }
+
+        function showTakwimDayDetail(dateStr) {
+            const detailContainer = document.getElementById('takwimDayDetailContainer');
+            if (!detailContainer) return;
+
+            const dayEvents = currentTakwimData.filter(item => item.tarikh === dateStr);
+
+            if (dayEvents.length === 0) {
+                detailContainer.innerHTML = `
+                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center">
+                        <p class="text-slate-600 text-xs font-semibold">📅 Tarikh: <span class="font-mono font-bold text-slate-900">${dateStr}</span></p>
+                        <p class="text-slate-400 text-xs mt-1 italic">Tiada sebarang aktiviti dijadualkan pada tarikh ini.</p>
+                    </div>`;
+                return;
+            }
+
+            let detailHTML = `
+                <div class="bg-purple-50/60 border border-purple-200 p-4 rounded-xl space-y-3">
+                    <h5 class="text-xs font-bold text-purple-900 flex items-center gap-2 border-b border-purple-200 pb-2">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span>Aktiviti Pada Tarikh: <span class="font-mono font-extrabold text-slate-900">${dateStr}</span></span>
+                    </h5>
+                    <div class="space-y-2">`;
+
+            dayEvents.forEach(item => {
+                const pegawai = item.pegawai || 'Semua Pasukan PTIS';
+                const isSemua = pegawai.includes('Semua');
+
+                let catColor = 'bg-blue-100 text-blue-800 border-blue-200';
+                if (item.kategori === 'PPD / JPN') catColor = 'bg-purple-100 text-purple-800 border-purple-200';
+                else if (item.kategori === 'Kursus / Bengkel') catColor = 'bg-amber-100 text-amber-800 border-amber-200';
+                else if (item.kategori === 'Program PKG / PTIS') catColor = 'bg-emerald-100 text-emerald-800 border-emerald-200';
+
+                detailHTML += `
+                    <div class="bg-white border border-slate-200 p-3 rounded-lg shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="${catColor} border text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">${esc(item.kategori || 'Umum')}</span>
+                                ${isSemua ? `<span class="bg-purple-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-md"><i class="fa-solid fa-users"></i> Semua Pasukan PTIS</span>` : ''}
+                            </div>
+                            <h4 class="text-xs font-bold text-slate-900">${esc(item.tajuk)}</h4>
+                            <p class="text-[11px] text-slate-600 font-medium flex items-center gap-1.5">
+                                <i class="fa-solid fa-location-dot text-slate-400"></i> ${esc(item.lokasi)}
+                                ${!isSemua ? `<span class="text-slate-400">|</span> <i class="fa-solid fa-user text-slate-400"></i> ${esc(pegawai)}` : ''}
+                            </p>
+                        </div>
+                    </div>`;
+            });
+
+            detailHTML += `</div></div>`;
+            detailContainer.innerHTML = detailHTML;
+       
+        }
+
+      function showAdminSection(which) {
             document.getElementById('adminSchoolsSection').classList.toggle('hidden', which !== 'schools');
             document.getElementById('adminTeamSection').classList.toggle('hidden', which !== 'team');
             
@@ -1240,11 +1507,146 @@
             const invSec = document.getElementById('adminInventorySection');
             if (invSec) invSec.classList.toggle('hidden', which !== 'inventory');
 
-            // TAB TEMPAHAN BAHARU
+            // TAB TEMPAHAN
             const bookSec = document.getElementById('adminBookingsSection');
             if (bookSec) {
                 bookSec.classList.toggle('hidden', which !== 'bookings');
                 if (which === 'bookings') loadAdminBookings();
+            }
+
+            // TAB TAKWIM PTIS (DITAMBAH DI SINI)
+            const schSec = document.getElementById('adminSchedulesSection');
+            if (schSec) {
+                schSec.classList.toggle('hidden', which !== 'schedules');
+                if (which === 'schedules') loadAdminSchedules();
+            }
+        }
+
+        // ==================== LOGIK ADMIN TAKWIM PTIS ====================
+        async function loadAdminSchedules() {
+            const tbody = document.getElementById('adminScheduleBody');
+            if (!tbody) return;
+
+            tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-purple-700 font-semibold animate-pulse"><i class="fa-solid fa-spinner fa-spin"></i> Memuatkan data takwim...</td></tr>`;
+
+            try {
+                const client = getSupabase();
+                const { data, error } = await client.from('ptis_schedules').select('*').order('tarikh', { ascending: true });
+                if (error) throw error;
+
+                const statEl = document.getElementById('statScheduleCount');
+                if (statEl) statEl.textContent = (data || []).length + ' aktiviti';
+
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400 italic">Tiada aktiviti takwim dijumpai.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = data.map((item, index) => `
+                    <tr class="hover:bg-slate-50 border-b border-slate-100 transition-colors">
+                        <td class="p-3 text-slate-500 text-center font-bold">${index + 1}</td>
+                        <td class="p-3 font-mono font-bold text-slate-900">${esc(item.tarikh)}</td>
+                        <td class="p-3"><span class="bg-purple-50 text-purple-800 border border-purple-200 text-[10px] font-bold px-2 py-0.5 rounded">${esc(item.kategori)}</span></td>
+                        <td class="p-3 font-bold text-slate-800">${esc(item.tajuk)}</td>
+                        <td class="p-3 font-medium text-slate-700">${esc(item.lokasi)}</td>
+                        <td class="p-3 text-slate-700 font-medium">${esc(item.pegawai)}</td>
+                        <td class="p-3 text-center">
+                            <div class="flex items-center justify-center gap-1.5">
+                                <button onclick="editSchedule('${item.id}')" class="bg-blue-50 text-blue-700 border border-blue-200 px-2 py-1 rounded text-xs font-bold hover:bg-blue-100">Edit</button>
+                                <button onclick="deleteSchedule('${item.id}')" class="bg-rose-50 text-rose-700 border border-rose-200 px-2 py-1 rounded text-xs font-bold hover:bg-rose-100">Padam</button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+
+            } catch (err) {
+                console.error('Load Admin Schedules Error:', err);
+                tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-rose-600 font-semibold">Gagal memuatkan data: ${err.message}</td></tr>`;
+            }
+        }
+
+        function openAddScheduleModal() {
+            document.getElementById('editScheduleId').value = '';
+            document.getElementById('scheduleModalTitle').textContent = "Tambah Aktiviti Takwim";
+            document.getElementById('schDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('schCategory').value = 'Lawatan Sekolah';
+            document.getElementById('schTitle').value = '';
+            document.getElementById('schLocation').value = '';
+            document.getElementById('schOfficer').value = 'Semua Pasukan PTIS';
+            document.getElementById('addScheduleModal').classList.remove('hidden');
+        }
+
+        async function editSchedule(id) {
+            try {
+                const client = getSupabase();
+                const { data, error } = await client.from('ptis_schedules').select('*').eq('id', id).single();
+                if (error) throw error;
+
+                if (data) {
+                    document.getElementById('editScheduleId').value = data.id;
+                    document.getElementById('scheduleModalTitle').textContent = "Kemaskini Aktiviti Takwim";
+                    document.getElementById('schDate').value = data.tarikh || '';
+                    document.getElementById('schCategory').value = data.kategori || 'Lawatan Sekolah';
+                    document.getElementById('schTitle').value = data.tajuk || '';
+                    document.getElementById('schLocation').value = data.lokasi || '';
+                    document.getElementById('schOfficer').value = data.pegawai || 'Semua Pasukan PTIS';
+                    document.getElementById('addScheduleModal').classList.remove('hidden');
+                }
+            } catch (err) {
+                alert('Gagal memuatkan data: ' + err.message);
+            }
+        }
+
+        async function saveSchedule() {
+            const id = document.getElementById('editScheduleId').value;
+            const tarikh = document.getElementById('schDate').value;
+            const kategori = document.getElementById('schCategory').value;
+            const tajuk = document.getElementById('schTitle').value.trim();
+            const lokasi = document.getElementById('schLocation').value.trim();
+            const pegawai = document.getElementById('schOfficer').value;
+
+            if (!tarikh || !tajuk || !lokasi) return alert('Sila lengkapkan semua medan bertanda (*).');
+
+            const btn = document.getElementById('btnSaveSchedule');
+            btn.textContent = "Menyimpan...";
+            btn.disabled = true;
+
+            try {
+                const client = getSupabase();
+                const payload = { tarikh, kategori, tajuk, lokasi, pegawai };
+
+                let error;
+                if (id) {
+                    ({ error } = await client.from('ptis_schedules').update(payload).eq('id', id));
+                } else {
+                    ({ error } = await client.from('ptis_schedules').insert([payload]));
+                }
+
+                if (error) throw error;
+
+                closeModal('addScheduleModal');
+                await loadAdminSchedules();
+                await loadTakwimSchedules();
+                alert('Aktiviti takwim berjaya disimpan!');
+
+            } catch (err) {
+                alert('Gagal menyimpan: ' + err.message);
+            } finally {
+                btn.textContent = "Simpan Takwim";
+                btn.disabled = false;
+            }
+        }
+
+        async function deleteSchedule(id) {
+            if (!confirm('Adakah anda pasti mahu memadam aktiviti takwim ini?')) return;
+            try {
+                const client = getSupabase();
+                const { error } = await client.from('ptis_schedules').delete().eq('id', id);
+                if (error) throw error;
+                await loadAdminSchedules();
+                await loadTakwimSchedules();
+            } catch (err) {
+                alert('Gagal memadam: ' + err.message);
             }
         }
 
@@ -1457,14 +1859,41 @@
         container.innerHTML = `<p class="text-rose-600 text-xs font-semibold">Gagal memuatkan pengumuman.</p>`;
     }
 }
-        async function refreshAllData() {
-            await loadSchools();
-            await loadPTISMembers();
-            await loadAnnouncements();
-            
-            const adminDashboard = document.getElementById('adminDashboard');
-            if (adminDashboard && !adminDashboard.classList.contains('hidden')) {
-                await loadAdminAnnouncements();
+      async function refreshAllData() {
+            // Beri maklum balas visual pada butang semasa memuatkan semula
+            const btnRefresh = document.querySelector('button[onclick="refreshAllData()"]');
+            if (btnRefresh) {
+                btnRefresh.disabled = true;
+                btnRefresh.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Memuatkan...`;
+            }
+
+            try {
+                // 1. Muat semula data paparan awam
+                if (typeof loadSchools === 'function') await loadSchools();
+                if (typeof loadPTISMembers === 'function') await loadPTISMembers();
+                if (typeof loadAnnouncements === 'function') await loadAnnouncements();
+                if (typeof loadTakwimSchedules === 'function') await loadTakwimSchedules();
+
+                // 2. Jika Admin Dashboard sedang terbuka, muat semula data Admin
+                const adminDashboard = document.getElementById('adminDashboard');
+                if (adminDashboard && !adminDashboard.classList.contains('hidden')) {
+                    if (typeof loadAdminAnnouncements === 'function') await loadAdminAnnouncements();
+                    if (typeof loadAdminBookings === 'function') await loadAdminBookings();
+                    if (typeof loadAdminSchedules === 'function') await loadAdminSchedules();
+                    
+                    // Kemaskini semula jadual sekolah atau inventori jika ada
+                    if (typeof renderAdminSchools === 'function') renderAdminSchools();
+                    if (typeof renderAdminTeam === 'function') renderAdminTeam();
+                }
+
+            } catch (err) {
+                console.error("Ralat Muat Semula Data:", err);
+            } finally {
+                // Kembalikan teks asal pada butang selepas selesai
+                if (btnRefresh) {
+                    btnRefresh.disabled = false;
+                    btnRefresh.innerHTML = `<i class="fa-solid fa-rotate"></i> Muat Semula Data`;
+                }
             }
         }
 
@@ -1925,30 +2354,30 @@ function renderPublicSchoolTable() {
                     return;
                 }
 
-                let html = `
-                    <div class="overflow-x-auto">
+           let html = `
+                    <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
                         <table class="w-full text-left border-collapse text-xs">
                             <thead>
-                                <tr class="text-slate-700 border-b border-slate-200 bg-slate-100 font-bold uppercase">
-                                    <th class="p-3">Nama Aset / Item</th>
-                                    <th class="p-3">Fasa</th>
-                                    <th class="p-3 text-center">Jumlah (J)</th>
-                                    <th class="p-3 text-center">Baik (B)</th>
-                                    <th class="p-3 text-center">Rosak (R)</th>
-                                    <th class="p-3 text-center">Hilang (H)</th>
+                                <tr class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white font-bold uppercase tracking-wider text-[11px]">
+                                    <th class="p-3.5 border-r border-blue-800/40 text-left">Nama Aset / Item</th>
+                                    <th class="p-3.5 border-r border-blue-800/40 text-left">Fasa</th>
+                                    <th class="p-3.5 border-r border-blue-800/40 text-center">Jumlah (J)</th>
+                                    <th class="p-3.5 border-r border-blue-800/40 text-center">Baik (B)</th>
+                                    <th class="p-3.5 border-r border-blue-800/40 text-center">Rosak (R)</th>
+                                    <th class="p-3.5 text-center">Hilang (H)</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-100">`;
+                            <tbody class="divide-y divide-slate-100 bg-white">`;
                 
                 data.forEach(item => {
                     html += `
-                        <tr class="hover:bg-slate-50">
-                            <td class="p-3 font-bold text-slate-900">${item.item}</td>
-                            <td class="p-3 text-slate-600">${item.fasa}</td>
-                            <td class="p-3 text-center font-bold text-blue-800">${item.j}</td>
-                            <td class="p-3 text-center text-emerald-700 font-bold">${item.b}</td>
-                            <td class="p-3 text-center text-amber-700 font-bold">${item.r}</td>
-                            <td class="p-3 text-center text-rose-700 font-bold">${item.h}</td>
+                        <tr class="hover:bg-blue-50/50 even:bg-slate-50/80 transition-colors">
+                            <td class="p-3 font-bold text-slate-900">${esc(item.item || '')}</td>
+                            <td class="p-3 text-slate-600">${esc(item.fasa || '')}</td>
+                            <td class="p-3 text-center font-bold text-blue-800">${item.j ?? 0}</td>
+                            <td class="p-3 text-center text-emerald-700 font-bold">${item.b ?? 0}</td>
+                            <td class="p-3 text-center text-amber-700 font-bold">${item.r ?? 0}</td>
+                            <td class="p-3 text-center text-rose-700 font-bold">${item.h ?? 0}</td>
                         </tr>`;
                 });
 
@@ -1956,7 +2385,7 @@ function renderPublicSchoolTable() {
                 contentDiv.innerHTML = html;
 
             } catch (err) {
-                contentDiv.innerHTML = `<p class="text-center py-10 text-rose-600">Gagal memuatkan data inventori.</p>`;
+                contentDiv.innerHTML = `<p class="text-center py-10 text-rose-600 font-semibold">Gagal memuatkan data inventori.</p>`;
             }
         }
 
