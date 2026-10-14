@@ -75,51 +75,60 @@
             </div>
         </a>
 
-        <!-- MENU NAVIGASI DESKTOP (GAYA TAB SOFT) -->
-        <nav class="hidden md:flex items-center gap-1 bg-slate-100/80 p-1.5 rounded-xl border border-slate-200/80 text-sm font-semibold text-slate-700">
-            <a href="#perkhidmatan" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Perkhidmatan</a>
-            <a href="#sekolah-zon" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sekolah Zon</a>
-            <a href="https://isd.moe.gov.my" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sistem Aduan ISD</a>
-            
-            <!-- DROPDOWN TAB TEMPAHAN -->
-            <div class="relative group">
-                <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all flex items-center gap-1.5 font-semibold text-slate-700 group-hover:bg-white group-hover:text-blue-700 group-hover:shadow-sm">
-                    <span>Tempahan</span>
-                    <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 group-hover:rotate-180"></i>
-                </button>
+      <!-- MENU NAVIGASI DESKTOP (GAYA TAB SOFT) -->
+<nav class="hidden md:flex items-center gap-1 bg-slate-100/80 p-1.5 rounded-xl border border-slate-200/80 text-sm font-semibold text-slate-700">
+    <a href="#perkhidmatan" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Perkhidmatan</a>
+    
+    <!-- PAUTAN GALERI AKTIVITI (BARU) -->
+    <a href="#galeri-aktiviti" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Galeri</a>
 
-                <!-- SUB TAB DROPDOWN MENU -->
-                <div class="absolute left-0 top-full mt-2 w-60 bg-white/95 backdrop-blur-md border border-slate-200 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-1.5 flex flex-col gap-1">
-                    <a href="tempahan.html" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all text-xs font-semibold">
-                        <i class="fa-solid fa-calendar-check text-blue-600 w-4"></i>
-                        <span>Tempahan Bilik Mesyuarat</span>
-                    </a>
-                    <a href="tempahan_studio.html" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all text-xs font-semibold">
-                        <i class="fa-solid fa-video text-blue-600 w-4"></i>
-                        <span>Tempahan Studio / 3D Printer</span>
-                    </a>
-                </div>
-            </div>
-
-            <a href="#sumber-digital" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sumber Digital</a>
-            <a href="#hubungi" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Hubungi Kami</a>
-            
-            <button onclick="openAdminLogin()" class="ml-2 bg-blue-900 hover:bg-blue-800 text-white font-bold px-3.5 py-1.5 rounded-lg transition-colors text-xs flex items-center gap-1.5 shadow-sm">
-                <i class="fa-solid fa-lock text-white/80"></i> Admin
-            </button>
-        </nav>
-
-        <!-- BUTANG MENU MOBILE (HAMBURGER BUTTON - DIPAPARKAN DI TELEFON) -->
-        <button onclick="toggleMobileMenu()" type="button" class="md:hidden flex items-center justify-center p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-800 hover:bg-blue-50 hover:text-blue-900 focus:outline-none transition-all">
-            <i class="fa-solid fa-bars text-lg"></i>
+    <a href="#sekolah-zon" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Aset Sekolah</a>
+    <a href="https://isd.moe.gov.my" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sistem Aduan ISD</a>
+    
+    <!-- DROPDOWN TAB TEMPAHAN -->
+    <div class="relative group">
+        <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all flex items-center gap-1.5 font-semibold text-slate-700 group-hover:bg-white group-hover:text-blue-700 group-hover:shadow-sm">
+            <span>Tempahan</span>
+            <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 group-hover:rotate-180"></i>
         </button>
+
+        <!-- SUB TAB DROPDOWN MENU -->
+        <div class="absolute left-0 top-full mt-2 w-60 bg-white/95 backdrop-blur-md border border-slate-200 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-1.5 flex flex-col gap-1">
+            <a href="tempahan.html" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all text-xs font-semibold">
+                <i class="fa-solid fa-calendar-check text-blue-600 w-4"></i>
+                <span>Tempahan Bilik Mesyuarat</span>
+            </a>
+            <a href="tempahan_studio.html" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all text-xs font-semibold">
+                <i class="fa-solid fa-video text-blue-600 w-4"></i>
+                <span>Tempahan Studio / 3D Printer</span>
+            </a>
+        </div>
+    </div>
+
+    <a href="#sumber-digital" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sumber Digital</a>
+    <a href="#hubungi" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Hubungi Kami</a>
+    
+    <button onclick="openAdminLogin()" class="ml-2 bg-blue-900 hover:bg-blue-800 text-white font-bold px-3.5 py-1.5 rounded-lg transition-colors text-xs flex items-center gap-1.5 shadow-sm">
+        <i class="fa-solid fa-lock text-white/80"></i> Admin
+    </button>
+</nav>
+	<!-- BUTANG MENU MOBILE (HAMBURGER BUTTON - DIPAPARKAN DI TELEFON) -->
+<button onclick="toggleMobileMenu()" type="button" class="md:hidden flex items-center justify-center p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-800 hover:bg-blue-50 hover:text-blue-900 focus:outline-none transition-all">
+    <i class="fa-solid fa-bars text-lg"></i>
+</button>
 
     </div>
 
-    <!-- PANEL DROPDOWN MENU MOBILE -->
+    <!-- PANEL DROPDOWN MENU MOBILE (DIKEMASKINI) -->
     <div id="mobileMenuNav" class="hidden md:hidden max-w-7xl mx-auto px-4 pt-3 pb-2 space-y-1.5 border-t border-slate-100 mt-2 text-xs font-semibold text-slate-700">
         <a href="#perkhidmatan" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-blue-50 hover:text-blue-700">Perkhidmatan</a>
-        <a href="#sekolah-zon" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-blue-50 hover:text-blue-700">Sekolah Zon</a>
+        
+        <!-- PAUTAN GALERI (BARU) -->
+        <a href="#galeri-aktiviti" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-blue-50 hover:text-blue-700">Galeri</a>
+
+        <!-- PENAMAAN DIKEMASKINI DARI SEKOLAH ZON KE ASET SEKOLAH -->
+        <a href="#sekolah-zon" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-blue-50 hover:text-blue-700">Aset Sekolah</a>
+        
         <a href="https://isd.moe.gov.my" target="_blank" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-blue-50 hover:text-blue-700">Sistem Aduan ISD</a>
         
         <!-- SUB MENU TEMPAHAN MOBILE -->
@@ -141,6 +150,7 @@
         </button>
     </div>
 </header>
+       
     <!-- HERO SECTION FORMAL -->
     <section class="hero-corporate relative py-16 px-6 text-center border-b border-slate-800">
         <div class="max-w-4xl mx-auto relative z-10 space-y-6">
@@ -181,7 +191,7 @@
          <!-- STATS GRID FORMAL (5 KOTAK DENGAN TAKWIM PTIS) -->
             <div class="pt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 text-left max-w-5xl mx-auto">
                 
-             <!-- 1. DIREKTORI PGB & ICT (IKON DITUKAR KE ADDRESS-BOOK) -->
+              <!-- 1. DIREKTORI PGB & ICT (IKON DITUKAR KE ADDRESS-BOOK) -->
 <button onclick="openModal('schoolModal')" class="bg-slate-800/80 hover:bg-slate-800 p-3.5 rounded-xl border border-slate-700/80 transition-all cursor-pointer block text-left w-full shadow-sm">
     <div class="flex items-center justify-between mb-2">
         <span class="text-xs font-bold text-slate-400 uppercase">Rekod Sekolah</span>
@@ -350,6 +360,105 @@
             <img id="serviceImagePreview" src="" alt="Paparan gambar perkhidmatan" class="w-full max-h-[65vh] object-contain rounded-xl border border-slate-200 bg-slate-50">
         </div>
     </div>
+
+<!-- SEKSYEN GALERI AKTIVITI PTIS (SLIDER DIKEMASKINI - TIDAK BERTINDAN) -->
+<section id="galeri-aktiviti" class="py-12 bg-slate-900 text-white border-y border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- TAJUK SEKSYEN -->
+        <div class="text-center max-w-xl mx-auto mb-8">
+            <span class="text-xs font-bold text-blue-400 uppercase tracking-widest">SOROTAN PROGRAM</span>
+            <h2 class="text-2xl font-extrabold text-white mt-1">Galeri Aktiviti & Program PTIS</h2>
+            <p class="text-slate-400 text-xs font-medium mt-1">Dokumentasi bergambar aktiviti penyelenggaraan, program teknikal, dan lawatan ke sekolah zon.</p>
+        </div>
+
+        <!-- CONTAINER SLIDER (BINGKAI UTAMA) -->
+        <div class="relative max-w-3xl mx-auto overflow-hidden rounded-2xl border border-slate-700/80 shadow-2xl bg-slate-950 group" onmouseenter="stopAutoSlide()" onmouseleave="startAutoSlide()">
+            
+            <!-- TRACK IMAGES (SAIZ KETAT & TIDAK BERTINDAN) -->
+            <div id="gallerySliderTrack" class="flex transition-transform duration-500 ease-in-out w-full">
+                
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (1).jpg" alt="Aktiviti PTIS 1" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (2).jpg" alt="Aktiviti PTIS 2" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (3).jpg" alt="Aktiviti PTIS 3" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (4).jpg" alt="Aktiviti PTIS 4" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (5).jpg" alt="Aktiviti PTIS 5" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (6).jpg" alt="Aktiviti PTIS 6" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (7).jpg" alt="Aktiviti PTIS 7" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (8).jpg" alt="Aktiviti PTIS 8" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (9).jpg" alt="Aktiviti PTIS 9" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (10).jpg" alt="Aktiviti PTIS 10" class="w-full h-full object-contain"></div>
+
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (11).jpg" alt="Aktiviti PTIS 11" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (12).jpg" alt="Aktiviti PTIS 12" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (13).jpg" alt="Aktiviti PTIS 13" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (14).jpg" alt="Aktiviti PTIS 14" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (15).jpg" alt="Aktiviti PTIS 15" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (16).jpg" alt="Aktiviti PTIS 16" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (17).jpg" alt="Aktiviti PTIS 17" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (18).jpg" alt="Aktiviti PTIS 18" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (19).jpg" alt="Aktiviti PTIS 19" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (20).jpg" alt="Aktiviti PTIS 20" class="w-full h-full object-contain"></div>
+
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (21).jpg" alt="Aktiviti PTIS 21" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (22).jpg" alt="Aktiviti PTIS 22" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (23).jpg" alt="Aktiviti PTIS 23" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (24).jpg" alt="Aktiviti PTIS 24" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (25).jpg" alt="Aktiviti PTIS 25" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (26).jpg" alt="Aktiviti PTIS 26" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (27).jpg" alt="Aktiviti PTIS 27" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (28).jpg" alt="Aktiviti PTIS 28" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (29).jpg" alt="Aktiviti PTIS 29" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (30).jpg" alt="Aktiviti PTIS 30" class="w-full h-full object-contain"></div>
+
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (31).jpg" alt="Aktiviti PTIS 31" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (32).jpg" alt="Aktiviti PTIS 32" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (33).jpg" alt="Aktiviti PTIS 33" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (34).jpg" alt="Aktiviti PTIS 34" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (35).jpg" alt="Aktiviti PTIS 35" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (36).jpg" alt="Aktiviti PTIS 36" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (37).jpg" alt="Aktiviti PTIS 37" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (38).jpg" alt="Aktiviti PTIS 38" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (39).jpg" alt="Aktiviti PTIS 39" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (40).jpg" alt="Aktiviti PTIS 40" class="w-full h-full object-contain"></div>
+
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (41).jpg" alt="Aktiviti PTIS 41" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (42).jpg" alt="Aktiviti PTIS 42" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (43).jpg" alt="Aktiviti PTIS 43" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (44).jpg" alt="Aktiviti PTIS 44" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (45).jpg" alt="Aktiviti PTIS 45" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (46).jpg" alt="Aktiviti PTIS 46" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (47).jpg" alt="Aktiviti PTIS 47" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (48).jpg" alt="Aktiviti PTIS 48" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (49).jpg" alt="Aktiviti PTIS 49" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (50).jpg" alt="Aktiviti PTIS 50" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (51).jpg" alt="Aktiviti PTIS 51" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (52).jpg" alt="Aktiviti PTIS 52" class="w-full h-full object-contain"></div>
+                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (53).jpg" alt="Aktiviti PTIS 53" class="w-full h-full object-contain"></div>
+
+            </div>
+
+            <!-- BUTANG NAVIGASI KIRI -->
+            <button onclick="prevSlide()" type="button" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/80 hover:bg-blue-600 text-white flex items-center justify-center border border-slate-600 transition-all shadow-lg z-20">
+                <i class="fa-solid fa-chevron-left text-sm"></i>
+            </button>
+
+            <!-- BUTANG NAVIGASI KANAN -->
+            <button onclick="nextSlide()" type="button" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/80 hover:bg-blue-600 text-white flex items-center justify-center border border-slate-600 transition-all shadow-lg z-20">
+                <i class="fa-solid fa-chevron-right text-sm"></i>
+            </button>
+
+            <!-- BADGE PENUNJUK NOMBOR GAMBAR (GANTI DOTS TERLALU BANYAK) -->
+            <div class="absolute bottom-3 right-3 bg-slate-900/80 backdrop-blur-md border border-slate-700 text-blue-400 text-xs font-mono font-bold px-3 py-1 rounded-full shadow-lg z-20">
+                <span id="galleryCurrentNum">1</span> / <span id="galleryTotalNum">53</span>
+            </div>
+
+            <!-- INDIKATOR TITIK (BENTUK TERKAWAL) -->
+            <div id="galleryDotsContainer" class="hidden"></div>
+
+        </div>
+    </div>
+</section>
 
     <!-- SECTION: GRID 12 SEKOLAH SELIAAN -->
     <section id="sekolah-zon" class="py-12 bg-white border-y border-slate-200">
@@ -2746,6 +2855,65 @@ function toggleMobileMenu() {
         menu.classList.toggle('hidden');
     }
 }
+
+// ==================== LOGIK GALERI SLIDER (KEMASKINI DENGAN KAUNTER NOMBOR) ====================
+let currentSlideIndex = 0;
+let slideInterval = null;
+
+function updateSliderPosition() {
+    const track = document.getElementById('gallerySliderTrack');
+    const currNum = document.getElementById('galleryCurrentNum');
+    const totalNum = document.getElementById('galleryTotalNum');
+
+    if (!track) return;
+
+    const totalSlides = track.children.length;
+    if (totalSlides === 0) return;
+
+    if (currentSlideIndex >= totalSlides) currentSlideIndex = 0;
+    if (currentSlideIndex < 0) currentSlideIndex = totalSlides - 1;
+
+    // Gerakkan track secara tepat 100% per slide
+    track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+
+    // Kemaskini Kaunter Nombor Gambar (Cth: 1 / 53)
+    if (currNum) currNum.textContent = currentSlideIndex + 1;
+    if (totalNum) totalNum.textContent = totalSlides;
+}
+
+function nextSlide() {
+    currentSlideIndex++;
+    updateSliderPosition();
+}
+
+function prevSlide() {
+    currentSlideIndex--;
+    updateSliderPosition();
+}
+
+function goToSlide(index) {
+    currentSlideIndex = index;
+    updateSliderPosition();
+}
+
+function startAutoSlide() {
+    stopAutoSlide();
+    slideInterval = setInterval(() => {
+        nextSlide();
+    }, 3500); // Bertukar setiap 3.5 saat
+}
+
+function stopAutoSlide() {
+    if (slideInterval) clearInterval(slideInterval);
+}
+
+// Mulakan Slider apabila DOM sedia
+document.addEventListener('DOMContentLoaded', () => {
+    refreshAllData();
+    updateSliderPosition();
+    startAutoSlide();
+});
+
     </script>
 
     <!-- MODAL BORANG EDIT / TAMBAH INVENTORI ADMIN -->
