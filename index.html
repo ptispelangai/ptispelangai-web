@@ -2860,7 +2860,7 @@ function toggleMobileMenu() {
     }
 }
 
-// ==================== LOGIK GALERI SLIDER (KEMASKINI DENGAN KAUNTER NOMBOR) ====================
+// ==================== LOGIK GALERI SLIDER (DIBANGKITKAN BUTANG & AUTO-SLIDE) ====================
 let currentSlideIndex = 0;
 let slideInterval = null;
 
@@ -2888,27 +2888,34 @@ function updateSliderPosition() {
 function nextSlide() {
     currentSlideIndex++;
     updateSliderPosition();
+    startAutoSlide(); // Mula semula pemutar automatik bila butang ditekan
 }
 
 function prevSlide() {
     currentSlideIndex--;
     updateSliderPosition();
+    startAutoSlide(); // Mula semula pemutar automatik bila butang ditekan
 }
 
 function goToSlide(index) {
     currentSlideIndex = index;
     updateSliderPosition();
+    startAutoSlide();
 }
 
 function startAutoSlide() {
-    stopAutoSlide();
+    stopAutoSlide(); // Clean up interval sedia ada
     slideInterval = setInterval(() => {
-        nextSlide();
+        currentSlideIndex++;
+        updateSliderPosition();
     }, 3500); // Bertukar setiap 3.5 saat
 }
 
 function stopAutoSlide() {
-    if (slideInterval) clearInterval(slideInterval);
+    if (slideInterval) {
+        clearInterval(slideInterval);
+        slideInterval = null;
+    }
 }
 
 // Mulakan Slider apabila DOM sedia
@@ -2917,7 +2924,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSliderPosition();
     startAutoSlide();
 });
-
     </script>
 
     <!-- MODAL BORANG EDIT / TAMBAH INVENTORI ADMIN -->
