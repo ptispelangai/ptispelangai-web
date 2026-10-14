@@ -786,49 +786,71 @@
     </div>
 </div>
 
-<!-- 2. MODAL TAKWIM PTIS (BAHARU) -->
-    <div id="takwimModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white border border-slate-200 rounded-2xl max-w-4xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
-            
-            <!-- HEADER MODAL TAKWIM -->
-            <div class="p-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-                <div class="flex items-center gap-3">
-                    <div class="p-2 bg-purple-100 text-purple-700 rounded-lg"><i class="fa-solid fa-calendar-days text-lg"></i></div>
-                    <div>
-                        <h3 class="text-base font-extrabold text-slate-900">Takwim & Perancangan PTIS</h3>
-                        <p class="text-xs font-semibold text-slate-700">Jadual Aktiviti, Lawatan Sekolah & Program Rasmi Pasukan</p>
-                    </div>
+<!-- 2. MODAL TAKWIM PTIS (DIKEMASKINI UI/UX) -->
+<div id="takwimModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-2 sm:p-4">
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-5xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
+        
+        <!-- HEADER MODAL TAKWIM -->
+        <div class="p-4 sm:p-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 bg-purple-100 text-purple-700 rounded-xl border border-purple-200">
+                    <i class="fa-solid fa-calendar-days text-xl"></i>
                 </div>
-                <button onclick="closeModal('takwimModal')" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                <div>
+                    <h3 class="text-base sm:text-lg font-extrabold text-slate-900">Takwim & Perancangan PTIS</h3>
+                    <p class="text-xs font-semibold text-slate-600">Jadual Aktiviti, Lawatan Sekolah & Program Rasmi Pasukan</p>
+                </div>
             </div>
+            <button onclick="closeModal('takwimModal')" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-base"></i>
+            </button>
+        </div>
 
-            <!-- ISI KANDUNGAN TAKWIM -->
-            <div class="p-6 overflow-y-auto max-h-[65vh] space-y-4">
-                <!-- BAR PENAPIS BULAN -->
-                <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs font-bold text-slate-600 uppercase">Pilih Bulan:</span>
-                        <input type="month" id="takwimFilterMonth" onchange="loadTakwimSchedules()" class="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 font-bold outline-none shadow-sm">
-                    </div>
-                    <button onclick="loadTakwimSchedules()" class="text-xs bg-purple-50 text-purple-700 border border-purple-200 px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 hover:bg-purple-100 transition-colors">
-                        <i class="fa-solid fa-rotate"></i> Muat Semula
+        <!-- ISI KANDUNGAN TAKWIM -->
+        <div class="p-4 sm:p-6 overflow-y-auto space-y-4 max-h-[75vh]">
+            
+            <!-- BAR PENAPIS & NAVIGASI BULAN -->
+            <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+                <div class="flex items-center gap-2">
+                    <button onclick="changeTakwimMonth(-1)" title="Bulan Sebelumnya" class="p-2 rounded-xl bg-white border border-slate-300 text-slate-700 hover:bg-purple-50 hover:text-purple-700 transition-all text-xs font-bold shadow-sm flex items-center justify-center w-9 h-9">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    
+                    <input type="month" id="takwimFilterMonth" onchange="loadTakwimSchedules()" class="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-800 font-extrabold outline-none shadow-sm cursor-pointer h-9">
+
+                    <button onclick="changeTakwimMonth(1)" title="Bulan Seterusnya" class="p-2 rounded-xl bg-white border border-slate-300 text-slate-700 hover:bg-purple-50 hover:text-purple-700 transition-all text-xs font-bold shadow-sm flex items-center justify-center w-9 h-9">
+                        <i class="fa-solid fa-chevron-right"></i>
                     </button>
                 </div>
 
-                <!-- SENARAI KAD JADUAL TAKWIM -->
-                <div id="takwimListContainer" class="space-y-3">
-                    <p class="text-center py-8 text-slate-500 text-xs italic"><i class="fa-solid fa-spinner fa-spin"></i> Memuatkan Takwim PTIS...</p>
+                <div class="flex items-center gap-2">
+                    <button onclick="goToCurrentTakwimMonth()" class="text-xs bg-purple-100 text-purple-800 border border-purple-200 px-3 py-2 rounded-xl font-bold hover:bg-purple-200 transition-colors flex items-center gap-1.5 shadow-sm">
+                        <i class="fa-solid fa-calendar-day"></i> Bulan Ini
+                    </button>
+                    <button onclick="loadTakwimSchedules()" class="text-xs bg-white text-slate-700 border border-slate-300 px-3 py-2 rounded-xl font-bold flex items-center gap-1.5 hover:bg-slate-100 transition-colors shadow-sm">
+                        <i class="fa-solid fa-rotate"></i> Muat Semula
+                    </button>
                 </div>
             </div>
 
-            <!-- FOOTER MODAL -->
-            <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-end">
-                <button onclick="closeModal('takwimModal')" class="bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-bold text-xs px-4 py-2 rounded-lg shadow-sm">Tutup</button>
+            <!-- KAD STATISTIK RINGKASAN TAKWIM BULANAN -->
+            <div id="takwimStatsContainer" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <!-- Statistik dijana secara automatik oleh JS -->
+            </div>
+
+            <!-- SENARAI GRID KALENDAR -->
+            <div id="takwimListContainer" class="space-y-3">
+                <p class="text-center py-8 text-slate-500 text-xs italic"><i class="fa-solid fa-spinner fa-spin text-base"></i> Memuatkan Takwim PTIS...</p>
             </div>
         </div>
+
+        <!-- FOOTER MODAL -->
+        <div class="p-3.5 border-t border-slate-200 bg-slate-50 flex justify-between items-center text-xs text-slate-500">
+            <span class="font-medium hidden sm:inline">Tekan pada mana-mana tarikh di atas untuk maklumat lanjut.</span>
+            <button onclick="closeModal('takwimModal')" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-sm transition-colors ml-auto">Tutup</button>
+        </div>
     </div>
+</div>
 
 <!-- 3. Modal Pop-Up Senarai 12 Sekolah -->
 <div id="schoolModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
@@ -1451,47 +1473,67 @@
         }
 
 
-// ==================== FUNGSI TAKWIM PTIS (DIKEMAS KINI) ====================
+// ==================== FUNGSI TAKWIM PTIS (DIKEMASKINI DENGAN VISUAL MENARIK) ====================
+let currentTakwimData = [];
+let selectedTakwimYearMonth = '';
+
 function openTakwimModal() {
     const modal = document.getElementById('takwimModal');
     if (!modal) return;
     
-    // 1. Dapatkan masa tempatan peranti secara segar
     const now = new Date();
-    const currentYearMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    selectedTakwimYearMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
 
-    // 2. Paksa kemaskini nilai pada input filter bulan
     const filterInput = document.getElementById('takwimFilterMonth');
-    if (filterInput) {
-        filterInput.value = currentYearMonth;
-    }
+    if (filterInput) filterInput.value = selectedTakwimYearMonth;
 
     modal.classList.remove('hidden');
     document.body.classList.add('overflow-hidden');
     
-    // 3. Muat semula jadual dengan hantaran bulan semasa secara terus
-    loadTakwimSchedules(currentYearMonth);
+    loadTakwimSchedules(selectedTakwimYearMonth);
 }
 
-let currentTakwimData = [];
+function changeTakwimMonth(offset) {
+    if (!selectedTakwimYearMonth) {
+        const now = new Date();
+        selectedTakwimYearMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    }
+
+    let [year, month] = selectedTakwimYearMonth.split('-').map(Number);
+    month += offset;
+
+    if (month > 12) { month = 1; year++; }
+    if (month < 1) { month = 12; year--; }
+
+    selectedTakwimYearMonth = `${year}-${String(month).padStart(2, '0')}`;
+
+    const filterInput = document.getElementById('takwimFilterMonth');
+    if (filterInput) filterInput.value = selectedTakwimYearMonth;
+
+    loadTakwimSchedules(selectedTakwimYearMonth);
+}
+
+function goToCurrentTakwimMonth() {
+    const now = new Date();
+    selectedTakwimYearMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    const filterInput = document.getElementById('takwimFilterMonth');
+    if (filterInput) filterInput.value = selectedTakwimYearMonth;
+    loadTakwimSchedules(selectedTakwimYearMonth);
+}
 
 async function loadTakwimSchedules(forcedMonth = null) {
     const container = document.getElementById('takwimListContainer');
     const filterInput = document.getElementById('takwimFilterMonth');
     if (!container) return;
 
-    // Paksa guna forcedMonth jika ada, atau baca dari input, atau buat tarikh tempatan baru
     const now = new Date();
-    const currentYearMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-    
-    let selectedMonthStr = forcedMonth || (filterInput ? filterInput.value : null) || currentYearMonth;
+    const defaultYM = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    let selectedMonthStr = forcedMonth || (filterInput ? filterInput.value : null) || defaultYM;
+    selectedTakwimYearMonth = selectedMonthStr;
 
-    // Pastikan filterInput sentiasa selari
-    if (filterInput && !filterInput.value) {
-        filterInput.value = selectedMonthStr;
-    }
+    if (filterInput) filterInput.value = selectedMonthStr;
 
-    container.innerHTML = `<p class="text-center py-8 text-purple-700 text-xs font-semibold animate-pulse"><i class="fa-solid fa-spinner fa-spin"></i> Memuatkan Kalendar Takwim...</p>`;
+    container.innerHTML = `<p class="text-center py-8 text-purple-700 text-xs font-semibold animate-pulse"><i class="fa-solid fa-spinner fa-spin text-base"></i> Memuatkan Kalendar Takwim...</p>`;
 
     try {
         const client = getSupabase();
@@ -1499,6 +1541,7 @@ async function loadTakwimSchedules(forcedMonth = null) {
         if (error) throw error;
 
         currentTakwimData = data || [];
+        renderTakwimStats(selectedMonthStr);
         renderTakwimCalendarGrid(selectedMonthStr);
 
     } catch (err) {
@@ -1507,199 +1550,217 @@ async function loadTakwimSchedules(forcedMonth = null) {
     }
 }
 
-      function renderTakwimCalendarGrid(yearMonth) {
-            const container = document.getElementById('takwimListContainer');
-            if (!container) return;
+function renderTakwimStats(yearMonth) {
+    const statsContainer = document.getElementById('takwimStatsContainer');
+    if (!statsContainer) return;
 
-            const [year, month] = yearMonth.split('-').map(Number);
-            
-            // Pengiraan hari
-            const firstDay = new Date(year, month - 1, 1).getDay();
-            const daysInMonth = new Date(year, month, 0).getDate();
+    const monthlyEvents = currentTakwimData.filter(item => item.tarikh && item.tarikh.startsWith(yearMonth));
+    const lawatanCount = monthlyEvents.filter(item => (item.kategori || '').includes('Lawatan')).length;
+    const pkgCount = monthlyEvents.filter(item => (item.kategori || '').includes('PKG') || (item.kategori || '').includes('PTIS')).length;
+    const kursusCount = monthlyEvents.filter(item => (item.kategori || '').includes('Kursus') || (item.kategori || '').includes('Bengkel')).length;
 
-            const monthNames = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
-            
-            // Label Hari: Singkatan untuk Mobile, Penuh untuk Desktop
-            const dayLabelsShort = ["A", "I", "S", "R", "K", "J", "S"];
-            const dayLabelsFull = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"];
+    statsContainer.innerHTML = `
+        <div class="bg-purple-50 border border-purple-200 p-3 rounded-xl flex items-center justify-between shadow-xs">
+            <div><p class="text-[10px] font-bold uppercase text-purple-600">Jumlah Aktiviti</p><p class="text-lg font-extrabold text-purple-900">${monthlyEvents.length}</p></div>
+            <div class="p-2 bg-purple-200 text-purple-800 rounded-lg text-xs"><i class="fa-solid fa-list-check"></i></div>
+        </div>
+        <div class="bg-blue-50 border border-blue-200 p-3 rounded-xl flex items-center justify-between shadow-xs">
+            <div><p class="text-[10px] font-bold uppercase text-blue-600">Lawatan Sekolah</p><p class="text-lg font-extrabold text-blue-900">${lawatanCount}</p></div>
+            <div class="p-2 bg-blue-200 text-blue-800 rounded-lg text-xs"><i class="fa-solid fa-school"></i></div>
+        </div>
+        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl flex items-center justify-between shadow-xs">
+            <div><p class="text-[10px] font-bold uppercase text-emerald-600">Program PKG / PTIS</p><p class="text-lg font-extrabold text-emerald-900">${pkgCount}</p></div>
+            <div class="p-2 bg-emerald-200 text-emerald-800 rounded-lg text-xs"><i class="fa-solid fa-laptop-code"></i></div>
+        </div>
+        <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl flex items-center justify-between shadow-xs">
+            <div><p class="text-[10px] font-bold uppercase text-amber-600">Kursus / Bengkel</p><p class="text-lg font-extrabold text-amber-900">${kursusCount}</p></div>
+            <div class="p-2 bg-amber-200 text-amber-800 rounded-lg text-xs"><i class="fa-solid fa-chalkboard-user"></i></div>
+        </div>
+    `;
+}
 
-            // Tapis data bagi bulan terpilih
-            const monthlyEvents = currentTakwimData.filter(item => item.tarikh && item.tarikh.startsWith(yearMonth));
+function renderTakwimCalendarGrid(yearMonth) {
+    const container = document.getElementById('takwimListContainer');
+    if (!container) return;
 
-            // Petakan aktiviti mengikut tarikh (day number)
-            const eventsByDay = {};
-            monthlyEvents.forEach(item => {
-                const dayNum = parseInt(item.tarikh.split('-')[2], 10);
-                if (!eventsByDay[dayNum]) eventsByDay[dayNum] = [];
-                eventsByDay[dayNum].push(item);
-            });
+    const [year, month] = yearMonth.split('-').map(Number);
+    const firstDay = new Date(year, month - 1, 1).getDay();
+    const daysInMonth = new Date(year, month, 0).getDate();
 
-            // Pembinaan HTML Grid
-            let gridHTML = `
-                <div class="bg-white border border-slate-200 rounded-xl p-2 sm:p-4 shadow-sm space-y-3">
-                    <!-- HEADER NAMA BULAN & TAJUK -->
-                    <div class="flex flex-wrap justify-between items-center border-b border-slate-200 pb-2.5 gap-2">
-                        <h4 class="text-sm sm:text-base font-extrabold text-slate-900 flex items-center gap-2">
-                            <i class="fa-solid fa-calendar-day text-purple-700"></i>
-                            <span>${monthNames[month - 1]} ${year}</span>
-                        </h4>
-                        <span class="bg-purple-100 text-purple-800 border border-purple-200 text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-full">
-                            ${monthlyEvents.length} Aktiviti Dijadualkan
-                        </span>
+    const monthNames = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
+    const dayLabelsShort = ["A", "I", "S", "R", "K", "J", "S"];
+    const dayLabelsFull = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"];
+
+    const monthlyEvents = currentTakwimData.filter(item => item.tarikh && item.tarikh.startsWith(yearMonth));
+
+    const eventsByDay = {};
+    monthlyEvents.forEach(item => {
+        const dayNum = parseInt(item.tarikh.split('-')[2], 10);
+        if (!eventsByDay[dayNum]) eventsByDay[dayNum] = [];
+        eventsByDay[dayNum].push(item);
+    });
+
+    let gridHTML = `
+        <div class="bg-white border border-slate-200 rounded-2xl p-3 sm:p-5 shadow-sm space-y-4">
+            <div class="flex flex-wrap justify-between items-center border-b border-slate-200 pb-3 gap-2">
+                <h4 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-day text-purple-700"></i>
+                    <span>${monthNames[month - 1]} ${year}</span>
+                </h4>
+                <span class="bg-purple-100 text-purple-900 border border-purple-200 text-xs font-bold px-3 py-1 rounded-full">
+                    ${monthlyEvents.length} Aktiviti Dijadualkan
+                </span>
+            </div>
+
+            <div class="grid grid-cols-7 gap-1.5 text-center font-bold text-xs text-slate-600 uppercase bg-slate-100 py-2 rounded-xl">
+                ${dayLabelsFull.map((d, idx) => `
+                    <div class="${(idx === 0 || idx === 6) ? 'text-rose-600' : ''}">
+                        <span class="hidden sm:inline">${d}</span>
+                        <span class="sm:hidden">${dayLabelsShort[idx]}</span>
                     </div>
+                `).join('')}
+            </div>
 
-                    <!-- GRID HEADER (AHAD - SABTU): RESPONSIF -->
-                    <div class="grid grid-cols-7 gap-1 text-center font-bold text-[10px] sm:text-[11px] text-slate-600 uppercase bg-slate-100 py-1.5 rounded-lg">
-                        ${dayLabelsFull.map((d, idx) => `
-                            <div>
-                                <span class="hidden sm:inline">${d}</span>
-                                <span class="sm:hidden">${dayLabelsShort[idx]}</span>
-                            </div>
-                        `).join('')}
+            <div class="grid grid-cols-7 gap-1.5 text-xs">`;
+
+    // Petak Kosong Sebelum Hari Pertama
+    for (let i = 0; i < firstDay; i++) {
+        gridHTML += `<div class="h-16 sm:h-24 bg-slate-50/40 border border-slate-100 rounded-xl"></div>`;
+    }
+
+    const now = new Date();
+    const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const currentDayFormatted = `${yearMonth}-${String(day).padStart(2, '0')}`;
+        const dayOfWeek = new Date(year, month - 1, day).getDay();
+        const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
+        const isToday = (currentDayFormatted === todayStr);
+        const dayEvents = eventsByDay[day] || [];
+        const hasEvents = dayEvents.length > 0;
+
+        let cellBg = 'bg-white border-slate-200';
+        if (isWeekend) cellBg = 'bg-slate-50/80 border-slate-200/80';
+        if (hasEvents) cellBg = 'bg-purple-50/50 border-purple-300 hover:border-purple-600 shadow-sm';
+        if (isToday) cellBg = 'bg-amber-50/80 border-amber-500 ring-2 ring-amber-400/50';
+
+        gridHTML += `
+            <div onclick="showTakwimDayDetail('${currentDayFormatted}')" class="h-16 sm:h-24 border ${cellBg} rounded-xl p-1.5 flex flex-col justify-between cursor-pointer transition-all hover:shadow-md relative overflow-hidden group">
+                <div class="flex justify-between items-center w-full">
+                    <span class="font-mono ${isToday ? 'bg-amber-600 text-white px-1.5 py-0.5 rounded-md text-[10px] font-extrabold' : (isWeekend ? 'text-rose-500 font-bold' : 'text-slate-700 font-bold')}">${day}</span>
+                    ${isToday ? `<span class="hidden sm:inline text-[8px] bg-amber-200 text-amber-900 px-1 rounded font-extrabold uppercase">Hari Ini</span>` : ''}
+                    ${hasEvents ? `<span class="bg-purple-700 text-white text-[9px] font-extrabold px-1.5 py-0.2 rounded-full">${dayEvents.length}</span>` : ''}
+                </div>
+                
+                <div class="hidden sm:block space-y-1 overflow-hidden w-full my-1">
+                    ${dayEvents.slice(0, 2).map(ev => {
+                        let badgeColor = 'bg-blue-600';
+                        if (ev.kategori === 'PPD / JPN') badgeColor = 'bg-purple-600';
+                        else if (ev.kategori === 'Kursus / Bengkel') badgeColor = 'bg-amber-600';
+                        else if (ev.kategori === 'Program PKG / PTIS') badgeColor = 'bg-emerald-600';
+
+                        return `<div class="${badgeColor} text-white text-[9px] font-bold truncate px-1.5 py-0.5 rounded-md shadow-xs leading-tight" title="${esc(ev.tajuk)}">${esc(ev.tajuk)}</div>`;
+                    }).join('')}
+                    ${dayEvents.length > 2 ? `<div class="text-[8px] text-purple-700 font-bold">+${dayEvents.length - 2} lagi</div>` : ''}
+                </div>
+
+                ${hasEvents ? `<div class="sm:hidden flex justify-center gap-0.5 w-full mt-0.5">
+                    <span class="w-2 h-2 rounded-full bg-purple-600"></span>
+                </div>` : ''}
+            </div>`;
+    }
+
+    gridHTML += `</div></div>
+        <div id="takwimDayDetailContainer" class="mt-4">
+            <p class="text-center py-4 text-slate-500 text-xs italic bg-slate-50 rounded-2xl border border-slate-200">Tekan mana-mana tarikh di atas untuk paparan terperinci aktiviti.</p>
+        </div>`;
+
+    container.innerHTML = gridHTML;
+}
+
+function showTakwimDayDetail(dateStr) {
+    const detailContainer = document.getElementById('takwimDayDetailContainer');
+    if (!detailContainer) return;
+
+    const dayEvents = currentTakwimData.filter(item => item.tarikh === dateStr);
+
+    if (dayEvents.length === 0) {
+        detailContainer.innerHTML = `
+            <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center shadow-inner">
+                <p class="text-slate-600 text-xs font-semibold">📅 Tarikh: <span class="font-mono font-bold text-slate-900">${dateStr}</span></p>
+                <p class="text-slate-400 text-xs mt-1 italic">Tiada sebarang aktiviti dijadualkan pada tarikh ini.</p>
+            </div>`;
+    } else {
+        let detailHTML = `
+            <div class="bg-purple-50/90 border-2 border-purple-300 p-4 rounded-xl space-y-3 shadow-md transition-all">
+                <h5 class="text-xs font-bold text-purple-900 flex items-center justify-between border-b border-purple-200 pb-2">
+                    <span class="flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-purple-700"></i>
+                        <span>Aktiviti Pada Tarikh: <span class="font-mono font-extrabold text-slate-900">${dateStr}</span></span>
+                    </span>
+                    <span class="bg-purple-200 text-purple-900 text-[10px] px-2 py-0.5 rounded-full font-bold">${dayEvents.length} Aktiviti</span>
+                </h5>
+                <div class="space-y-2">`;
+
+        dayEvents.forEach(item => {
+            const pegawai = item.pegawai || 'Semua Pasukan PTIS';
+            const isSemua = pegawai.includes('Semua');
+
+            let catColor = 'bg-blue-100 text-blue-800 border-blue-200';
+            if (item.kategori === 'PPD / JPN') catColor = 'bg-purple-100 text-purple-800 border-purple-200';
+            else if (item.kategori === 'Kursus / Bengkel') catColor = 'bg-amber-100 text-amber-800 border-amber-200';
+            else if (item.kategori === 'Program PKG / PTIS') catColor = 'bg-emerald-100 text-emerald-800 border-emerald-200';
+
+            detailHTML += `
+                <div class="bg-white border border-slate-200 p-3 rounded-lg shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="${catColor} border text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">${esc(item.kategori || 'Umum')}</span>
+                            ${isSemua ? `<span class="bg-purple-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-md"><i class="fa-solid fa-users"></i> Semua Pasukan PTIS</span>` : ''}
+                        </div>
+                        <h4 class="text-xs font-bold text-slate-900">${esc(item.tajuk)}</h4>
+                        <p class="text-[11px] text-slate-600 font-medium flex items-center gap-1.5">
+                            <i class="fa-solid fa-location-dot text-slate-400"></i> ${esc(item.lokasi)}
+                            ${!isSemua ? `<span class="text-slate-400">|</span> <i class="fa-solid fa-user text-slate-400"></i> ${esc(pegawai)}` : ''}
+                        </p>
                     </div>
-
-                    <!-- GRID PETAK TARIKH -->
-                    <div class="grid grid-cols-7 gap-1 text-xs">`;
-
-            // Petak Kosong Sebelum Hari Pertama
-            for (let i = 0; i < firstDay; i++) {
-                gridHTML += `<div class="h-11 sm:h-20 bg-slate-50/50 border border-slate-100 rounded-lg"></div>`;
-            }
-
-           // Petak Tarikh 1 sehingga DaysInMonth
-            const now = new Date();
-            const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-
-            for (let day = 1; day <= daysInMonth; day++) {
-                const currentDayFormatted = `${yearMonth}-${String(day).padStart(2, '0')}`;
-                const isToday = (currentDayFormatted === todayStr);
-                const dayEvents = eventsByDay[day] || [];
-                const hasEvents = dayEvents.length > 0;
-
-                let cellBg = isToday ? 'bg-purple-50 border-purple-400 font-bold' : 'bg-white border-slate-200';
-                if (hasEvents && !isToday) cellBg = 'bg-slate-50 border-purple-300 hover:border-purple-500';
-
-                gridHTML += `
-                    <div onclick="showTakwimDayDetail('${currentDayFormatted}')" class="h-11 sm:h-20 border ${cellBg} rounded-lg p-1 sm:p-1.5 flex flex-col justify-between cursor-pointer transition-all hover:shadow-md relative overflow-hidden group">
-                        <div class="flex justify-between items-center w-full">
-                            <span class="font-mono ${isToday ? 'bg-purple-900 text-white px-1 sm:px-1.5 py-0.2 rounded text-[9px] sm:text-[10px]' : 'text-slate-700 text-[10px] sm:text-xs font-bold'}">${day}</span>
-                            ${hasEvents ? `<span class="bg-purple-600 text-white text-[8px] sm:text-[9px] font-extrabold w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full flex items-center justify-center">${dayEvents.length}</span>` : ''}
-                        </div>
-                        
-                        <!-- LENCANA RINGKASAN AKTIVITI DALAM PETAK (TERSEMBUNYI DI MOBILE, TAMPIL DI DESKTOP) -->
-                        <div class="hidden sm:block space-y-0.5 overflow-hidden w-full">
-                            ${dayEvents.slice(0, 2).map(ev => {
-                                let badgeColor = 'bg-blue-600';
-                                if (ev.kategori === 'PPD / JPN') badgeColor = 'bg-purple-600';
-                                else if (ev.kategori === 'Kursus / Bengkel') badgeColor = 'bg-amber-600';
-                                else if (ev.kategori === 'Program PKG / PTIS') badgeColor = 'bg-emerald-600';
-
-                                return `<div class="${badgeColor} text-white text-[9px] font-semibold truncate px-1 rounded-sm leading-tight" title="${esc(ev.tajuk)}">${esc(ev.tajuk)}</div>`;
-                            }).join('')}
-                            ${dayEvents.length > 2 ? `<div class="text-[8px] text-slate-500 font-bold">+${dayEvents.length - 2} lagi</div>` : ''}
-                        </div>
-
-                        <!-- TITIK INDIKATOR RINGKAS UNTUK SKRIN MOBILE -->
-                        ${hasEvents ? `<div class="sm:hidden flex justify-center gap-0.5 w-full mt-0.5">
-                            <span class="w-1.5 h-1.5 rounded-full bg-purple-600"></span>
-                        </div>` : ''}
-                    </div>`;
-            }
-            gridHTML += `</div></div>
-                <!-- RUANGAN BUTIRAN AKTIVITI BILA PETAK DIKLIK -->
-                <div id="takwimDayDetailContainer" class="mt-3">
-                    <p class="text-center py-3 text-slate-500 text-[11px] sm:text-xs italic bg-slate-50 rounded-xl border border-slate-200">Klik mana-mana tarikh di atas untuk melihat butiran aktiviti.</p>
                 </div>`;
+        });
 
-            container.innerHTML = gridHTML;
-        }
+        detailHTML += `</div></div>`;
+        detailContainer.innerHTML = detailHTML;
+    }
 
-       function showTakwimDayDetail(dateStr) {
-            const detailContainer = document.getElementById('takwimDayDetailContainer');
-            if (!detailContainer) return;
+    setTimeout(() => {
+        detailContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+}
 
-            const dayEvents = currentTakwimData.filter(item => item.tarikh === dateStr);
+function showAdminSection(which) {
+    document.getElementById('adminSchoolsSection').classList.toggle('hidden', which !== 'schools');
+    document.getElementById('adminTeamSection').classList.toggle('hidden', which !== 'team');
+    
+    const annSec = document.getElementById('adminAnnouncementsSection');
+    if (annSec) {
+        annSec.classList.toggle('hidden', which !== 'announcements');
+        if (which === 'announcements') loadAdminAnnouncements();
+    }
 
-            if (dayEvents.length === 0) {
-                detailContainer.innerHTML = `
-                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center shadow-inner">
-                        <p class="text-slate-600 text-xs font-semibold">📅 Tarikh: <span class="font-mono font-bold text-slate-900">${dateStr}</span></p>
-                        <p class="text-slate-400 text-xs mt-1 italic">Tiada sebarang aktiviti dijadualkan pada tarikh ini.</p>
-                    </div>`;
-            } else {
-                let detailHTML = `
-                    <div class="bg-purple-50/90 border-2 border-purple-300 p-4 rounded-xl space-y-3 shadow-md transition-all">
-                        <h5 class="text-xs font-bold text-purple-900 flex items-center justify-between border-b border-purple-200 pb-2">
-                            <span class="flex items-center gap-2">
-                                <i class="fa-solid fa-list-check text-purple-700"></i>
-                                <span>Aktiviti Pada Tarikh: <span class="font-mono font-extrabold text-slate-900">${dateStr}</span></span>
-                            </span>
-                            <span class="bg-purple-200 text-purple-900 text-[10px] px-2 py-0.5 rounded-full font-bold">${dayEvents.length} Aktiviti</span>
-                        </h5>
-                        <div class="space-y-2">`;
+    const invSec = document.getElementById('adminInventorySection');
+    if (invSec) invSec.classList.toggle('hidden', which !== 'inventory');
 
-                dayEvents.forEach(item => {
-                    const pegawai = item.pegawai || 'Semua Pasukan PTIS';
-                    const isSemua = pegawai.includes('Semua');
+    const bookSec = document.getElementById('adminBookingsSection');
+    if (bookSec) {
+        bookSec.classList.toggle('hidden', which !== 'bookings');
+        if (which === 'bookings') loadAdminBookings();
+    }
 
-                    let catColor = 'bg-blue-100 text-blue-800 border-blue-200';
-                    if (item.kategori === 'PPD / JPN') catColor = 'bg-purple-100 text-purple-800 border-purple-200';
-                    else if (item.kategori === 'Kursus / Bengkel') catColor = 'bg-amber-100 text-amber-800 border-amber-200';
-                    else if (item.kategori === 'Program PKG / PTIS') catColor = 'bg-emerald-100 text-emerald-800 border-emerald-200';
-
-                    detailHTML += `
-                        <div class="bg-white border border-slate-200 p-3 rounded-lg shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
-                            <div class="space-y-1">
-                                <div class="flex items-center gap-2 flex-wrap">
-                                    <span class="${catColor} border text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">${esc(item.kategori || 'Umum')}</span>
-                                    ${isSemua ? `<span class="bg-purple-900 text-white text-[10px] font-bold px-2 py-0.5 rounded-md"><i class="fa-solid fa-users"></i> Semua Pasukan PTIS</span>` : ''}
-                                </div>
-                                <h4 class="text-xs font-bold text-slate-900">${esc(item.tajuk)}</h4>
-                                <p class="text-[11px] text-slate-600 font-medium flex items-center gap-1.5">
-                                    <i class="fa-solid fa-location-dot text-slate-400"></i> ${esc(item.lokasi)}
-                                    ${!isSemua ? `<span class="text-slate-400">|</span> <i class="fa-solid fa-user text-slate-400"></i> ${esc(pegawai)}` : ''}
-                                </p>
-                            </div>
-                        </div>`;
-                });
-
-                detailHTML += `</div></div>`;
-                detailContainer.innerHTML = detailHTML;
-            }
-
-            // AUTO-SCROLL AUTOMATIK KE BAHAGIAN BUTIRAN BILA TARIKH DIKLIK
-            setTimeout(() => {
-                detailContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 100);
-        }
-
-      function showAdminSection(which) {
-            document.getElementById('adminSchoolsSection').classList.toggle('hidden', which !== 'schools');
-            document.getElementById('adminTeamSection').classList.toggle('hidden', which !== 'team');
-            
-            const annSec = document.getElementById('adminAnnouncementsSection');
-            if (annSec) {
-                annSec.classList.toggle('hidden', which !== 'announcements');
-                if (which === 'announcements') loadAdminAnnouncements();
-            }
-
-            const invSec = document.getElementById('adminInventorySection');
-            if (invSec) invSec.classList.toggle('hidden', which !== 'inventory');
-
-            // TAB TEMPAHAN
-            const bookSec = document.getElementById('adminBookingsSection');
-            if (bookSec) {
-                bookSec.classList.toggle('hidden', which !== 'bookings');
-                if (which === 'bookings') loadAdminBookings();
-            }
-
-            // TAB TAKWIM PTIS (DITAMBAH DI SINI)
-            const schSec = document.getElementById('adminSchedulesSection');
-            if (schSec) {
-                schSec.classList.toggle('hidden', which !== 'schedules');
-                if (which === 'schedules') loadAdminSchedules();
-            }
-        }
+    const schSec = document.getElementById('adminSchedulesSection');
+    if (schSec) {
+        schSec.classList.toggle('hidden', which !== 'schedules');
+        if (which === 'schedules') loadAdminSchedules();
+    }
+}
 
         // ==================== LOGIK ADMIN TAKWIM PTIS ====================
         async function loadAdminSchedules() {
