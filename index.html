@@ -85,7 +85,7 @@
     <a href="#sekolah-zon" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Aset Sekolah</a>
     <a href="https://isd.moe.gov.my" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all">Sistem Aduan ISD</a>
     
-    <!-- DROPDOWN TAB TEMPAHAN -->
+ <!-- DROPDOWN TAB TEMPAHAN -->
     <div class="relative group">
         <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-white hover:text-blue-700 hover:shadow-sm transition-all flex items-center gap-1.5 font-semibold text-slate-700 group-hover:bg-white group-hover:text-blue-700 group-hover:shadow-sm">
             <span>Tempahan</span>
@@ -93,7 +93,7 @@
         </button>
 
         <!-- SUB TAB DROPDOWN MENU -->
-        <div class="absolute left-0 top-full mt-2 w-60 bg-white/95 backdrop-blur-md border border-slate-200 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-1.5 flex flex-col gap-1">
+        <div class="absolute left-0 top-full mt-2 w-64 bg-white/95 backdrop-blur-md border border-slate-200 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-1.5 flex flex-col gap-1">
             <a href="tempahan.html" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all text-xs font-semibold">
                 <i class="fa-solid fa-calendar-check text-blue-600 w-4"></i>
                 <span>Tempahan Bilik Mesyuarat</span>
@@ -101,6 +101,11 @@
             <a href="tempahan_studio.html" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all text-xs font-semibold">
                 <i class="fa-solid fa-video text-blue-600 w-4"></i>
                 <span>Tempahan Studio / 3D Printer</span>
+            </a>
+            <!-- PAUTAN BAHARU PINJAMAN COE -->
+            <a href="pinjaman_coe.html" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all text-xs font-semibold">
+                <i class="fa-solid fa-robot text-blue-600 w-4"></i>
+                <span>Pinjaman Peralatan COE</span>
             </a>
         </div>
     </div>
@@ -112,6 +117,7 @@
         <i class="fa-solid fa-lock text-white/80"></i> Admin
     </button>
 </nav>
+
 	<!-- BUTANG MENU MOBILE (HAMBURGER BUTTON - DIPAPARKAN DI TELEFON) -->
 <button onclick="toggleMobileMenu()" type="button" class="md:hidden flex items-center justify-center p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-800 hover:bg-blue-50 hover:text-blue-900 focus:outline-none transition-all">
     <i class="fa-solid fa-bars text-lg"></i>
@@ -131,24 +137,28 @@
         
         <a href="https://isd.moe.gov.my" target="_blank" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-blue-50 hover:text-blue-700">Sistem Aduan ISD</a>
         
-        <!-- SUB MENU TEMPAHAN MOBILE -->
-        <div class="bg-slate-50 p-2 rounded-xl space-y-1 my-1 border border-slate-200/60">
-            <span class="text-[10px] uppercase font-bold text-slate-400 px-2">Modul Tempahan</span>
-            <a href="tempahan.html" target="_blank" onclick="toggleMobileMenu()" class="flex items-center gap-2 py-1.5 px-2 rounded-lg text-slate-700 hover:text-blue-700">
-                <i class="fa-solid fa-calendar-check text-blue-600"></i> Tempahan Bilik Mesyuarat
-            </a>
-            <a href="tempahan_studio.html" target="_blank" onclick="toggleMobileMenu()" class="flex items-center gap-2 py-1.5 px-2 rounded-lg text-slate-700 hover:text-blue-700">
-                <i class="fa-solid fa-video text-blue-600"></i> Tempahan Studio / 3D Printer
-            </a>
-        </div>
-
-        <a href="#sumber-digital" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-blue-50 hover:text-blue-700">Sumber Digital</a>
-        <a href="#hubungi" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-blue-50 hover:text-blue-700">Hubungi Kami</a>
-        
-        <button onclick="toggleMobileMenu(); openAdminLogin();" class="w-full text-left py-2 px-3 rounded-lg bg-blue-900 text-white font-bold flex items-center gap-2 mt-2">
-            <i class="fa-solid fa-lock"></i> Log Masuk Admin
-        </button>
+     <!-- SUB MENU TEMPAHAN MOBILE -->
+    <div class="bg-slate-50 p-2 rounded-xl space-y-1 my-1 border border-slate-200/60">
+        <span class="text-[10px] uppercase font-bold text-slate-400 px-2">Modul Tempahan</span>
+        <a href="tempahan.html" target="_blank" onclick="toggleMobileMenu()" class="flex items-center gap-2 py-1.5 px-2 rounded-lg text-slate-700 hover:text-blue-700">
+            <i class="fa-solid fa-calendar-check text-blue-600"></i> Tempahan Bilik Mesyuarat
+        </a>
+        <a href="tempahan_studio.html" target="_blank" onclick="toggleMobileMenu()" class="flex items-center gap-2 py-1.5 px-2 rounded-lg text-slate-700 hover:text-blue-700">
+            <i class="fa-solid fa-video text-blue-600"></i> Tempahan Studio / 3D Printer
+        </a>
+        <!-- PAUTAN BAHARU PINJAMAN COE MOBILE -->
+        <a href="pinjaman_coe.html" target="_blank" onclick="toggleMobileMenu()" class="flex items-center gap-2 py-1.5 px-2 rounded-lg text-slate-700 hover:text-blue-700">
+            <i class="fa-solid fa-robot text-blue-600"></i> Pinjaman Peralatan COE
+        </a>
     </div>
+
+    <a href="#sumber-digital" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-blue-50 hover:text-blue-700">Sumber Digital</a>
+    <a href="#hubungi" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-blue-50 hover:text-blue-700">Hubungi Kami</a>
+    
+    <button onclick="toggleMobileMenu(); openAdminLogin();" class="w-full text-left py-2 px-3 rounded-lg bg-blue-900 text-white font-bold flex items-center gap-2 mt-2">
+        <i class="fa-solid fa-lock"></i> Log Masuk Admin
+    </button>
+</div>
 </header>
        
     <!-- HERO SECTION FORMAL -->
@@ -186,6 +196,13 @@
         <i class="fa-solid fa-video"></i>
         <span>Tempahan Studio / 3D Printer</span>
     </a>
+
+<!-- BUTANG 4: PINJAMAN PERALATAN COE (BARU) -->
+            <a href="pinjaman_coe.html" target="_blank" class="w-full sm:w-[220px] h-10 bg-blue-600 hover:bg-blue-500 text-white font-bold px-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-xs whitespace-nowrap">
+                <i class="fa-solid fa-robot"></i>
+                <span>Pinjaman Peralatan COE</span>
+            </a>
+
 </div>
 
          <!-- STATS GRID FORMAL (5 KOTAK DENGAN TAKWIM PTIS) -->
