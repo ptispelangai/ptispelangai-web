@@ -185,17 +185,29 @@
       box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
     }
 
-    /* GRID PERALATAN COE */
+/* GRID PERALATAN COE (DIKEMASKINI DENGAN RESPONSIVE STRICT 5 KOLUM ON PC) */
     .equipment-grid { 
       display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
-      gap: 12px; 
+      grid-template-columns: repeat(1, minmax(0, 1fr)); 
+      gap: 10px; 
+    }
+
+    @media (min-width: 640px) {
+      .equipment-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .equipment-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr)); /* Dikunci 5 kolum sebaris pada PC/Laptop */
+      }
     }
     
     .equipment-card {
       border: 2px solid var(--border);
       border-radius: 12px;
-      padding: 14px 10px;
+      padding: 14px 8px; /* Padding tepi dikurangkan sikit supaya muat cantik 5 kolum */
       cursor: pointer;
       text-align: center;
       user-select: none;
