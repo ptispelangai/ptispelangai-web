@@ -165,30 +165,39 @@
     /* REKA BENTUK SLIP CETAKAN REKOD A4 (PRINT ONLY) */
     #reportArea { display: none; }
 
+    /* KAWALAN CETAKAN DIKUNCI TEPAT 1 MUKA SURAT A4 */
     @media print {
-      @page { size: A4 portrait; margin: 15mm; }
-      body * { visibility: hidden; }
-      #reportArea, #reportArea * { visibility: visible; }
+      @page { size: A4 portrait; margin: 12mm 15mm; }
+      html, body {
+        height: 100%;
+        overflow: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+      }
+      .main-wrapper { display: none !important; }
       #reportArea {
         display: block !important;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
         color: #000000 !important;
-        font-family: Arial, sans-serif;
+        font-family: Arial, sans-serif !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
       }
-      .report-header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 15px; }
-      .report-header h3 { margin: 0; font-size: 14pt; color: #000000 !important; }
-      .report-header h2 { margin: 5px 0; font-size: 16pt; font-weight: bold; color: #000000 !important; }
-      .report-header p { margin: 0; font-size: 11pt; color: #000000 !important; }
-      .report-subhead { display: flex; justify-content: space-between; font-size: 10pt; margin-bottom: 15px; color: #000000 !important; }
+      .report-header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 12px; }
+      .report-header h3 { margin: 0; font-size: 13pt; color: #000000 !important; }
+      .report-header h2 { margin: 4px 0; font-size: 15pt; font-weight: bold; color: #000000 !important; }
+      .report-header p { margin: 0; font-size: 10.5pt; color: #000000 !important; }
+      .report-subhead { display: flex; justify-content: space-between; font-size: 9.5pt; margin-bottom: 12px; color: #000000 !important; }
       
-      .report-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+      .report-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
       .report-table th, .report-table td { 
         border: 1px solid #000000 !important; 
-        padding: 10px !important; 
-        font-size: 11pt !important; 
+        padding: 8px !important; 
+        font-size: 10pt !important; 
         color: #000000 !important;
       }
       .report-table th { 
@@ -203,32 +212,34 @@
       }
 
       .terms-box {
-        font-size: 10pt !important;
+        font-size: 9pt !important;
         border: 1px solid #000 !important;
-        padding: 12px !important;
-        margin-bottom: 30px !important;
+        padding: 10px !important;
+        margin-bottom: 20px !important;
         background: #fff !important;
+        line-height: 1.35;
       }
 
       .signature-section { 
         width: 100%; 
         display: flex;
         justify-content: space-between;
-        margin-top: 30px; 
+        margin-top: 20px; 
+        page-break-inside: avoid !important;
       }
       .sig-box { 
         width: 45%; 
         text-align: left; 
         color: #000000 !important; 
-        font-size: 10pt;
+        font-size: 9.5pt;
       }
       .sig-line { 
         border-top: 1px solid #000; 
-        margin-top: 50px; 
+        margin-top: 45px; 
         margin-bottom: 5px; 
       }
       .footer-note { 
-        margin-top: 40px; 
+        margin-top: 25px; 
         font-size: 8pt; 
         text-align: center; 
         border-top: 1px dashed #000; 
@@ -464,7 +475,6 @@
     });
 
     let totalPages = Math.ceil(allData.length / rowsPerPage);
-    document.getElementById('pageIndicator') ? '' : ''; 
     document.getElementById('pageInfo').innerText = `Halaman ${currentPage} dari ${totalPages || 1}`;
     
     document.getElementById('btnPrev').disabled = (currentPage === 1);
@@ -575,7 +585,9 @@
     document.getElementById('rptTarikhRef').innerText = (record.tarikh || '0000').replace(/-/g, '');
     document.getElementById('rptPrintDate').innerText = datePrinted;
 
-    window.print();
+    setTimeout(() => {
+      window.print();
+    }, 150);
   }
 </script>
 
