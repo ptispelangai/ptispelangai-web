@@ -229,55 +229,75 @@
       cursor: pointer;
     }
 
-   /* KAWALAN CETAKAN STRICT 1 PAGE A4 (BEBAS TERPOTONG) */
+/* KAWALAN CETAKAN STRICT 1 PAGE A4 (BERSIH TANPA GARISAN/BAYANG-BAYANG) */
     @media print {
       @page { 
         size: A4 portrait; 
-        margin: 8mm 10mm; /* Margin selamat untuk semua jenis pencetak & pelayar */
+        margin: 5mm 8mm; 
       }
       
       html, body {
         width: 100% !important;
-        height: auto !important;
-        overflow: visible !important;
+        height: 100% !important;
+        max-height: 100% !important;
+        overflow: hidden !important;
         margin: 0 !important;
         padding: 0 !important;
         background: #ffffff !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
       }
       
-      /* Sembunyikan elemen latar belakang web & butang kawalan */
-      .main-wrapper, .preview-actions, .preview-modal { 
+      /* PADAMKAN GARISAN, BORDER & BAYANG-BAYANG (BOX-SHADOW) DARI SEMUA KONTENA */
+      #reportArea, .main-wrapper, .preview-actions, .preview-modal, .preview-modal-content { 
         background: transparent !important;
         box-shadow: none !important;
         border: none !important;
+        outline: none !important;
+      }
+
+      .preview-actions {
+        display: none !important;
+        height: 0 !important;
       }
       
+      /* SEMBUNYIKAN UNUR LUARAN DOKUMEN */
       body * {
         visibility: hidden !important;
       }
 
-      /* Paparkan kandungan borang sahaja secara berskala tepat */
-      #previewModalContent, #previewModalContent * {
+      /* PAPARKAN HANYA SLIP PRATONTON DENGAN BERSIH */
+      #previewModal, #previewModal * {
         visibility: visible !important;
+      }
+
+      #previewModal {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: visible !important;
+        box-shadow: none !important;
+        border: none !important;
       }
 
       #previewModalContent {
         position: relative !important;
-        left: 0 !important;
-        top: 0 !important;
-        width: 100% !important;
-        max-width: 100% !important;
+        width: 96% !important;
+        max-width: 96% !important;
+        margin: 0 auto !important;
         padding: 0 !important;
-        margin: 0 !important;
         box-sizing: border-box !important;
+        box-shadow: none !important;
+        border: none !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
       }
 
-      /* Kunci jadual dan elemen garisan supaya tidak melimpah ke kanan */
       #previewModalContent table {
         width: 100% !important;
-        max-width: 100% !important;
         table-layout: fixed !important;
         word-wrap: break-word !important;
         box-sizing: border-box !important;
@@ -288,7 +308,6 @@
         box-sizing: border-box !important;
       }
     }
-
   </style>
 </head>
 <body>
@@ -386,73 +405,17 @@
 
 </div>
 
-<!-- STRUKTUR KERTAS CETAKAN RASMI A4 (PRINT ONLY) -->
-<div id="reportArea">
-  <div class="report-header">
-    <h3>PUSAT KEGIATAN GURU PELANGAI</h3>
-    <h2>REKOD PENGGUNAAN BILIK MESYUARAT</h2>
-    <p>Kementerian Pendidikan Malaysia</p>
-  </div>
-
-  <div class="report-subhead">
-    <span><b>No. Rujukan:</b> PKGP/BM/<span id="rptTarikhRef">20260922</span></span>
-    <span><b>Tarikh Cetakan:</b> <span id="rptPrintDate">-</span></span>
-  </div>
-
-  <table class="report-table">
-    <tr><th>Nama Pemohon</th><td id="rptNama">-</td></tr>
-    <tr><th>Sekolah / Agensi</th><td id="rptSekolah">-</td></tr>
-    <tr><th>No. Telefon (WhatsApp)</th><td id="rptPhone">-</td></tr>
-    <tr><th>Tarikh Tempahan</th><td id="rptTarikh">-</td></tr>
-    <tr><th>Masa Penggunaan</th><td id="rptMasa">-</td></tr>
-    <tr><th>Tujuan / Nama Program</th><td id="rptTujuan">-</td></tr>
-    <tr><th>Status Permohonan</th><td id="rptStatus">DILULUSKAN</td></tr>
-  </table>
-
-  <!-- SYARAT & AKUAN PENGGUNAAN -->
-  <div class="terms-box">
-    <b>SYARAT & AKUAN PENGGUNAAN BILIK MESYUARAT:</b>
-    <ol style="margin: 5px 0 0 18px; padding: 0;">
-      <li>Pengguna dikehendaki memastikan susunan kerusi dan meja dikembalikan ke keadaan asal selepas mesyuarat/aktiviti selesai.</li>
-      <li>Kebersihan di dalam bilik mesyuarat hendaklah sentiasa dijaga. Sisa makanan dan minuman hendaklah dibuang ke tempat sampah yang disediakan.</li>
-      <li>Pastikan semua suis lampu, alat pendingin udara (aircond), dan projektor dimatikan sebelum meninggalkan bilik mesyuarat.</li>
-    </ol>
-  </div>
-
-  <!-- PETAK TANDATANGAN & PENGESAHAN -->
-  <div class="signature-section">
-    <div class="sig-box">
-      <div><b>(Tandatangan Pemohon)</b></div>
-      <div class="sig-line"></div>
-      <div>
-        Nama:<br>
-        Tarikh: _______________
-      </div>
-    </div>
-    <div class="sig-box">
-      <div><b>(Pengesahan / Pegawai PKG Pelangai)</b></div>
-      <div class="sig-line"></div>
-      <div>
-        Cop Rasmi & Jawatan:<br>
-        Tarikh: _______________
-      </div>
-    </div>
-  </div>
-
-  <div class="footer-note">
-    * Slip ini dijana secara automatik melalui Portal Pengurusan ICT PTIS Zon Pelangai.
-  </div>
-</div>
 <!-- POP-UP MODAL PRATONTON SLIP MESYUARAT -->
 <div id="previewModal" class="preview-modal">
   <div class="preview-modal-content">
     <div id="previewModalContent"></div>
     <div class="preview-actions">
-      <button onclick="window.print()" class="btn-action-print">🖨️ Cetak / Save PDF</button>
-      <button onclick="closePreviewModal()" class="btn-action-close">❌ Tutup Paparan</button>
+      <button type="button" onclick="triggerPrint()" class="btn-action-print">🖨️ Cetak / Save PDF</button>
+      <button type="button" onclick="closePreviewModal()" class="btn-action-close">❌ Tutup Paparan</button>
     </div>
   </div>
 </div>
+
 
 
 <script>
@@ -622,7 +585,7 @@
     }
   });
 
- // FUNGSI MENUTUP MODAL PRATONTON
+// FUNGSI MENUTUP MODAL PRATONTON
   function closePreviewModal() {
     const modal = document.getElementById('previewModal');
     if (modal) {
@@ -631,7 +594,12 @@
     }
   }
 
-  // FUNGSI CETAK SLIP PRATONTON A4
+  // FUNGSI CETAK DARI MODAL
+  function triggerPrint() {
+    window.print();
+  }
+
+  // FUNGSI MEMAPARKAN SLIP PRATONTON A4
   function cetakRowData(index) {
     const record = allData[index];
     if (!record) return;
@@ -642,50 +610,50 @@
     const wrapText = (txt) => `<span style="color:#000000 !important; font-family:Arial, sans-serif !important; font-weight:bold !important; display:inline-block;">${txt || '-'}</span>`;
 
     const rptHTML = `
-      <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 12px;">
-        <h3 style="margin:0; font-size:13pt; color:#000;">PUSAT KEGIATAN GURU PELANGAI</h3>
-        <h2 style="margin:4px 0; font-size:15pt; font-weight:bold; color:#000;">REKOD PENGGUNAAN BILIK MESYUARAT</h2>
-        <p style="margin:0; font-size:10.5pt; color:#000;">Kementerian Pendidikan Malaysia</p>
+      <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 6px; margin-bottom: 10px;">
+        <h3 style="margin:0; font-size:12pt; color:#000;">PUSAT KEGIATAN GURU PELANGAI</h3>
+        <h2 style="margin:3px 0; font-size:14pt; font-weight:bold; color:#000;">REKOD PENGGUNAAN BILIK MESYUARAT</h2>
+        <p style="margin:0; font-size:10pt; color:#000;">Kementerian Pendidikan Malaysia</p>
       </div>
 
-      <div style="display: flex; justify-content: space-between; font-size: 9.5pt; margin-bottom: 12px; color: #000;">
+      <div style="display: flex; justify-content: space-between; font-size: 9pt; margin-bottom: 10px; color: #000;">
         <span><b>No. Rujukan:</b> PKGP/BM/${(record.tarikh || '0000').replace(/-/g, '')}</span>
         <span><b>Tarikh Cetakan:</b> ${datePrinted}</span>
       </div>
 
-      <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
-        <tr><th style="width: 35%; text-align: left; background-color: #f2f2f2; border: 1px solid #000; padding: 8px; font-weight: bold; color: #000;">Nama Pemohon</th><td style="border: 1px solid #000; padding: 8px; color: #000;">${wrapText(record.nama)}</td></tr>
-        <tr><th style="text-align: left; background-color: #f2f2f2; border: 1px solid #000; padding: 8px; font-weight: bold; color: #000;">Sekolah / Agensi</th><td style="border: 1px solid #000; padding: 8px; color: #000;">${wrapText(record.sekolah)}</td></tr>
-        <tr><th style="text-align: left; background-color: #f2f2f2; border: 1px solid #000; padding: 8px; font-weight: bold; color: #000;">No. Telefon (WhatsApp)</th><td style="border: 1px solid #000; padding: 8px; color: #000;">${wrapText(record.phone)}</td></tr>
-        <tr><th style="text-align: left; background-color: #f2f2f2; border: 1px solid #000; padding: 8px; font-weight: bold; color: #000;">Tarikh Tempahan</th><td style="border: 1px solid #000; padding: 8px; color: #000;">${wrapText(formattedTarikh)}</td></tr>
-        <tr><th style="text-align: left; background-color: #f2f2f2; border: 1px solid #000; padding: 8px; font-weight: bold; color: #000;">Masa Penggunaan</th><td style="border: 1px solid #000; padding: 8px; color: #000;">${wrapText(record.masa_mula + ' - ' + record.masa_tamat)}</td></tr>
-        <tr><th style="text-align: left; background-color: #f2f2f2; border: 1px solid #000; padding: 8px; font-weight: bold; color: #000;">Tujuan / Nama Program</th><td style="border: 1px solid #000; padding: 8px; color: #000;">${wrapText(record.tujuan)}</td></tr>
-        <tr><th style="text-align: left; background-color: #f2f2f2; border: 1px solid #000; padding: 8px; font-weight: bold; color: #000;">Status Permohonan</th><td style="border: 1px solid #000; padding: 8px; color: #000;"><strong style="color:#000;">DILULUSKAN</strong></td></tr>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 9.5pt;">
+        <tr><th style="width: 32%; text-align: left; background-color: #f2f2f2; border: 1px solid #000; padding: 6px 8px; font-weight: bold; color: #000;">Nama Pemohon</th><td style="border: 1px solid #000; padding: 6px 8px; color: #000;">${wrapText(record.nama)}</td></tr>
+        <tr><th style="text-align: left; background-color: #f2f2f2; border: 1px solid #000; padding: 6px 8px; font-weight: bold; color: #000;">Sekolah / Agensi</th><td style="border: 1px solid #000; padding: 6px 8px; color: #000;">${wrapText(record.sekolah)}</td></tr>
+        <tr><th style="text-align: left; background-color: #f2f2f2; border: 1px solid #000; padding: 6px 8px; font-weight: bold; color: #000;">No. Telefon (WhatsApp)</th><td style="border: 1px solid #000; padding: 6px 8px; color: #000;">${wrapText(record.phone)}</td></tr>
+        <tr><th style="text-align: left; background-color: #f2f2f2; border: 1px solid #000; padding: 6px 8px; font-weight: bold; color: #000;">Tarikh Tempahan</th><td style="border: 1px solid #000; padding: 6px 8px; color: #000;">${wrapText(formattedTarikh)}</td></tr>
+        <tr><th style="text-align: left; background-color: #f2f2f2; border: 1px solid #000; padding: 6px 8px; font-weight: bold; color: #000;">Masa Penggunaan</th><td style="border: 1px solid #000; padding: 6px 8px; color: #000;">${wrapText(record.masa_mula + ' - ' + record.masa_tamat)}</td></tr>
+        <tr><th style="text-align: left; background-color: #f2f2f2; border: 1px solid #000; padding: 6px 8px; font-weight: bold; color: #000;">Tujuan / Nama Program</th><td style="border: 1px solid #000; padding: 6px 8px; color: #000;">${wrapText(record.tujuan)}</td></tr>
+        <tr><th style="text-align: left; background-color: #f2f2f2; border: 1px solid #000; padding: 6px 8px; font-weight: bold; color: #000;">Status Permohonan</th><td style="border: 1px solid #000; padding: 6px 8px; color: #000;"><strong style="color:#000;">DILULUSKAN</strong></td></tr>
       </table>
 
-      <div style="font-size: 9pt; border: 1px solid #000; padding: 10px; margin-bottom: 20px; line-height: 1.35; color: #000;">
+      <div style="font-size: 8.5pt; border: 1px solid #000; padding: 8px; margin-bottom: 12px; line-height: 1.35; color: #000;">
         <b>SYARAT & AKUAN PENGGUNAAN BILIK MESYUARAT:</b>
-        <ol style="margin: 5px 0 0 18px; padding: 0;">
+        <ol style="margin: 4px 0 0 15px; padding: 0;">
           <li>Pengguna dikehendaki memastikan susunan kerusi dan meja dikembalikan ke keadaan asal selepas mesyuarat/aktiviti selesai.</li>
           <li>Kebersihan di dalam bilik mesyuarat hendaklah sentiasa dijaga. Sisa makanan dan minuman hendaklah dibuang ke tempat sampah yang disediakan.</li>
           <li>Pastikan semua suis lampu, alat pendingin udara (aircond), dan projektor dimatikan sebelum meninggalkan bilik mesyuarat.</li>
         </ol>
       </div>
 
-      <div style="width: 100%; display: flex; justify-content: space-between; margin-top: 20px; font-size: 9.5pt; color: #000;">
+      <div style="width: 100%; display: flex; justify-content: space-between; margin-top: 15px; font-size: 9pt; color: #000;">
         <div style="width: 45%; text-align: left;">
           <div><b>(Tandatangan Pemohon)</b></div>
-          <div style="border-top: 1px solid #000; margin-top: 45px; margin-bottom: 5px;"></div>
+          <div style="border-top: 1px solid #000; margin-top: 35px; margin-bottom: 3px;"></div>
           <div>Nama: ${wrapText(record.nama)}<br>Tarikh: _______________</div>
         </div>
         <div style="width: 45%; text-align: left;">
           <div><b>(Pengesahan / Pegawai PKG Pelangai)</b></div>
-          <div style="border-top: 1px solid #000; margin-top: 45px; margin-bottom: 5px;"></div>
+          <div style="border-top: 1px solid #000; margin-top: 35px; margin-bottom: 3px;"></div>
           <div>Cop Rasmi & Jawatan:<br>Tarikh: _______________</div>
         </div>
       </div>
 
-      <div style="margin-top: 25px; font-size: 8pt; text-align: center; border-top: 1px dashed #000; padding-top: 5px; font-style: italic; color: #000;">
+      <div style="margin-top: 20px; font-size: 7.5pt; text-align: center; border-top: 1px dashed #000; padding-top: 4px; font-style: italic; color: #000;">
         * Slip ini dijana secara automatik melalui Portal Pengurusan ICT PTIS Zon Pelangai.
       </div>
     `;
