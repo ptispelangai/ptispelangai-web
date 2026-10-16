@@ -470,6 +470,16 @@
   
   const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// FUNGSI UTIS UNTUK FORMAT TARIKH DD/MM/YYYY
+  function formatDateDDMMYYYY(dateStr) {
+    if (!dateStr) return '';
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+      return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
+    return dateStr;
+  }
+
   let bookings = [];
   let currentPage = 1;
   const rowsPerPage = 4;
@@ -504,7 +514,7 @@
     } else {
       paginatedItems.forEach(item => {
         let row = `<tr>
-          <td><strong style="color: #1e3a8a;">${item.tarikh}</strong><br><small style="color:#64748b; font-weight:600;">${item.masa}</small></td>
+	<td><strong style="color: #1e3a8a;">${formatDateDDMMYYYY(item.tarikh)}</strong><br><small style="color:#64748b; font-weight:600;">${item.masa}</small></td>
           <td><strong>${item.nama}</strong><br><small style="color:#64748b; font-weight:600;">${item.sekolah}</small></td>
           <td style="font-weight:600;">${item.kemudahan}</td>
           <td><span class="badge-lulus">DILULUSKAN</span></td>
@@ -642,7 +652,7 @@
     document.getElementById('outSekolah').innerHTML = wrapText(item.sekolah);
     document.getElementById('outPhone').innerHTML = wrapText(item.phone);
     document.getElementById('outKemudahan').innerHTML = wrapText(item.kemudahan);
-    document.getElementById('outTarikh').innerHTML = wrapText(item.tarikh);
+    document.getElementById('outTarikh').innerHTML = wrapText(formatDateDDMMYYYY(item.tarikh));
     
     if(item.kemudahan.includes('Studio Green Screen')) {
       document.getElementById('rowOutMasa').style.display = 'table-row';
