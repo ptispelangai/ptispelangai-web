@@ -93,7 +93,8 @@
     }
     .btn-print-row:hover { background: #047857; }
 
-    /* PAGINATION STYLES */
+	
+/* PAGINATION STYLES (DISERAGAMKAN SAMA SAIZ TEPAT) */
     .pagination-container {
       display: flex;
       justify-content: space-between;
@@ -102,21 +103,37 @@
       color: #475569;
       font-weight: 600;
       padding-top: 10px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pagination-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .pagination-btn {
       background: #e2e8f0;
       border: 1px solid #cbd5e1;
-      padding: 6px 14px;
+      padding: 8px 16px;
+      min-width: 110px; /* Lebar dikunci supaya butang Sebelum & Seterusnya sama saiz */
+      height: 36px;     /* Ketinggian dikunci seragam */
       border-radius: 8px;
       cursor: pointer;
+      font-size: 12px;
       font-weight: 700;
       color: #334155;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
     }
 
     .pagination-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .pagination-btn:hover:not(:disabled) { background: #cbd5e1; }
 
+	
     /* PEMISAH / DIVIDER TEGAS */
     .section-divider {
       height: 4px;
@@ -301,13 +318,12 @@
 
     <div class="pagination-container">
       <span id="pageIndicator">Halaman 1 daripada 1</span>
-      <div>
+      <div class="pagination-group">
         <button class="pagination-btn" id="prevBtn" onclick="changePage(-1)">◄ Sebelum</button>
         <button class="pagination-btn" id="nextBtn" onclick="changePage(1)">Seterusnya ►</button>
       </div>
     </div>
   </div>
-
   <!-- DIVIDER / PEMISAH -->
   <div class="section-divider"></div>
 
