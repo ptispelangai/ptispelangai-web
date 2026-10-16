@@ -93,8 +93,7 @@
     }
     .btn-print-row:hover { background: #047857; }
 
-	
-/* PAGINATION STYLES (DISERAGAMKAN SAMA SAIZ TEPAT) */
+    /* PAGINATION STYLES (DISERAGAMKAN SAMA SAIZ TEPAT) */
     .pagination-container {
       display: flex;
       justify-content: space-between;
@@ -117,8 +116,8 @@
       background: #e2e8f0;
       border: 1px solid #cbd5e1;
       padding: 8px 16px;
-      min-width: 110px; /* Lebar dikunci supaya butang Sebelum & Seterusnya sama saiz */
-      height: 36px;     /* Ketinggian dikunci seragam */
+      min-width: 110px; 
+      height: 36px;     
       border-radius: 8px;
       cursor: pointer;
       font-size: 12px;
@@ -133,7 +132,6 @@
     .pagination-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .pagination-btn:hover:not(:disabled) { background: #cbd5e1; }
 
-	
     /* PEMISAH / DIVIDER TEGAS */
     .section-divider {
       height: 4px;
@@ -220,45 +218,71 @@
     .date-time-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .date-time-grid.single-col { grid-template-columns: 1fr; }
 
-    /* SURAT REKOD A4 FOR PRINT */
-    .a4-document {
+    /* MODAL PAPARAN PRATONTON SEBELUM CETAK (KHAS UNTUK TELEFON & PC) */
+    .preview-modal {
       display: none;
-      width: 210mm;
-      padding: 15mm 20mm;
-      margin: 0 auto;
-      background: #ffffff !important;
-      color: #000000 !important;
-      font-family: Arial, Helvetica, sans-serif !important;
-      box-sizing: border-box;
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(4px);
+      z-index: 99999;
+      overflow-y: auto;
+      padding: 15px;
     }
-
-    .letter-head { text-align: center; border-bottom: 2px solid #000000; padding-bottom: 8px; margin-bottom: 15px; color: #000000 !important; }
-    .letter-head h3 { margin: 0; font-size: 16px; text-transform: uppercase; color: #000000 !important; font-weight: bold; }
-    .letter-head p { margin: 3px 0 0 0; font-size: 11px; color: #000000 !important; }
-    .doc-title { text-align: center; font-weight: bold; font-size: 14px; text-decoration: underline; margin-bottom: 15px; text-transform: uppercase; color: #000000 !important; }
-
-    .details-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 12px; color: #000000 !important; }
-    .details-table th { background-color: #f2f2f2 !important; font-weight: bold; border: 1px solid #000000 !important; padding: 8px; text-align: left; color: #000000 !important; }
     
-    .details-table td { 
-      border: 1px solid #000000 !important; 
-      padding: 8px; 
-      text-align: left; 
-      color: #000000 !important; 
-      font-weight: 500 !important; 
-      font-size: 12px !important;
-      opacity: 1 !important;
-      filter: none !important;
+    .preview-modal-content {
+      background: #ffffff;
+      max-width: 800px;
+      margin: 10px auto;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      position: relative;
     }
 
-    .terms-box { font-size: 10px; border: 1px solid #000000; padding: 8px 10px; margin-top: 15px; background: #ffffff !important; color: #000000 !important; line-height: 1.35; }
-    .signature-section { margin-top: 25px; display: flex; justify-content: space-between; font-size: 11px; color: #000000 !important; page-break-inside: avoid; }
-    .sig-box { width: 45%; text-align: center; color: #000000 !important; }
-    .sig-line { margin-top: 40px; border-top: 1px dashed #000000; padding-top: 5px; color: #000000 !important; }
+    .preview-actions {
+      position: sticky;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      margin-top: 20px;
+      z-index: 100000;
+    }
 
-    /* KAWALAN CETAKAN DIKUNCI TEPAT 1 MUKA SURAT A4 */
+    .btn-action-print {
+      background: #059669;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .btn-action-close {
+      background: #64748b;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    /* KAWALAN CETAKAN STRICT 1 PAGE A4 (TOMAN APLIKASI/MODAL DIHILANGKAN SAAT CETAK) */
     @media print {
       @page { size: A4 portrait; margin: 10mm 15mm; }
       html, body {
@@ -268,20 +292,30 @@
         padding: 0 !important;
         background: #ffffff !important;
       }
-      .container { display: none !important; }
-      .a4-document { 
-        display: block !important; 
+      
+      /* Sembunyikan web asal, modal wrapper, dan butang tindakan */
+      .container, .preview-actions, .preview-modal { 
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+      
+      body * {
+        visibility: hidden !important;
+      }
+
+      /* Hanya cetak kandungan surat A4 secara bersih */
+      #previewModalContent, #previewModalContent * {
+        visibility: visible !important;
+      }
+
+      #previewModalContent {
         position: absolute !important;
         left: 0 !important;
         top: 0 !important;
         width: 100% !important;
-        border: none !important; 
-        padding: 0 !important; 
-        color: #000000 !important; 
-        page-break-inside: avoid !important;
-        break-inside: avoid !important;
+        padding: 0 !important;
+        margin: 0 !important;
       }
-      .a4-document * { color: #000000 !important; opacity: 1 !important; }
     }
   </style>
 </head>
@@ -324,6 +358,7 @@
       </div>
     </div>
   </div>
+
   <!-- DIVIDER / PEMISAH -->
   <div class="section-divider"></div>
 
@@ -386,79 +421,13 @@
   </div>
 </div>
 
-<!-- DOKUMEN SURAT RASMI A4 (CETAKAN) -->
-<div class="a4-document" id="a4View">
-  <div class="letter-head">
-    <h3>Pusat Kegiatan Guru Pelangai</h3>
-    <p>Kementerian Pendidikan Malaysia | Rekod Penggunaan Kemudahan Digital</p>
-  </div>
-
-  <div class="doc-title">Borang Rekod Penggunaan Kemudahan PKG</div>
-
-  <table class="details-table">
-    <tr>
-      <th colspan="2">A. MAKLUMAT PEMOHON</th>
-    </tr>
-    <tr>
-      <td style="width: 35%;"><strong>Nama Penuh Guru:</strong></td>
-      <td id="outNama">-</td>
-    </tr>
-    <tr>
-      <td><strong>Sekolah / Agensi:</strong></td>
-      <td id="outSekolah">-</td>
-    </tr>
-    <tr>
-      <td><strong>Nombor Telefon:</strong></td>
-      <td id="outPhone">-</td>
-    </tr>
-  </table>
-
-  <table class="details-table">
-    <tr>
-      <th colspan="2">B. BUTIRAN TEMPAHAN KEMUDAHAN</th>
-    </tr>
-    <tr>
-      <td style="width: 35%;"><strong>Jenis Kemudahan:</strong></td>
-      <td id="outKemudahan">-</td>
-    </tr>
-    <tr>
-      <td><strong>Tarikh Penggunaan:</strong></td>
-      <td id="outTarikh">-</td>
-    </tr>
-    <tr id="rowOutMasa" style="display:none;">
-      <td><strong>Sesi Masa (Studio):</strong></td>
-      <td id="outMasa">-</td>
-    </tr>
-    <tr>
-      <td><strong>Tujuan / Tajuk Projek:</strong></td>
-      <td id="outTujuan">-</td>
-    </tr>
-    <tr>
-      <td><strong>Status Permohonan:</strong></td>
-      <td><strong style="color: #000000;">DILULUSKAN</strong></td>
-    </tr>
-  </table>
-
-  <div class="terms-box">
-    <strong>SYARAT & AKUAN PENGGUNAAN:</strong>
-    <ol style="margin: 4px 0 0 15px; padding: 0;">
-      <li>Pengguna bertanggungjawab memastikan kebersihan dan keselamatan studio / peralatan pencetak 3D.</li>
-      <li>Sebarang kerosakan hendaklah dilaporkan dengan kadar segera kepada pihak pentadbiran PKG Pelangai.</li>
-    </ol>
-  </div>
-
-  <div class="signature-section">
-    <div class="sig-box">
-      <div class="sig-line">
-        <strong>(Tandatangan Pemohon)</strong><br>
-        Tarikh: _______________
-      </div>
-    </div>
-    <div class="sig-box">
-      <div class="sig-line">
-        <strong>(Pengesahan / Pegawai PKG Pelangai)</strong><br>
-        Tarikh: _______________
-      </div>
+<!-- POP-UP MODAL PRATONTON SLIP STUDIO -->
+<div id="previewModal" class="preview-modal">
+  <div class="preview-modal-content">
+    <div id="previewModalContent"></div>
+    <div class="preview-actions">
+      <button onclick="triggerPrint()" class="btn-action-print">🖨️ Cetak / Save PDF</button>
+      <button onclick="closePreviewModal()" class="btn-action-close">❌ Tutup Paparan</button>
     </div>
   </div>
 </div>
@@ -470,7 +439,7 @@
   
   const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// FUNGSI UTIS UNTUK FORMAT TARIKH DD/MM/YYYY
+  // FUNGSI UTIS UNTUK FORMAT TARIKH DD/MM/YYYY
   function formatDateDDMMYYYY(dateStr) {
     if (!dateStr) return '';
     const parts = dateStr.split('-');
@@ -514,7 +483,7 @@
     } else {
       paginatedItems.forEach(item => {
         let row = `<tr>
-	<td><strong style="color: #1e3a8a;">${formatDateDDMMYYYY(item.tarikh)}</strong><br><small style="color:#64748b; font-weight:600;">${item.masa}</small></td>
+          <td><strong style="color: #1e3a8a;">${formatDateDDMMYYYY(item.tarikh)}</strong><br><small style="color:#64748b; font-weight:600;">${item.masa}</small></td>
           <td><strong>${item.nama}</strong><br><small style="color:#64748b; font-weight:600;">${item.sekolah}</small></td>
           <td style="font-weight:600;">${item.kemudahan}</td>
           <td><span class="badge-lulus">DILULUSKAN</span></td>
@@ -584,7 +553,6 @@
     btnSubmit.disabled = true;
 
     try {
-      // Semak tarikh bertindih terus dari server Supabase
       const { data: existingBookings, error: checkErr } = await _supabase
         .from('tempahan_pkg')
         .select('kemudahan')
@@ -606,7 +574,6 @@
         return;
       }
 
-      // Simpan ke Supabase
       const { error: insertErr } = await _supabase
         .from('tempahan_pkg')
         .insert([{
@@ -629,7 +596,6 @@
       document.getElementById('card-3d').classList.remove('selected');
       updateFormLogic();
       
-      // Muat semula jadual dari Supabase
       fetchBookings();
 
     } catch (err) {
@@ -640,32 +606,86 @@
     }
   }
 
-  // 4. CETAK SURAT A4
+  // FUNGSI MENUTUP MODAL PRATONTON
+  function closePreviewModal() {
+    const modal = document.getElementById('previewModal');
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+  }
+
+  // FUNGSI MEMANGGIL CETAKAN
+  function triggerPrint() {
+    window.print();
+  }
+
+  // 4. CETAK / PRATONTON SURAT A4
   function printDoc(id) {
     let item = bookings.find(b => b.id === id);
     if (!item) return;
 
-    // Fungsi kecil untuk mengunci warna hitam penuh (100% Black) pada teks dinamik
-    const wrapText = (txt) => `<span style="color:#000000 !important; font-family:Arial, sans-serif !important; font-weight:normal !important; display:inline-block;">${txt || '-'}</span>`;
+    const wrapText = (txt) => `<span style="color:#000000 !important; font-family:Arial, sans-serif !important; font-weight:bold !important; display:inline-block;">${txt || '-'}</span>`;
 
-    document.getElementById('outNama').innerHTML = wrapText(item.nama);
-    document.getElementById('outSekolah').innerHTML = wrapText(item.sekolah);
-    document.getElementById('outPhone').innerHTML = wrapText(item.phone);
-    document.getElementById('outKemudahan').innerHTML = wrapText(item.kemudahan);
-    document.getElementById('outTarikh').innerHTML = wrapText(formatDateDDMMYYYY(item.tarikh));
-    
-    if(item.kemudahan.includes('Studio Green Screen')) {
-      document.getElementById('rowOutMasa').style.display = 'table-row';
-      document.getElementById('outMasa').innerHTML = wrapText(item.masa);
-    } else {
-      document.getElementById('rowOutMasa').style.display = 'none';
+    let masaRow = item.kemudahan.includes('Studio Green Screen') 
+      ? `<tr><td style="border:1px solid #000; padding:8px; color:#000;"><strong>Sesi Masa (Studio):</strong></td><td style="border:1px solid #000; padding:8px; color:#000;">${wrapText(item.masa)}</td></tr>` 
+      : '';
+
+    const slipHTML = `
+      <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 15px;">
+        <h3 style="margin:0; font-size:16px; text-transform:uppercase; font-weight:bold; color:#000;">Pusat Kegiatan Guru Pelangai</h3>
+        <p style="margin:3px 0 0 0; font-size:11px; color:#000;">Kementerian Pendidikan Malaysia | Rekod Penggunaan Kemudahan Digital</p>
+      </div>
+
+      <div style="text-align:center; font-weight:bold; font-size:14px; text-decoration:underline; margin-bottom:15px; text-transform:uppercase; color:#000;">
+        Borang Rekod Penggunaan Kemudahan PKG
+      </div>
+
+      <table class="details-table" style="width:100%; border-collapse:collapse; margin:12px 0; font-size:12px; color:#000;">
+        <tr><th colspan="2" style="background:#f2f2f2; border:1px solid #000; padding:8px; text-align:left; color:#000;">A. MAKLUMAT PEMOHON</th></tr>
+        <tr><td style="width:35%; border:1px solid #000; padding:8px; color:#000;"><strong>Nama Penuh Guru:</strong></td><td style="border:1px solid #000; padding:8px; color:#000;">${wrapText(item.nama)}</td></tr>
+        <tr><td style="border:1px solid #000; padding:8px; color:#000;"><strong>Sekolah / Agensi:</strong></td><td style="border:1px solid #000; padding:8px; color:#000;">${wrapText(item.sekolah)}</td></tr>
+        <tr><td style="border:1px solid #000; padding:8px; color:#000;"><strong>Nombor Telefon:</strong></td><td style="border:1px solid #000; padding:8px; color:#000;">${wrapText(item.phone)}</td></tr>
+      </table>
+
+      <table class="details-table" style="width:100%; border-collapse:collapse; margin:12px 0; font-size:12px; color:#000;">
+        <tr><th colspan="2" style="background:#f2f2f2; border:1px solid #000; padding:8px; text-align:left; color:#000;">B. BUTIRAN TEMPAHAN KEMUDAHAN</th></tr>
+        <tr><td style="width:35%; border:1px solid #000; padding:8px; color:#000;"><strong>Jenis Kemudahan:</strong></td><td style="border:1px solid #000; padding:8px; color:#000;">${wrapText(item.kemudahan)}</td></tr>
+        <tr><td style="border:1px solid #000; padding:8px; color:#000;"><strong>Tarikh Penggunaan:</strong></td><td style="border:1px solid #000; padding:8px; color:#000;">${wrapText(formatDateDDMMYYYY(item.tarikh))}</td></tr>
+        ${masaRow}
+        <tr><td style="border:1px solid #000; padding:8px; color:#000;"><strong>Tujuan / Tajuk Projek:</strong></td><td style="border:1px solid #000; padding:8px; color:#000;">${wrapText(item.tujuan)}</td></tr>
+        <tr><td style="border:1px solid #000; padding:8px; color:#000;"><strong>Status Permohonan:</strong></td><td style="border:1px solid #000; padding:8px; color:#000;"><strong style="color:#000;">DILULUSKAN</strong></td></tr>
+      </table>
+
+      <div style="font-size:10px; border:1px solid #000; padding:8px 10px; margin-top:15px; line-height:1.35; color:#000;">
+        <strong>SYARAT & AKUAN PENGGUNAAN:</strong>
+        <ol style="margin: 4px 0 0 15px; padding: 0;">
+          <li>Pengguna bertanggungjawab memastikan kebersihan dan keselamatan studio / peralatan pencetak 3D.</li>
+          <li>Sebarang kerosakan hendaklah dilaporkan dengan kadar segera kepada pihak pentadbiran PKG Pelangai.</li>
+        </ol>
+      </div>
+
+      <div style="margin-top:25px; display:flex; justify-content:space-between; font-size:11px; color:#000;">
+        <div style="width:45%; text-align:center;">
+          <div style="margin-top:40px; border-top:1px dashed #000; padding-top:5px;">
+            <strong>(Tandatangan Pemohon)</strong><br>Tarikh: _______________
+          </div>
+        </div>
+        <div style="width:45%; text-align:center;">
+          <div style="margin-top:40px; border-top:1px dashed #000; padding-top:5px;">
+            <strong>(Pengesahan / Pegawai PKG Pelangai)</strong><br>Tarikh: _______________
+          </div>
+        </div>
+      </div>
+    `;
+
+    const modal = document.getElementById('previewModal');
+    const content = document.getElementById('previewModalContent');
+    if (modal && content) {
+      content.innerHTML = slipHTML;
+      modal.style.display = 'block';
+      document.body.style.overflow = 'hidden';
     }
-
-    document.getElementById('outTujuan').innerHTML = wrapText(item.tujuan);
-    
-    setTimeout(() => {
-      window.print();
-    }, 150);
   }
 
   // Panggil data dari Supabase semasa web mula dibuka
