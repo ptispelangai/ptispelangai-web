@@ -308,6 +308,60 @@
         box-sizing: border-box !important;
       }
     }
+
+/* KAD STATUS HARI INI */
+    .today-status-container {
+      background: #ffffff;
+      padding: 18px 20px;
+      margin-bottom: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      border-left: 6px solid #28a745;
+      transition: all 0.3s ease;
+    }
+    .today-status-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 1px solid #e9ecef;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+    .today-status-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #0056b3;
+      margin: 0;
+    }
+    .today-date-badge {
+      background-color: #e9ecef;
+      color: #495057;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .today-status-body {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .status-available {
+      color: #28a745;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .today-booking-item {
+      background: #f8f9fa;
+      border-left: 4px solid #ffc107;
+      padding: 10px 14px;
+      margin-top: 8px;
+      border-radius: 4px;
+      color: #333;
+    }
   </style>
 </head>
 <body>
@@ -339,6 +393,17 @@
       <button id="btnPrev" class="pagination-btn" onclick="prevPage()" disabled>◀ Sebelum</button>
       <span id="pageInfo">Halaman 1</span>
       <button id="btnNext" class="pagination-btn" onclick="nextPage()" disabled>Seterusnya ▶</button>
+    </div>
+  </div>
+
+<!-- BAHAGIAN 1.5: STATUS TEMPAHAN HARI INI -->
+  <div class="today-status-container" id="todayStatusCard">
+    <div class="today-status-header">
+      <h4 class="today-status-title">📅 STATUS PENGGUNAAN HARI INI</h4>
+      <span class="today-date-badge" id="todayDateLabel">Memuatkan tarikh...</span>
+    </div>
+    <div class="today-status-body" id="todayStatusContent">
+      <span class="loading-text">Menyemak status bilik hari ini...</span>
     </div>
   </div>
 
@@ -456,6 +521,9 @@
       if (error) throw error;
 
       allData = data || [];
+      // TAMBAHAN: Paparkan status hari ini
+      renderTodayStatus();
+      
       if (allData.length === 0) {
         jadualBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Tiada tempahan direkodkan lagi.</td></tr>';
         document.getElementById('pageInfo').innerText = "Halaman 0 dari 0";
@@ -518,6 +586,49 @@
     if (currentPage < totalPages) {
       currentPage++;
       renderTable();
+    }
+  }
+
+function renderTodayStatus() {
+    const card = document.getElementById('todayStatusCard');
+    const label = document.getElementById('todayDateLabel');
+    const content = document.getElementById('todayStatusContent');
+    if (!card || !content) return;
+
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const todayISO = `${year}-${month}-${day}`;
+
+    if (label) {
+      label.innerText = `Hari Ini: ${day}/${month}/${year}`;
+    }
+
+    const todayBookings = allData.filter(item => item.tarikh === todayISO);
+
+    if (todayBookings.length === 0) {
+      card.style.borderLeftColor = '#28a745';
+      content.innerHTML = `
+        <div class="status-available">
+          <span>🟢 <b>TIADA TEMPAHAN HARI INI</b> — Bilik mesyuarat sedia digunakan / tiada sebarang program.</span>
+        </div>
+      `;
+    } else {
+      card.style.borderLeftColor = '#fd7e14';
+      let html = `<div style="margin-bottom: 6px; font-weight: bold; color: #d9480f; font-size: 13px;">
+                    ⚠️ TEMPAHAN HARI INI:
+                  </div>`;
+      
+      todayBookings.forEach(b => {
+        html += `
+          <div class="today-booking-item" style="padding: 8px 12px; margin-top: 5px; font-size: 13px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+            <span>⏰ <b>${b.masa_mula} - ${b.masa_tamat}</b></span>
+            <span>🏫 <b>${b.sekolah}</b></span>
+          </div>
+        `;
+      });
+      content.innerHTML = html;
     }
   }
 
