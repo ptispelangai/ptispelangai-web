@@ -227,6 +227,28 @@
       cursor: pointer;
     }
 
+/* BUTANG TINDAKAN KE BORANG TEMPAHAN */
+.btn-go-to-form {
+  display: none; /* <--- UBAH INI: Sembunyikan secara lalai di PC/Desktop */
+  width: 100%;
+  background: #28a745;
+  color: #ffffff;
+  border: none;
+  padding: 13px 18px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 13.5px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+.btn-go-to-form:hover {
+  background: #218838;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(40, 167, 69, 0.4);
+}
+
     /* KAWALAN CETAKAN STRICT 1 PAGE A4 */
     @media print {
       @page { 
@@ -440,15 +462,20 @@
       margin-top: 3px;
     }
 
-    /* OPTIMASI KHUSUS TAMPILAN PONSEL / MOBILE (LAYAR <= 600px) */
-    @media screen and (max-width: 600px) {
-      body {
-        padding: 8px 6px;
-      }
-      .tab-nav-wrapper {
-        flex-direction: column;
-        gap: 6px;
-      }
+  /* OPTIMASI KHUSUS TAMPILAN PONSEL / MOBILE (LAYAR <= 600px) */
+  @media screen and (max-width: 600px) {
+    body {
+      padding: 8px 6px; /* */
+    }
+    .tab-nav-wrapper {
+      flex-direction: column; /* */
+      gap: 6px; /*[cite: 8] */
+    }
+
+    /* TAMPILKAN TOMBOL HIJAU HANYA DI HP */
+    .btn-go-to-form {
+      display: block !important;
+    }
       .main-tab-btn {
         width: 100%;
         text-align: center;
@@ -545,11 +572,20 @@
       </table>
     </div>
 
-    <!-- KAWALAN PAGINATION -->
+ <!-- KAWALAN PAGINATION -->
     <div class="pagination-container">
       <button id="btnPrev" class="pagination-btn" onclick="prevPage()" disabled>◀ Sebelum</button>
       <span id="pageInfo">Halaman 1</span>
       <button id="btnNext" class="pagination-btn" onclick="nextPage()" disabled>Seterusnya ▶</button>
+    </div>
+
+    <!-- BUTANG PANTAS KE BORANG PERMOHONAN -->
+    <div style="margin-top: 18px; text-align: center;">
+      <button type="button" 
+              class="btn-go-to-form"
+              onclick="scrollToBookingForm()">
+        ✍️ KLIK DI SINI UNTUK MOHON TEMPAHAN BARU 👇
+      </button>
     </div>
   </div>
 
@@ -736,7 +772,18 @@
     }
   }
 
-
+// FUNGSI SKROL AUTOMATIK KE BORANG DENGAN FOKUS
+  function scrollToBookingForm() {
+    const formContainer = document.querySelector('.form-container');
+    if (formContainer) {
+      formContainer.scrollIntoView({ behavior: 'smooth' });
+      // Letakkan kursor terus pada medan nama pemohon
+      setTimeout(() => {
+        const inputNama = document.getElementById('nama');
+        if (inputNama) inputNama.focus();
+      }, 500);
+    }
+  }
 
   window.onload = loadJadual;
 
