@@ -6,7 +6,7 @@
   <title>Tempahan Bilik Mesyuarat PKG Pelangai</title>
   <!-- Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
- <style>
+<style>
     body { 
       font-family: Arial, sans-serif; 
       background-color: #f4f6f9; 
@@ -154,7 +154,7 @@
       font-size: 16px; 
       cursor: pointer; 
       font-weight: bold; 
-      margin-top: 10px;
+      margin-top: 10px; 
     }
     button[type="submit"]:hover { background-color: #003d80; }
     #statusMessage { 
@@ -337,7 +337,7 @@
       border-left-color: #dc3545;
     }
 
- /* POPUP TAKWIM / KALENDAR (SEIMBANG KIRI & KANAN) */
+    /* POPUP TAKWIM / KALENDAR (DESKTOP) */
     .cal-modal {
       display: none;
       position: fixed;
@@ -350,17 +350,17 @@
       z-index: 99999;
       padding: 15px;
       overflow-y: auto;
-      box-sizing: border-box; /* Kunci padding supaya tidak tolak ke tepi */
+      box-sizing: border-box;
     }
     .cal-modal-content {
       background: #ffffff;
-      width: 100%;             /* Fleksibel ikut skrin */
-      max-width: 580px;        /* Saiz ideal supaya tidak terlebih lebar */
-      margin: 25px auto;       /* 'auto' akan letak tepat di tengah */
+      width: 100%;
+      max-width: 520px;
+      margin: 25px auto;
       padding: 18px;
-      border-radius: 10px;
+      border-radius: 12px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-      box-sizing: border-box; /* Pastikan ruang kiri kanan sama rata */
+      box-sizing: border-box;
     }
     .cal-header {
       display: flex;
@@ -368,6 +368,13 @@
       align-items: center;
       margin-bottom: 12px;
       gap: 6px;
+    }
+    .cal-header h3 {
+      margin: 0;
+      color: #0056b3;
+      font-size: 16px;
+      text-align: center;
+      white-space: nowrap;
     }
     .cal-btn-nav {
       background: #0056b3;
@@ -397,18 +404,18 @@
       box-sizing: border-box;
     }
     
-    /* KOTAK TARIKH KALENDAR YANG RAPI & SERAGAM */
+    /* KOTAK TARIKH KALENDAR */
     .cal-cell {
-      height: 52px;
+      height: 48px;
       border: 1px solid #e2e8f0;
       border-radius: 6px;
-      padding: 5px 3px;
+      padding: 4px 1px;
       font-size: 12px;
       background: #ffffff;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
       box-sizing: border-box;
       transition: all 0.2s;
     }
@@ -426,20 +433,20 @@
       transform: scale(1.04);
     }
     .cal-dot {
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
       background-color: #dc2626;
       border-radius: 50%;
-      margin-top: 6px;
+      margin-top: 3px;
     }
 
-/* OPTIMASI KHUSUS TAMPILAN PONSEL / MOBILE (LAYAR <= 600px) */
+    /* OPTIMASI KHUSUS TAMPILAN PONSEL / MOBILE (LAYAR <= 600px) */
     @media screen and (max-width: 600px) {
       body {
-        padding: 10px 8px; /* Kurangi jarak tepi layar ponsel */
+        padding: 8px 6px;
       }
       .tab-nav-wrapper {
-        flex-direction: column; /* Tombol tab bertumpuk rapi di ponsel */
+        flex-direction: column;
         gap: 6px;
       }
       .main-tab-btn {
@@ -448,26 +455,57 @@
         border-radius: 6px;
         padding: 10px;
       }
-      .cal-modal-content {
-        padding: 12px;
-        margin: 15px auto;
-        width: 95%; /* Kalender memanfaatkan lebar layar ponsel penuh */
-      }
-      .cal-cell {
-        height: 42px; /* Sedikit lebih ramping di layar sentuh ponsel */
-        font-size: 11px;
-      }
-      .cal-col-name {
-        font-size: 10.5px;
-        padding: 4px 1px;
-      }
       .today-status-card {
         flex-direction: column;
         align-items: flex-start;
         gap: 6px;
       }
-    }
 
+      /* KONTENA MODAL PONSEL */
+      .cal-modal {
+        padding: 10px;
+      }
+      .cal-modal-content {
+        padding: 14px 10px;
+        margin: 10px auto;
+        width: 100%;
+        max-width: 360px;
+        border-radius: 10px;
+      }
+
+      /* NAVIGASI BULAN TIDAK BERDESAK */
+      .cal-header {
+        margin-bottom: 8px;
+        gap: 4px;
+      }
+      .cal-header h3 {
+        font-size: 13.5px !important;
+        white-space: nowrap;
+      }
+      .cal-btn-nav {
+        padding: 5px 6px;
+        font-size: 10.5px;
+      }
+
+      /* GRID & KOTAK SEGI EMPAT SAMA KEMAS */
+      .cal-grid {
+        gap: 3px;
+      }
+      .cal-col-name {
+        font-size: 10px;
+        padding: 4px 1px;
+      }
+      .cal-cell {
+        height: 38px;
+        padding: 2px 1px;
+        font-size: 11px;
+      }
+      .cal-dot {
+        width: 5px;
+        height: 5px;
+        margin-top: 2px;
+      }
+    }
   </style>
 
 </head>
@@ -982,9 +1020,9 @@
 <div id="calendarModal" class="cal-modal">
   <div class="cal-modal-content">
     <div class="cal-header">
-      <button type="button" class="cal-btn-nav" onclick="prevMonth()">◀ Bulan Sebelum</button>
-      <h3 id="calMonthTitle" style="margin: 0; color: #0056b3; font-size: 16px;">Takwim Tempahan</h3>
-      <button type="button" class="cal-btn-nav" onclick="nextMonth()">Bulan Seterusnya ▶</button>
+      <button type="button" class="cal-btn-nav" onclick="prevMonth()">◀ Sebelum</button>
+      <h3 id="calMonthTitle" style="margin: 0; color: #0056b3;">Takwim Tempahan</h3>
+      <button type="button" class="cal-btn-nav" onclick="nextMonth()">Seterusnya ▶</button>
     </div>
     
     <div id="calendarGrid" class="cal-grid"></div>
