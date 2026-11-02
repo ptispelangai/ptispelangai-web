@@ -454,10 +454,19 @@
       background-color: #fecaca;
       transform: scale(1.04);
     }
-    .cal-dot {
+   
+     .cal-dot {
       width: 6px;
       height: 6px;
       background-color: #dc2626;
+      border-radius: 50%;
+      margin-top: 3px;
+    }
+    /* TITIK HIJAU DESKTOP */
+    .cal-dot-free {
+      width: 6px;
+      height: 6px;
+      background-color: #28a745;
       border-radius: 50%;
       margin-top: 3px;
     }
@@ -527,11 +536,13 @@
         padding: 2px 1px;
         font-size: 11px;
       }
-      .cal-dot {
+      
+     .cal-dot, .cal-dot-free {
         width: 5px;
         height: 5px;
         margin-top: 2px;
-      }
+      }	
+
     }
   </style>
 
@@ -546,12 +557,7 @@
 
   <!-- KONTENA UTAMA ATAS -->
   <div class="dashboard-container" style="border-radius: 0 8px 8px 8px; border-top: 3px solid #0056b3;">
-    
-    <!-- KAD STATUS RINGKAS HARI INI -->
-    <div id="todayStatusBox" class="today-status-card">
-      <span id="todayStatusText">🟢 Memeriksa status hari ini...</span>
-      <span id="todayDateLabel" style="font-weight: bold; color: #555;"></span>
-    </div>
+  
 
     <h3 style="font-size: 15px; margin-bottom: 10px;">📌 REKOD TEMPAHAN BILIK MESYUARAT PKG PELANGAI TERKINI</h3>
     
@@ -692,7 +698,7 @@
   let currentPage = 1;
   const rowsPerPage = 3;
 
-  // AMBIL DATA DARI SUPABASE (PANTAS)
+ // AMBIL DATA DARI SUPABASE (PANTAS)
   async function loadJadual() {
     try {
       const { data, error } = await _supabase
@@ -704,8 +710,6 @@
       if (error) throw error;
 
       allData = data || [];
-      // TAMBAHAN: Paparkan status hari ini
-      renderTodayStatus();
       
       if (allData.length === 0) {
         jadualBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Tiada tempahan direkodkan lagi.</td></tr>';
@@ -942,29 +946,6 @@
     return `${y}-${m}-${d}`;
   }
 
-// KEMASKINI STATUS KAD HARI INI
-  function renderTodayStatus() {
-    const todayStr = getTodayString();
-    const todayBox = document.getElementById('todayStatusBox');
-    const statusText = document.getElementById('todayStatusText');
-    const dateLabel = document.getElementById('todayDateLabel');
-
-    if (dateLabel) {
-      dateLabel.innerText = `Hari Ini: ${formatDateDDMMYYYY(todayStr)}`;
-    }
-
-    const todayBookings = allData.filter(item => item.tarikh === todayStr);
-
-    if (todayBookings.length > 0) {
-      todayBox.classList.add('occupied');
-      const b = todayBookings[0];
-      // Hanya nama sekolah dan masa sahaja dipaparkan
-      statusText.innerHTML = `🔴 <b>DITEMPAH HARI INI:</b> ${b.sekolah} (${b.masa_mula} - ${b.masa_tamat})`;
-    } else {
-      todayBox.classList.remove('occupied');
-      statusText.innerHTML = `🟢 <b>TIADA TEMPAHAN HARI INI</b> — Bilik mesyuarat sedia digunakan / tiada sebarang program.`;
-    }
-  }
 
   // FUNGSI MODAL KALENDAR
   function openCalendarModal() {
@@ -988,7 +969,7 @@
     renderCalendar();
   }
 
- function renderCalendar() {
+function renderCalendar() {
     const calGrid = document.getElementById('calendarGrid');
     calGrid.innerHTML = '';
 
@@ -1033,7 +1014,9 @@
 
       // Semak sama ada tarikh ini ada tempahan
       const matches = allData.filter(b => b.tarikh === dStr);
+
       if (matches.length > 0) {
+        // JIKA ADA TEMPAHAN (TITIK MERAH)
         cell.classList.add('has-booking');
         cell.title = "Klik untuk lihat maklumat tempahan";
         
@@ -1043,6 +1026,19 @@
 
         // Fungsi bila kotak tarikh diklik
         cell.onclick = () => showBookingDetails(dStr, matches);
+      } else if (dStr === todayStr) {
+        // KHUSUS HARI INI JIKA TIADA TEMPAHAN (TITIK HIJAU)
+        cell.style.cursor = 'pointer';
+        cell.title = "Klik untuk semak status hari ini";
+
+        const greenDot = document.createElement('div');
+        greenDot.className = 'cal-dot-free';
+        cell.appendChild(greenDot);
+
+        // Popup pemberitahuan bilik sedia digunakan
+        cell.onclick = () => {
+          alert(`📅 TARIKH: ${formatDateDDMMYYYY(todayStr)}\n------------------------------------\n🟢 STATUS: TIADA TEMPAHAN\nBilik mesyuarat sedia digunakan / tiada sebarang program.`);
+        };
       }
 
       calGrid.appendChild(cell);
