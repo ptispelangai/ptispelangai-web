@@ -54,6 +54,7 @@
         .hero-corporate {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
         }
+
     </style>
 </head>
 
@@ -314,20 +315,42 @@
         </div>
     </section> 
 
-    <!-- BAHAGIAN PENGUMUMAN FORMAL -->
-    <section class="max-w-7xl mx-auto px-6 pt-10">
-        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-            <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
-                <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
-                    <i class="fa-solid fa-bullhorn text-blue-700"></i>
-                    <span>Pengumuman & Makluman Semasa</span>
-                </h3>
+  <!-- BAHAGIAN BERITA & PENGUMUMAN (GAYA PORTAL KLUANG) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+        <!-- Header Tajuk & Keterangan -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-3">
+            <div>
+                <span class="text-xs font-bold text-rose-600 uppercase tracking-widest block mb-1">TERKINI</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Berita & pengumuman</h2>
             </div>
-            
-            <div id="announcementContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <p class="text-slate-500 text-sm italic">Memuatkan pengumuman rasmi...</p>
-            </div>
+            <p class="text-xs sm:text-sm text-slate-500 max-w-md md:text-right font-medium">
+                Hebahan dan makluman terkini yang diterbitkan oleh Pasukan Teknikal ICT Sekolah Zon Pelangai.
+            </p>
         </div>
+
+       <!-- Carousel Container -->
+<div class="relative group" onmouseenter="stopAnnounceAutoSlide()" onmouseleave="startAnnounceAutoSlide()">
+   <!-- Slider Track dengan snap-x mandatory -->
+<div id="announcementSliderTrack" 
+     class="flex flex-nowrap gap-5 overflow-x-auto scroll-smooth pb-4 items-stretch snap-x snap-mandatory"
+     style="scrollbar-width: none; -ms-overflow-style: none;">
+    <p class="text-slate-500 text-sm italic py-8">Memuatkan pengumuman rasmi...</p>
+</div>
+
+    <!-- Butang Navigasi Panah Kiri & Kanan -->
+    <div class="flex justify-end items-center gap-2 mt-2">
+        <button type="button" onclick="slideAnnounce('left')" 
+                title="Sebelumnya"
+                class="w-10 h-10 rounded-full bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 hover:text-blue-700 flex items-center justify-center shadow-sm transition-all active:scale-95 cursor-pointer">
+            <i class="fa-solid fa-arrow-left text-sm"></i>
+        </button>
+        <button type="button" onclick="slideAnnounce('right')" 
+                title="Seterusnya"
+                class="w-10 h-10 rounded-full bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 hover:text-blue-700 flex items-center justify-center shadow-sm transition-all active:scale-95 cursor-pointer">
+            <i class="fa-solid fa-arrow-right text-sm"></i>
+        </button>
+    </div>
+</div>
     </section>
 
    <!-- SERVICES SECTION FORMAL -->
@@ -2178,73 +2201,158 @@ function showAdminSection(which) {
             }
         }
 
+// VARIABEL KONTROL SLIDER PENGUMUMAN
+      let announceAutoSlideTimer = null;
+
       async function loadAnnouncements() {
-    const container = document.getElementById('announcementContainer');
-    if (!container) return;
+          const track = document.getElementById('announcementSliderTrack');
+          if (!track) return;
 
-    try {
-        const client = getSupabase();
-        const { data, error } = await client
-            .from('announcements')
-            .select('*')
-            .order('created_at', { ascending: false })
-            .limit(2);
+          try {
+              const client = getSupabase();
+              const { data, error } = await client
+                  .from('announcements')
+                  .select('*')
+                  .order('created_at', { ascending: false })
+                  .limit(10);
 
-        if (error) throw error;
+              if (error) throw error;
 
-        if (!data || data.length === 0) {
-            container.innerHTML = `<p class="text-slate-600 text-xs font-medium italic">Tiada pengumuman semasa buat masa ini.</p>`;
-            return;
-        }
+              if (!data || data.length === 0) {
+                  track.innerHTML = `<p class="text-slate-500 text-sm italic py-8">Tiada pengumuman semasa buat masa ini.</p>`;
+                  return;
+              }
 
-        container.className = "grid grid-cols-1 md:grid-cols-2 gap-4";
-        container.innerHTML = '';
+              // Jika data ada 3 atau kurang, kita gandakan senarai supaya track cukup panjang untuk dislaid dengan ketara
+              let displayList = [...data];
+              if (data.length > 1 && data.length <= 4) {
+                  displayList = [...data, ...data]; // Gandakan jadi 6 kad
+              }
 
-        data.forEach(item => {
-            let rawContent = item.kandungan || item.butiran || '';
-            let displayText = rawContent;
-            let hasImage = false;
-            let lowerContent = rawContent.toLowerCase();
+              const defaultBanners = [
+                  'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80',
+                  'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80',
+                  'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80',
+                  'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80'
+              ];
 
-            if (lowerContent.includes('[img')) {
-                hasImage = true;
-                const index = lowerContent.indexOf('[img');
-                displayText = rawContent.substring(0, index).trim();
-            }
+              track.innerHTML = displayList.map((item, idx) => {
+                  let rawContent = item.kandungan || item.butiran || '';
+                  let displayText = rawContent;
+                  let bannerImg = '';
 
-            // Elakkan ralat aksara khas pada ID
-            const safeId = String(item.id).replace(/'/g, "\\'");
+                  // Ekstrak URL imej jika ada
+                  const match = rawContent.match(/\[IMG:(https?:\/\/[^\]]+)\]/i);
+                  if (match && match[1]) {
+                      const extracted = match[1].trim();
+                      if (!extracted.toLowerCase().endsWith('.pdf')) {
+                          bannerImg = extracted;
+                      }
+                      displayText = rawContent.replace(/\[IMG:[^\]]+\]/gi, '').trim();
+                  }
 
-            container.innerHTML += `
-                <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl flex flex-col justify-between shadow-sm">
-                    <div>
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="bg-blue-100 text-blue-800 border border-blue-200 text-[10px] px-2 py-0.5 rounded font-bold">${esc(item.kategori || 'Umum')}</span>
-                            
-                            <!-- TARIKH DITERANGKAN (text-slate-600 font-medium) -->
-                            <span class="text-slate-600 font-medium text-[11px]">${esc(item.tarikh || '')}</span>
-                        </div>
-                        <h4 class="text-slate-900 font-bold text-sm mb-1">${esc(item.tajuk)}</h4>
-                        <p class="text-slate-800 text-sm font-medium line-clamp-2 mb-3 leading-relaxed">
-                            ${displayText ? esc(displayText) : ''}
-                            ${hasImage ? '<span class="block text-blue-700 text-xs font-bold mt-1">📷 Lampiran Gambar / Dokumen</span>' : ''}
-                        </p>
-                    </div>
-                    <div class="flex justify-between items-center pt-2 border-t border-slate-200">
-                        <!-- LABEL ADMIN PTIS JUGA DITERANGKAN SIKIT -->
-                        <span class="text-[10px] text-slate-600 font-medium">Admin PTIS</span>
-                        <button type="button" onclick="loadAnnouncementDetail('${safeId}')" class="text-xs font-bold text-blue-700 hover:text-blue-900 hover:underline cursor-pointer">
-                            Baca Lanjut ↗
-                        </button>
-                    </div>
+                  if (!bannerImg) {
+                      bannerImg = defaultBanners[idx % defaultBanners.length];
+                  }
+
+                  const safeId = String(item.id).replace(/'/g, "\\'");
+                  const kategori = item.kategori || 'Hebahan Rasmi';
+                  const tarikh = item.tarikh || '';
+
+                  // Tetapkan saiz kad yang kemas (lebar 360px di desktop)
+                 
+		return `
+    <article class="flex-none snap-start w-full sm:w-[calc((100%-20px)/2)] md:w-[calc((100%-40px)/3)] bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between group/card">
+        <div>
+            <!-- Banner Gambar Atas -->
+            <div class="h-44 w-full overflow-hidden bg-slate-100 relative">
+                <img src="${bannerImg}" 
+                     alt="${esc(item.tajuk)}" 
+                     class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500 ease-out">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent"></div>
+            </div>
+
+            <div class="p-5">
+                <!-- Kategori & Tarikh -->
+                <div class="flex items-center justify-between text-xs mb-2.5">
+                    <span class="text-rose-600 font-extrabold uppercase tracking-wider text-[11px]">${esc(kategori)}</span>
+                    <span class="text-slate-400 font-medium">${esc(tarikh)}</span>
                 </div>
-            `;
-        });
-    } catch (err) {
-        console.error('Load Announcement Error:', err);
-        container.innerHTML = `<p class="text-rose-600 text-xs font-semibold">Gagal memuatkan pengumuman.</p>`;
-    }
-}
+
+                <!-- Tajuk Kad -->
+                <h3 class="text-base font-extrabold text-slate-900 leading-snug line-clamp-2 mb-2 group-hover/card:text-blue-700 transition-colors">
+                    ${esc(item.tajuk)}
+                </h3>
+
+                <!-- Teks Ringkasan -->
+                <p class="text-xs sm:text-sm text-slate-600 line-clamp-3 leading-relaxed font-normal">
+                    ${esc(displayText || 'Klik pautan di bawah untuk membaca butiran lanjut hebahan ini.')}
+                </p>
+            </div>
+        </div>
+
+        <!-- Pautan Baca Lagi -->
+        <div class="px-5 pb-5 pt-0">
+            <button type="button" 
+                    onclick="loadAnnouncementDetail('${safeId}')" 
+                    class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-800 hover:text-blue-700 transition-colors group/btn cursor-pointer">
+                <span>Baca lagi</span>
+                <i class="fa-solid fa-arrow-right text-[11px] transition-transform group-hover/btn:translate-x-1"></i>
+            </button>
+        </div>
+    </article>
+`;
+
+              }).join('');
+
+              startAnnounceAutoSlide();
+
+          } catch (err) {
+              console.error('Load Announcement Error:', err);
+              track.innerHTML = `<p class="text-rose-600 text-xs font-semibold py-8">Gagal memuatkan pengumuman.</p>`;
+          }
+      }
+
+      // KAWALAN SLIDER PENGUMUMAN DENGAN PERGERAKAN JELAS
+      function slideAnnounce(direction) {
+          const track = document.getElementById('announcementSliderTrack');
+          if (!track) return;
+
+          const firstCard = track.querySelector('article');
+          // Anjakkan sejauh 1 kad penuh (lebar kad + jarak gap 20px)
+          const scrollDistance = firstCard ? (firstCard.offsetWidth + 20) : 380;
+          const maxScrollLeft = track.scrollWidth - track.clientWidth;
+
+          if (direction === 'left') {
+              if (track.scrollLeft <= 10) {
+                  track.scrollTo({ left: maxScrollLeft, behavior: 'smooth' });
+              } else {
+                  track.scrollBy({ left: -scrollDistance, behavior: 'smooth' });
+              }
+          } else {
+              // Jika hampir hujung, patah balik ke permulaan secara lembut
+              if (track.scrollLeft >= maxScrollLeft - 20) {
+                  track.scrollTo({ left: 0, behavior: 'smooth' });
+              } else {
+                  track.scrollBy({ left: scrollDistance, behavior: 'smooth' });
+              }
+          }
+      }
+
+      function startAnnounceAutoSlide() {
+          stopAnnounceAutoSlide();
+          announceAutoSlideTimer = setInterval(() => {
+              slideAnnounce('right');
+          }, 3500); // Bertukar slaid setiap 3.5 saat
+      }
+
+      function stopAnnounceAutoSlide() {
+          if (announceAutoSlideTimer) {
+              clearInterval(announceAutoSlideTimer);
+              announceAutoSlideTimer = null;
+          }
+      }
+
       async function refreshAllData() {
             // Beri maklum balas visual pada butang semasa memuatkan semula
             const btnRefresh = document.querySelector('button[onclick="refreshAllData()"]');
