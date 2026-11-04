@@ -103,7 +103,28 @@
     </main>
 
     <script>
-        const API_KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNjA0MTBiN2RiZDA3YjAxNjczOTY0ZWUxOWQyY2RlNjc2OGI0N2YzNTZmYTE5ZDA4Nzk2ZmNjZmYyMjI3OTg2Zjc3Mjc3MjZiMjBhZWJhYzAiLCJpYXQiOjE3ODc5MDQzNzAuNDAzMTY3LCJuYmYiOjE3ODc5MDQzNzAuNDAzMTY5LCJleHAiOjQ5NDM1Nzc5NzAuMzk1MTM0LCJzdWIiOiI3Njc2OTQ1NyIsInNjb3BlcyI6WyJ1c2VyLnJlYWQiLCJ0YXNrLnJlYWQiLCJ0YXNrLndyaXRlIiwidXNlci53cml0ZSIsIndlYmhvb2sucmVhZCIsIndlYmhvb2sud3JpdGUiLCJwcmVzZXQucmVhZCIsInByZXNldC53cml0ZSJdfQ.Q2MrU13Q4PT7QCCCSkJ9Ce8bVCm3BcwfOJYBJqsZ4GHK2cU5nMsdPtONDjGH8hleW5orTwa98sZSIRrdGC0oDeTxOnE9eadyfT2s3pDs9LoOVeojLFEfgrjuLA99uQ3IZGdZSV9gMWuSSTXsI6s3quHe6iHuez96sTBWbOoc2x42IRpiBy11FGSqu7oAueb0pZcMRxjwlyKdPcivwk11OHS-_GQgvDJZncafKaMrm-MnyC4vBwsYfJNZFFnEfjnPgbkfg7XX-6WL5vY5rNtNp2HJ4GCMZ0kciKfhnLRrw4cQ46ARI9IRsdoJeFscmRDSz2DxVXyXtNKvNka-0toKnhkhOqKKEuqnVn-OB90Pf9wfv39iXwZZ7v76nUuEo8sHJq42eKYIiZynCQ-3esEbozCLYZzgSfKbdi5Koea72m87fKjUaMYsPAfaNrIUyJnyGkAfCJjARe4uA12mik-u60M3HDHIq95AwV4i7RqlxW1awMxN7L0COmxhuHjuy2ynKhg5H9e_BZbJdLoFs825RXtKgeUHCwgNi5ouqM2qUyYyj2sfAoIdXOBuCbvQUxmukrSF7EXnoUSO4p0oESQ-v33eu0QbXe6Z3WeEK72AnDJ7D5fL9vpvWDXoFJm39voaIe7Ev3iOgd8O6K5cCfqHg_Xcg2KCI-n288NCZjzTuPU";
+        // SENARAI API KEY (Kunci Utama Baharu & Kunci Sandaran)
+        const API_KEYS = [
+            // 1. Kunci Baharu (Aktif)
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZjNkZDZkMTI5NDlkYmQ4ZDUxMGM0NjJiOWI3ZDM5NTBhZWNkZDE0ZjQzNTVmOGRiNjNjY2NlNDdkMzE1MDMyZWI2ODRmNTgyMDRjNTliMDgiLCJpYXQiOjE3OTM3NjQzMzQuMjUxNzc0LCJuYmYiOjE3OTM3NjQzMzQuMjUxNzc2LCJleHAiOjQ5NDk0Mzc5MzQuMjQyMjMyLCJzdWIiOiI3NzU0NjQ3NSIsInNjb3BlcyI6WyJ1c2VyLnJlYWQiLCJ0YXNrLnJlYWQiLCJ0YXNrLndyaXRlIl19.AnltLWcC3rEh1n_aXjwYne6IKj6Zzr7OoPWmCeB051aoSw2D3aV5MP4kS1juYZjvKJpSRYttZSZcnjuwGNO9m3XK9zg4n2Zy6jDMDARg657-VJtMGwaRyIvDJwr7wb7cCM9Z5ZUjlu1N4yDc0SAYnsemybuCH-y-JuQdMWYTvPMnVbXOiiV0SNwdYtdOmQRJX1DbHPIVrjAusoJNuoIV8bPebUjxlbi2BBBokNTDqqwOwqZWESu0ApOmJ900izgoUHUzSb9VIulw-ScHi_5YznZ-cHetj3m2x9CK08umlVRVcQpbVSVviiQ43CvKiiC8GnxIC4-5dI8gEZLKfgxpspql0TgndIS_5vu9o1z9N6dM13WY89VCFfUKxjlyKwPpaZHa7wWbt4XdeiqghnuNI5RjJCPA0sTNvEmeunKDq1e7Chvp4V05WreOm5GCYaLk87TPt8UgHnn0RAx7c-415jygXF0bRE5D7B4HqK0W7D2Fc2VCg-Ofs79DHFvYTK3U39bZcnkwP9fpJ2JPbzms_kaziekG3lP5suJ-cIk8L5FCWUk9_HqLowRipKg860lioyJ9v4t2HivxTaKq2hFmas7Sa_CaTmjIuvScQ26De8zgQE5b-UcD7iOC3L8fSJv_L3f_lr5uSk9Y7oeXFb--wiVNwEK0mjdNBAh2RGyDjIg",
+            // 2. Kunci Terdahulu (Sandaran)
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNjA0MTBiN2RiZDA3YjAxNjczOTY0ZWUxOWQyY2RlNjc2OGI0N2YzNTZmYTE5ZDA4Nzk2ZmNjZmYyMjI3OTg2Zjc3Mjc3MjZiMjBhZWJhYzAiLCJpYXQiOjE3ODc5MDQzNzAuNDAzMTY3LCJuYmYiOjE3ODc5MDQzNzAuNDAzMTY5LCJleHAiOjQ5NDM1Nzc5NzAuMzk1MTM0LCJzdWIiOiI3Njc2OTQ1NyIsInNjb3BlcyI6WyJ1c2VyLnJlYWQiLCJ0YXNrLnJlYWQiLCJ0YXNrLndyaXRlIiwidXNlci53cml0ZSIsIndlYmhvb2sucmVhZCIsIndlYmhvb2sud3JpdGUiLCJwcmVzZXQucmVhZCIsInByZXNldC53cml0ZSJdfQ.Q2MrU13Q4PT7QCCCSkJ9Ce8bVCm3BcwfOJYBJqsZ4GHK2cU5nMsdPtONDjGH8hleW5orTwa98sZSIRrdGC0oDeTxOnE9eadyfT2s3pDs9LoOVeojLFEfgrjuLA99uQ3IZGdZSV9gMWuSSTXsI6s3quHe6iHuez96sTBWbOoc2x42IRpiBy11FGSqu7oAueb0pZcMRxjwlyKdPcivwk11OHS-_GQgvDJZncafKaMrm-MnyC4vBwsYfJNZFFnEfjnPgbkfg7XX-6WL5vY5rNtNp2HJ4GCMZ0kciKfhnLRrw4cQ46ARI9IRsdoJeFscmRDSz2DxVXyXtNKvNka-0toKnhkhOqKKEuqnVn-OB90Pf9wfv39iXwZZ7v76nUuEo8sHJq42eKYIiZynCQ-3esEbozCLYZzgSfKbdi5Koea72m87fKjUaMYsPAfaNrIUyJnyGkAfCJjARe4uA12mik-u60M3HDHIq95AwV4i7RqlxW1awMxN7L0COmxhuHjuy2ynKhg5H9e_BZbJdLoFs825RXtKgeUHCwgNi5ouqM2qUyYyj2sfAoIdXOBuCbvQUxmukrSF7EXnoUSO4p0oESQ-v33eu0QbXe6Z3WeEK72AnDJ7D5fL9vpvWDXoFJm39voaIe7Ev3iOgd8O6K5cCfqHg_Xcg2KCI-n288NCZjzTuPU"
+        ];
+
+        let activeKeyIdx = 0;
+
+        function getActiveKey() {
+            return API_KEYS[activeKeyIdx];
+        }
+
+        function switchKey() {
+            if (activeKeyIdx < API_KEYS.length - 1) {
+                activeKeyIdx++;
+                console.warn("Bertukar ke API Key sandaran: Indeks", activeKeyIdx);
+                return true;
+            }
+            return false;
+        }
 
         lucide.createIcons();
 
@@ -144,6 +165,48 @@
             progressStatus.textContent = text;
         }
 
+        async function createConversionJob() {
+            const response = await fetch('https://api.cloudconvert.com/v2/jobs', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${getActiveKey()}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "tasks": {
+                        "upload-my-file": {
+                            "operation": "import/upload"
+                        },
+                        "convert-to-docx": {
+                            "operation": "convert",
+                            "input": "upload-my-file",
+                            "output_format": "docx"
+                        },
+                        "export-my-file": {
+                            "operation": "export/url",
+                            "input": "convert-to-docx"
+                        }
+                    }
+                })
+            });
+
+            const jobData = await response.json();
+
+            // Jika ralat had kredit (status 402) atau mesej credit, tukar ke kunci sandaran automatik
+            if (response.status === 402 || (jobData.message && jobData.message.toLowerCase().includes('credit'))) {
+                if (switchKey()) {
+                    updateProgress(15, "Menyambung ke pelayan Cloud sandaran...");
+                    return await createConversionJob();
+                }
+            }
+
+            if (!response.ok) {
+                throw new Error(jobData.message || (jobData.errors ? JSON.stringify(jobData.errors) : 'Gagal membuat tugasan API.'));
+            }
+
+            return jobData;
+        }
+
         async function handleFile(file) {
             if (!file.name.toLowerCase().endsWith('.pdf')) {
                 alert('Sila pilih fail format PDF sahaja.');
@@ -160,42 +223,15 @@
             updateProgress(10, "Menyediakan tugasan penukaran...");
 
             try {
-                // 1. Create Job with automatic engine selection
-                const jobResponse = await fetch('https://api.cloudconvert.com/v2/jobs', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${API_KEY}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        "tasks": {
-                            "upload-my-file": {
-                                "operation": "import/upload"
-                            },
-                            "convert-to-docx": {
-                                "operation": "convert",
-                                "input": "upload-my-file",
-                                "output_format": "docx"
-                            },
-                            "export-my-file": {
-                                "operation": "export/url",
-                                "input": "convert-to-docx"
-                            }
-                        }
-                    })
-                });
-
-                const jobData = await jobResponse.json();
-                if (!jobResponse.ok) {
-                    throw new Error(jobData.message || (jobData.errors ? JSON.stringify(jobData.errors) : 'Gagal membuat tugasan API.'));
-                }
+                // 1. Cipta Tugasan Job (dengan Failover Kunci API)
+                const jobData = await createConversionJob();
 
                 const tasks = jobData.data.tasks;
                 const uploadTask = tasks.find(t => t.name === 'upload-my-file');
 
                 updateProgress(30, "Memuat naik fail PDF ke pelayan Cloud...");
 
-                // 2. Upload File
+                // 2. Muat Naik Fail
                 const formData = new FormData();
                 for (const p in uploadTask.result.form.parameters) {
                     formData.append(p, uploadTask.result.form.parameters[p]);
@@ -211,7 +247,7 @@
 
                 updateProgress(60, "Menukar PDF ke Word (mengekalkan susun atur & jadual)...");
 
-                // 3. Poll Job Status
+                // 3. Semak Status Penukaran
                 const jobId = jobData.data.id;
                 pollJobStatus(jobId);
 
@@ -227,7 +263,7 @@
                 try {
                     const response = await fetch(`https://api.cloudconvert.com/v2/jobs/${jobId}`, {
                         headers: {
-                            'Authorization': `Bearer ${API_KEY}`
+                            'Authorization': `Bearer ${getActiveKey()}`
                         }
                     });
                     const data = await response.json();
