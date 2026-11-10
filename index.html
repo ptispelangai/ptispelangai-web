@@ -1350,7 +1350,24 @@
             <div><label class="block text-xs font-bold text-slate-500 mb-1">Kategori</label><input id="newAnnCategory" placeholder="Cth: Penyelenggaraan" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs"></div>
             <div><label class="block text-xs font-bold text-slate-500 mb-1">Tajuk</label><input id="newAnnTitle" placeholder="Tajuk utama..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold"></div>
             <div><label class="block text-xs font-bold text-slate-500 mb-1">Butiran</label><textarea id="newAnnDesc" rows="3" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs"></textarea></div>
-            <div><label class="block text-xs font-bold text-slate-500 mb-1">Muat Naik Gambar (Opsional)</label><input type="file" id="newAnnImageFile" accept="image/*" class="w-full text-xs text-slate-600 bg-slate-50 border border-slate-300 rounded-xl p-1"></div>
+          <!-- MEDAN 1: FAIL UTAMA / SURAT SIARAN PDF -->
+<div>
+    <label class="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1.5">
+        <i class="fa-solid fa-file-pdf text-rose-600"></i>
+        <span>1. Fail Dokumen / Surat Siaran (PDF)</span>
+    </label>
+    <input type="file" id="newAnnDocFile" accept="application/pdf" class="w-full text-xs text-slate-600 bg-slate-50 border border-slate-300 rounded-xl p-1.5">
+</div>
+
+<!-- MEDAN 2: GAMBAR THUMBNAIL / SLIDE DEPAN -->
+<div>
+    <label class="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1.5">
+        <i class="fa-regular fa-image text-blue-600"></i>
+        <span>2. Gambar Thumbnail / Banner Slide (JPG / PNG)</span>
+    </label>
+    <input type="file" id="newAnnImageFile" accept="image/*" class="w-full text-xs text-slate-600 bg-slate-50 border border-slate-300 rounded-xl p-1.5">
+    <p class="text-[10px] text-slate-400 mt-0.5">Pilihan: Jika upload PDF dan mahu gambar poster di depan, pilih gambar di sini.</p>
+</div>
             <div class="flex gap-2 pt-2">
                 <button onclick="closeModal('addAnnouncementModal')" class="flex-1 bg-slate-100 text-slate-700 py-2 rounded-xl text-xs font-bold border border-slate-300">Batal</button>
                 <button onclick="saveNewAnnouncement()" class="flex-1 bg-blue-900 text-white py-2 rounded-xl text-xs font-bold">Simpan</button>
@@ -2241,17 +2258,27 @@ function showAdminSection(which) {
                   let displayText = rawContent;
                   let bannerImg = '';
 
-                  // Ekstrak URL imej jika ada
-                  const match = rawContent.match(/\[IMG:(https?:\/\/[^\]]+)\]/i);
-                  if (match && match[1]) {
-                      const extracted = match[1].trim();
-                      if (!extracted.toLowerCase().endsWith('.pdf')) {
-                          bannerImg = extracted;
+                 // Bersihkan teks ringkasan kad
+                  displayText = rawContent
+                      .replace(/\[DOC:[^\]]+\]/gi, '')
+                      .replace(/\[IMG:[^\]]+\]/gi, '')
+                      .trim();
+
+                  // 1. Semak jika ada gambar thumbnail [IMG:...]
+                  const imgMatch = rawContent.match(/\[IMG:(https?:\/\/[^\]]+)\]/i);
+                  if (imgMatch && imgMatch[1]) {
+                      const candidate = imgMatch[1].trim();
+                      if (!candidate.toLowerCase().endsWith('.pdf')) {
+                          bannerImg = candidate;
                       }
-                      displayText = rawContent.replace(/\[IMG:[^\]]+\]/gi, '').trim();
                   }
 
-                  if (!bannerImg) {
+                  // 2. Semak jika ada fail PDF
+                  const hasPdf = rawContent.toLowerCase().includes('.pdf');
+                  let isPdfDoc = (!bannerImg && hasPdf);
+
+                  // 3. Jika tiada sebarang gambar dan tiada PDF, guna banner lalai
+                  if (!bannerImg && !isPdfDoc) {
                       bannerImg = defaultBanners[idx % defaultBanners.length];
                   }
 
@@ -2265,12 +2292,24 @@ function showAdminSection(which) {
     <article class="flex-none snap-start w-full sm:w-[calc((100%-20px)/2)] md:w-[calc((100%-40px)/3)] bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between group/card">
         <div>
             <!-- Banner Gambar Atas -->
+       ${bannerImg ? `
         <div class="h-48 sm:h-52 w-full overflow-hidden bg-slate-100 relative">
-    <img src="${bannerImg}" 
-         alt="${esc(item.tajuk)}" 
-         class="w-full h-full object-cover object-top group-hover/card:scale-105 transition-transform duration-500 ease-out">
-    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent"></div>
-</div>
+            <img src="${bannerImg}" 
+                 alt="${esc(item.tajuk)}" 
+                 class="w-full h-full object-cover object-top group-hover/card:scale-105 transition-transform duration-500 ease-out">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent"></div>
+        </div>
+        ` : `
+        <div class="h-48 sm:h-52 w-full bg-slate-900 border-b border-slate-800 flex flex-col items-center justify-center p-4 text-center relative group-hover/card:bg-slate-850 transition-colors">
+            <div class="w-14 h-14 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center mb-2.5 shadow-sm">
+                <i class="fa-solid fa-file-pdf text-3xl text-rose-500"></i>
+            </div>
+            <span class="text-[10px] font-extrabold uppercase tracking-widest text-rose-400 bg-rose-950/60 border border-rose-800/60 px-2.5 py-0.5 rounded-full mb-1">
+                Lampiran PDF
+            </span>
+            <span class="text-xs text-slate-300 font-medium">Surat Siaran Rasmi</span>
+        </div>
+        `}
             <div class="p-5">
                 <!-- Kategori & Tarikh -->
                 <div class="flex items-center justify-between text-xs mb-2.5">
@@ -2644,125 +2683,155 @@ function renderPublicSchoolTable() {
        // Pembolehubah global untuk menyimpan ID pengumuman yang sedang diedit (null jika mod Tambah Baru)
         let currentEditAnnouncementId = null;
 
-      function openAddAnnouncementModal() {
-            currentEditAnnouncementId = null; // Set ke mod Tambah Baru
-            
-            // Tukar Tajuk Modal (jika ada id elemen tajuk) & Butang Simpan
+    function openAddAnnouncementModal() {
+    currentEditAnnouncementId = null;
+    window._existingDocUrl = '';
+    window._existingImgUrl = '';
+
+    const modalTitle = document.querySelector('#addAnnouncementModal h3');
+    if (modalTitle) modalTitle.innerText = "Tambah Pengumuman Baru";
+
+    const now = new Date();
+    const todayLocal = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
+    document.getElementById('newAnnDate').value = todayLocal;
+    document.getElementById('newAnnCategory').value = '';
+    document.getElementById('newAnnTitle').value = '';
+    document.getElementById('newAnnDesc').value = '';
+    
+    if (document.getElementById('newAnnDocFile')) document.getElementById('newAnnDocFile').value = '';
+    if (document.getElementById('newAnnImageFile')) document.getElementById('newAnnImageFile').value = '';
+
+    document.getElementById('addAnnouncementModal').classList.remove('hidden');
+}
+
+async function openEditAnnouncementModal(id) {
+    try {
+        const client = getSupabase();
+        const { data, error } = await client.from('announcements').select('*').eq('id', id).single();
+        if (error) throw error;
+
+        if (data) {
+            currentEditAnnouncementId = id;
+            window._existingDocUrl = '';
+            window._existingImgUrl = '';
+
             const modalTitle = document.querySelector('#addAnnouncementModal h3');
-            if (modalTitle) modalTitle.innerText = "Tambah Pengumuman Baru";
+            if (modalTitle) modalTitle.innerText = "Edit Pengumuman";
 
-            // Dapatkan tarikh tempatan Malaysia (YYYY-MM-DD)
-            const now = new Date();
-            const todayLocal = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+            let raw = data.kandungan || data.butiran || '';
 
-            document.getElementById('newAnnDate').value = todayLocal;
-            document.getElementById('newAnnCategory').value = '';
-            document.getElementById('newAnnTitle').value = '';
-            document.getElementById('newAnnDesc').value = '';
-            
-            const imageInput = document.getElementById('newAnnImageFile');
-            if (imageInput) imageInput.value = '';
+            // Asingkan dokumen PDF sedia ada
+            const docM = raw.match(/\[DOC:(https?:\/\/[^\]]+)\]/i);
+            const oldPdfM = raw.match(/\[IMG:(https?:\/\/[^\]]+\.pdf)\]/i);
+            if (docM) window._existingDocUrl = docM[1].trim();
+            else if (oldPdfM) window._existingDocUrl = oldPdfM[1].trim();
+
+            // Asingkan gambar sedia ada
+            const imgM = raw.match(/\[IMG:(https?:\/\/[^\]]+)\]/i);
+            if (imgM && !imgM[1].toLowerCase().endsWith('.pdf')) {
+                window._existingImgUrl = imgM[1].trim();
+            }
+
+            // Bersihkan teks daripada tag
+            let cleanDesc = raw
+                .replace(/\[DOC:[^\]]+\]/gi, '')
+                .replace(/\[IMG:[^\]]+\]/gi, '')
+                .trim();
+
+            document.getElementById('newAnnDate').value = data.tarikh || '';
+            document.getElementById('newAnnCategory').value = data.kategori || '';
+            document.getElementById('newAnnTitle').value = data.tajuk || '';
+            document.getElementById('newAnnDesc').value = cleanDesc;
+
+            if (document.getElementById('newAnnDocFile')) document.getElementById('newAnnDocFile').value = '';
+            if (document.getElementById('newAnnImageFile')) document.getElementById('newAnnImageFile').value = '';
 
             document.getElementById('addAnnouncementModal').classList.remove('hidden');
         }
-
-        // FUNGSI BARU: Buka Modal & Muat Data Sedia Ada Untuk Diedit
-        async function openEditAnnouncementModal(id) {
-            try {
-                const client = getSupabase();
-                const { data, error } = await client.from('announcements').select('*').eq('id', id).single();
-
-                if (error) throw error;
-
-                if (data) {
-                    currentEditAnnouncementId = id; // Simpan ID yang sedang diedit
-
-                    // Tukar Tajuk Modal
-                    const modalTitle = document.querySelector('#addAnnouncementModal h3');
-                    if (modalTitle) modalTitle.innerText = "Edit Pengumuman";
-
-                    // Asingkan Teks Kandungan jika ada tag [IMG:...]
-                    let rawContent = data.kandungan || '';
-                    if (rawContent.includes('[IMG:') && rawContent.includes(']')) {
-                        rawContent = rawContent.split('[IMG:')[0].trim();
-                    }
-
-                    // Isikan data ke dalam petak input borang modal
-                    document.getElementById('newAnnDate').value = data.tarikh || '';
-                    document.getElementById('newAnnCategory').value = data.kategori || '';
-                    document.getElementById('newAnnTitle').value = data.tajuk || '';
-                    document.getElementById('newAnnDesc').value = rawContent;
-
-                    // Buka Modal
-                    document.getElementById('addAnnouncementModal').classList.remove('hidden');
-                }
-            } catch (err) {
-                alert('Gagal memuatkan data untuk diedit: ' + err.message);
-            }
-        }
+    } catch (err) {
+        alert('Gagal memuatkan data untuk diedit: ' + err.message);
+    }
+}
 
         // FUNGSI DIKEMASKINI: Menyokong Tambah Baru ATAU Kemaskini (Edit)
-        async function saveNewAnnouncement() {
+     async function saveNewAnnouncement() {
             const tarikh = document.getElementById('newAnnDate').value;
             const kategori = document.getElementById('newAnnCategory').value.trim();
             const tajuk = document.getElementById('newAnnTitle').value.trim();
             const kandunganText = document.getElementById('newAnnDesc').value.trim();
+            const docInput = document.getElementById('newAnnDocFile');
             const imageInput = document.getElementById('newAnnImageFile');
 
             if (!tajuk) return alert('Tajuk tidak boleh kosong.');
 
+            const btn = document.querySelector('#addAnnouncementModal button[onclick="saveNewAnnouncement()"]');
+            if (btn) {
+                btn.disabled = true;
+                btn.textContent = "Menyimpan fail...";
+            }
+
             try {
                 const client = getSupabase();
-                let imageUrl = '';
+                let docUrl = window._existingDocUrl || '';
+                let imageUrl = window._existingImgUrl || '';
 
-                // Proses muat naik imej jika ada imej baru dipilih
+                // 1. Muat naik fail PDF (jika ada dipilih)
+                if (docInput && docInput.files.length > 0) {
+                    const docFile = docInput.files[0];
+                    const docPath = `announcements/doc_${Date.now()}.${docFile.name.split('.').pop()}`;
+                    const { error: uploadDocErr } = await client.storage.from('announcements').upload(docPath, docFile);
+                    if (uploadDocErr) throw uploadDocErr;
+
+                    const { data: urlDocData } = client.storage.from('announcements').getPublicUrl(docPath);
+                    if (urlDocData?.publicUrl) docUrl = urlDocData.publicUrl;
+                }
+
+                // 2. Muat naik gambar thumbnail (jika ada dipilih)
                 if (imageInput && imageInput.files.length > 0) {
-                    const file = imageInput.files[0];
-                    const filePath = `announcements/${Date.now()}.${file.name.split('.').pop()}`;
-                    const { error: uploadError } = await client.storage.from('announcements').upload(filePath, file);
-                    if (uploadError) throw uploadError;
+                    const imgFile = imageInput.files[0];
+                    const imgPath = `announcements/img_${Date.now()}.${imgFile.name.split('.').pop()}`;
+                    const { error: uploadImgErr } = await client.storage.from('announcements').upload(imgPath, imgFile);
+                    if (uploadImgErr) throw uploadImgErr;
 
-                    const { data: urlData } = client.storage.from('announcements').getPublicUrl(filePath);
-                    if (urlData?.publicUrl) imageUrl = urlData.publicUrl;
+                    const { data: urlImgData } = client.storage.from('announcements').getPublicUrl(imgPath);
+                    if (urlImgData?.publicUrl) imageUrl = urlImgData.publicUrl;
                 }
 
+                // Gabungkan tag lampiran
                 let finalKandungan = kandunganText;
-                if (imageUrl) {
-                    finalKandungan = `${kandunganText} [IMG:${imageUrl}]`;
-                }
+                if (docUrl) finalKandungan += ` [DOC:${docUrl}]`;
+                if (imageUrl) finalKandungan += ` [IMG:${imageUrl}]`;
 
                 if (currentEditAnnouncementId) {
-                    // --- MOD EDIT (UPDATE) ---
-                    const updatePayload = { tarikh, kategori, tajuk };
-                    
-                    // Hanya kemaskini kandungan jika ada perubahan teks atau imej baharu
-                    if (finalKandungan) {
-                        updatePayload.kandungan = finalKandungan;
-                    }
-
                     const { error } = await client
                         .from('announcements')
-                        .update(updatePayload)
+                        .update({ tarikh, kategori, tajuk, kandungan: finalKandungan })
                         .eq('id', currentEditAnnouncementId);
-
                     if (error) throw error;
                 } else {
-                    // --- MOD TAMBAH BARU (INSERT) ---
                     const { error } = await client.from('announcements').insert([{ 
                         tarikh, kategori, tajuk, kandungan: finalKandungan, penulis: 'Admin PTIS' 
                     }]);
-
                     if (error) throw error;
                 }
 
-                // Selesai: Tutup Modal & Muat Semula Data
                 closeModal('addAnnouncementModal');
-                currentEditAnnouncementId = null; // Reset ID
+                currentEditAnnouncementId = null;
+                window._existingDocUrl = '';
+                window._existingImgUrl = '';
+
                 await loadAnnouncements();
                 await loadAdminAnnouncements();
+                alert('Pengumuman berjaya disimpan!');
 
             } catch (err) {
                 alert('Gagal menyimpan: ' + err.message);
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.textContent = "Simpan";
+                }
             }
         }
 
@@ -2894,7 +2963,7 @@ function renderPublicSchoolTable() {
             loadInventoryData(schoolCode);
         }
 
-       async function loadAnnouncementDetail(id) {
+      async function loadAnnouncementDetail(id) {
     try {
         const client = getSupabase();
         const { data, error } = await client
@@ -2919,19 +2988,31 @@ function renderPublicSchoolTable() {
             const textEl = document.getElementById('modalDetailKandungan');
             const imgEl = document.getElementById('modalDetailGambar');
 
-            let mainText = rawContent;
-            let fileUrl = '';
-            let isPdf = false;
+            // Bersihkan teks daripada sebarang tag teknikal
+            let mainText = rawContent
+                .replace(/\[DOC:[^\]]+\]/gi, '')
+                .replace(/\[IMG:[^\]]+\]/gi, '')
+                .trim();
 
-            // Semak jika ada URL imej/PDF dalam format [IMG:...]
-            if (rawContent.includes('[IMG:') && rawContent.includes(']')) {
-                const parts = rawContent.split('[IMG:');
-                mainText = parts[0].trim();
-                fileUrl = parts[1].split(']')[0].trim();
-                if (fileUrl.toLowerCase().match(/\.pdf$/i)) isPdf = true;
+            let pdfUrl = '';
+            let imageUrl = '';
+
+            // 1. Ekstrak pautan dokumen PDF (format baru [DOC:...] atau format lama [IMG:...pdf])
+            const docM = rawContent.match(/\[DOC:(https?:\/\/[^\]]+)\]/i);
+            const oldPdfM = rawContent.match(/\[IMG:(https?:\/\/[^\]]+\.pdf)\]/i);
+            if (docM) {
+                pdfUrl = docM[1].trim();
+            } else if (oldPdfM) {
+                pdfUrl = oldPdfM[1].trim();
             }
 
-            // Paparkan teks kandungan
+            // 2. Ekstrak pautan gambar (jika ada gambar JPG/PNG)
+            const imgM = rawContent.match(/\[IMG:(https?:\/\/[^\]]+)\]/i);
+            if (imgM && !imgM[1].toLowerCase().endsWith('.pdf')) {
+                imageUrl = imgM[1].trim();
+            }
+
+            // Paparkan teks butiran
             if (textEl) {
                 textEl.innerText = mainText;
                 if (mainText) {
@@ -2941,7 +3022,15 @@ function renderPublicSchoolTable() {
                 }
             }
 
-            // Kendalikan paparan Gambar atau Butang PDF
+            // Paparkan Gambar (jika ada gambar dimuat naik)
+            if (imageUrl && imgEl) {
+                imgEl.src = imageUrl;
+                imgEl.classList.remove('hidden');
+            } else if (imgEl) {
+                imgEl.classList.add('hidden');
+            }
+
+            // Paparkan Butang Buka PDF (jika ada fail PDF)
             let pdfBtnContainer = document.getElementById('modalDetailPdfContainer');
             if (!pdfBtnContainer && imgEl && imgEl.parentNode) {
                 pdfBtnContainer = document.createElement('div');
@@ -2949,27 +3038,16 @@ function renderPublicSchoolTable() {
                 imgEl.parentNode.insertBefore(pdfBtnContainer, imgEl.nextSibling);
             }
 
-            if (fileUrl) {
-                if (isPdf) {
-                    if (imgEl) imgEl.classList.add('hidden');
-                    if (pdfBtnContainer) {
-                        pdfBtnContainer.innerHTML = `
-                            <a href="${fileUrl}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-red-700 hover:bg-red-800 text-white font-bold text-xs py-2.5 px-4 rounded-xl mt-3 shadow-sm cursor-pointer">
-                                📄 Buka Surat Siaran (PDF)
-                            </a>
-                        `;
-                        pdfBtnContainer.classList.remove('hidden');
-                    }
-                } else {
-                    if (imgEl) {
-                        imgEl.src = fileUrl;
-                        imgEl.classList.remove('hidden');
-                    }
-                    if (pdfBtnContainer) pdfBtnContainer.classList.add('hidden');
-                }
-            } else {
-                if (imgEl) imgEl.classList.add('hidden');
-                if (pdfBtnContainer) pdfBtnContainer.classList.add('hidden');
+            if (pdfUrl && pdfBtnContainer) {
+                pdfBtnContainer.innerHTML = `
+                    <a href="${pdfUrl}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-red-700 hover:bg-red-800 text-white font-bold text-xs py-2.5 px-4 rounded-xl mt-3 shadow-sm cursor-pointer transition-colors">
+                        <i class="fa-solid fa-file-pdf text-base"></i>
+                        <span>Buka Surat Siaran (PDF)</span>
+                    </a>
+                `;
+                pdfBtnContainer.classList.remove('hidden');
+            } else if (pdfBtnContainer) {
+                pdfBtnContainer.classList.add('hidden');
             }
 
             // Buka Modal Pop-up
@@ -2986,7 +3064,6 @@ function renderPublicSchoolTable() {
         alert('Gagal memaparkan pengumuman.');
     }
 }
-
 function tutupDetailPengumuman() {
     const modal = document.getElementById('modalPaparDetail');
     if (modal) {
