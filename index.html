@@ -1784,22 +1784,27 @@ function renderTakwimCalendarGrid(yearMonth) {
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
             
             <!-- BAHAGIAN KALENDAR (7 KOLUM) -->
-            <div class="lg:col-span-7 bg-white border border-slate-200/90 rounded-3xl p-4 sm:p-5 shadow-sm space-y-3.5">
+            <div class="lg:col-span-7 bg-slate-50/60 border border-slate-200 rounded-3xl p-4 sm:p-5 shadow-sm space-y-3.5">
                 
                 <!-- BAR NAVIGASI BULAN (BIRU GELAP) -->
                 <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-2.5 sm:p-3 rounded-2xl flex flex-wrap items-center justify-between gap-2 shadow-sm">
-                    <div class="flex items-center gap-1.5">
-                        <button onclick="changeTakwimMonth(-1)" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all cursor-pointer">
-                            <i class="fa-solid fa-chevron-left text-xs"></i>
-                        </button>
-                        <button onclick="changeTakwimMonth(1)" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all cursor-pointer">
-                            <i class="fa-solid fa-chevron-right text-xs"></i>
-                        </button>
-                        <div class="flex items-center gap-2 ml-1">
-                            <i class="fa-solid fa-calendar-day text-blue-300 text-sm"></i>
-                            <span class="text-sm sm:text-base font-extrabold tracking-wide">${monthNames[month - 1]} ${year}</span>
-                        </div>
-                    </div>
+                   <div class="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
+    <!-- BUTANG PREV (SEBELAH KIRI) -->
+    <button onclick="changeTakwimMonth(-1)" title="Bulan Sebelumnya" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 text-white flex items-center justify-center transition-all cursor-pointer border border-white/10 shadow-xs">
+        <i class="fa-solid fa-chevron-left text-xs"></i>
+    </button>
+
+    <!-- NAMA BULAN & TAHUN (TENGAH) -->
+    <div class="flex items-center justify-center gap-2 px-2 text-center">
+        <i class="fa-solid fa-calendar-day text-blue-300 text-sm"></i>
+        <span class="text-sm sm:text-base font-extrabold tracking-wide whitespace-nowrap">${monthNames[month - 1]} ${year}</span>
+    </div>
+
+    <!-- BUTANG NEXT (SEBELAH KANAN) -->
+    <button onclick="changeTakwimMonth(1)" title="Bulan Seterusnya" class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 text-white flex items-center justify-center transition-all cursor-pointer border border-white/10 shadow-xs">
+        <i class="fa-solid fa-chevron-right text-xs"></i>
+    </button>
+</div>
 
                     <div class="flex items-center gap-1.5">
                         <button onclick="goToCurrentTakwimMonth()" class="bg-white/10 hover:bg-white/20 text-white text-[11px] font-bold px-3 py-1.5 rounded-xl transition-all flex items-center gap-1 border border-white/10 cursor-pointer">
@@ -1829,9 +1834,9 @@ function renderTakwimCalendarGrid(yearMonth) {
     for (let i = firstDayIndex - 1; i >= 0; i--) {
         const pDay = prevMonthDays - i;
         html += `
-            <div class="h-20 sm:h-22 bg-slate-50/50 border border-slate-100 rounded-2xl p-1.5 flex flex-col justify-start opacity-35 select-none">
-                <span class="text-slate-400 font-bold text-xs">${pDay}</span>
-            </div>
+          <div class="h-20 sm:h-22 bg-slate-100/50 border border-slate-200 rounded-2xl p-1.5 flex flex-col justify-start opacity-40 select-none">
+    <span class="text-slate-400 font-bold text-xs">${pDay}</span>
+</div>
         `;
     }
 
@@ -1844,23 +1849,30 @@ function renderTakwimCalendarGrid(yearMonth) {
         const dayEvents = eventsByDay[day] || [];
         const hasEvents = dayEvents.length > 0;
 
-        let boxClass = "bg-white border-slate-200 hover:border-blue-400 hover:bg-blue-50/20";
-        if (isToday) {
-            boxClass = "bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-500/30";
-        } else if (hasEvents) {
-            boxClass = "bg-slate-50/70 border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/20";
-        }
+       let boxClass = "bg-white border border-slate-300 shadow-xs hover:border-blue-500 hover:shadow-sm";
+if (isToday) {
+    boxClass = "bg-blue-600 text-white border-2 border-blue-700 shadow-md shadow-blue-500/30";
+} else if (hasEvents) {
+    boxClass = "bg-blue-50/40 border border-blue-300 shadow-xs hover:border-blue-500";
+}
 
         html += `
             <div onclick="showTakwimDayDetail('${currentDayFormatted}')" 
                  class="h-20 sm:h-22 border ${boxClass} rounded-2xl p-1.5 flex flex-col justify-between cursor-pointer transition-all duration-150 hover:-translate-y-0.5 relative group">
                 
-                <div class="flex items-center justify-between w-full">
-                    <span class="font-bold text-xs ${isToday ? 'text-white' : (isSunday ? 'text-rose-600' : 'text-slate-800')}">
-                        ${day}
-                    </span>
-                    ${isToday ? `<span class="bg-white/20 text-white text-[8px] font-extrabold px-1 rounded-md uppercase">Hari Ini</span>` : ''}
-                </div>
+               <div class="flex items-center justify-between w-full">
+    <span class="font-bold text-xs ${isToday ? 'text-white' : (isSunday ? 'text-rose-600' : 'text-slate-800')}">
+        ${day}
+    </span>
+    ${isToday ? `
+        <!-- Lencana Jelas Pada Desktop (Tidak tenggelam & Tidak patah baris) -->
+        <span class="hidden sm:inline-block bg-white text-blue-900 text-[9px] font-black px-1.5 py-0.5 rounded-md uppercase tracking-tight shadow-xs whitespace-nowrap">
+            Hari Ini
+        </span>
+        <!-- Titik Penunjuk Pada Telefon (Kemas, tidak semak jadi 2 baris) -->
+        <span class="sm:hidden w-2 h-2 rounded-full bg-white animate-pulse" title="Hari Ini"></span>
+    ` : ''}
+</div>
 
                 <!-- Lencana Aktiviti di Dalam Kotak -->
                 <div class="space-y-0.5 overflow-hidden w-full my-auto">
