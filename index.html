@@ -2071,6 +2071,13 @@ function showTakwimDayDetail(dateStr) {
     }
 
     detailContainer.innerHTML = detailHTML;
+
+    // AUTO-SCROLL UNTUK MOBILE: Jika lebar skrin kurang daripada 1024px (tablet/telefon)
+    if (window.innerWidth < 1024) {
+        setTimeout(() => {
+            detailContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    }
 }
 
 function showAdminSection(which) {
