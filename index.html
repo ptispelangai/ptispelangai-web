@@ -945,9 +945,9 @@
                 <span class="flex items-center gap-1.5 text-[11px] font-bold text-slate-700">
                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Mesyuarat
                 </span>
-                <span class="flex items-center gap-1.5 text-[11px] font-bold text-slate-700">
-                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Kursus
-                </span>
+               <span class="flex items-center gap-1.5 text-[11px] font-bold text-slate-700">
+    <span class="w-2.5 h-2.5 rounded-full bg-amber-400 border border-amber-600"></span> Cuti Umum
+</span>
             </div>
 
             <!-- MOTO KECIL -->
@@ -1400,18 +1400,38 @@
         </div>
     </div>
 
-    <!-- MODAL TAMBAH / EDIT TAKWIM (ADMIN BAHARU) -->
+   <!-- MODAL TAMBAH / EDIT TAKWIM (DENGAN TAB PILIHAN CUTI UMUM) -->
     <div id="addScheduleModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm z-[95] hidden flex items-center justify-center p-4">
-        <div class="bg-white border border-slate-200 rounded-2xl max-w-lg w-full shadow-2xl p-6 space-y-3">
-            <h3 id="scheduleModalTitle" class="text-base font-bold text-slate-900 border-b border-slate-200 pb-2">Tambah Aktiviti Takwim</h3>
-            <input type="hidden" id="editScheduleId">
-            <div>
-                <label class="block text-xs font-bold text-slate-500 mb-1">Tarikh Aktiviti *</label>
-                <input id="schDate" type="date" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-lg w-full shadow-2xl p-6 space-y-4">
+            
+            <!-- HEADER BERGAYA TAB PILIHAN (Aktiviti vs Cuti Umum) -->
+            <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+                <div class="flex items-center gap-2">
+                    <button type="button" id="tabModeAktiviti" onclick="switchScheduleMode('aktiviti')" class="text-xs sm:text-sm font-extrabold px-3 py-1.5 rounded-xl bg-purple-900 text-white transition-all shadow-xs cursor-pointer">
+                        Tambah Aktiviti Takwim
+                    </button>
+                    <button type="button" id="tabModeCuti" onclick="switchScheduleMode('cuti')" class="text-xs sm:text-sm font-extrabold px-3 py-1.5 rounded-xl bg-amber-100 text-amber-900 hover:bg-amber-200 transition-all cursor-pointer">
+                        🎉 Tambah Cuti Umum
+                    </button>
+                </div>
+                <button onclick="closeModal('addScheduleModal')" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center cursor-pointer">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
             </div>
+
+            <input type="hidden" id="editScheduleId">
+            <input type="hidden" id="currentScheduleMode" value="aktiviti">
+
+            <!-- MEDAN TARIKH -->
             <div>
-                <label class="block text-xs font-bold text-slate-500 mb-1">Kategori Aktiviti *</label>
-                <select id="schCategory" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800">
+                <label class="block text-xs font-bold text-slate-600 mb-1">Tarikh *</label>
+                <input id="schDate" type="date" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold text-slate-800 outline-none focus:border-purple-600">
+            </div>
+
+            <!-- MEDAN KATEGORI -->
+            <div id="wrapperSchCategory">
+                <label class="block text-xs font-bold text-slate-600 mb-1">Kategori Aktiviti *</label>
+                <select id="schCategory" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold text-slate-800 outline-none focus:border-purple-600">
                     <option value="Lawatan Sekolah">Lawatan Sekolah</option>
                     <option value="Program PKG / PTIS">Program PKG / PTIS</option>
                     <option value="PPD / JPN">PPD / JPN</option>
@@ -1419,27 +1439,40 @@
                     <option value="Umum">Umum / Lain-lain</option>
                 </select>
             </div>
+
+            <!-- MEDAN TAJUK (Dinamik: Tajuk Tugasan ATAU Nama Cuti) -->
             <div>
-                <label class="block text-xs font-bold text-slate-500 mb-1">Tajuk Aktiviti / Tugas *</label>
-                <input id="schTitle" placeholder="Cth: Penyelenggaraan Makmal Komputer & Wi-Fi" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-900">
+                <label id="lblSchTitle" class="block text-xs font-bold text-slate-600 mb-1">Tajuk Aktiviti / Tugas *</label>
+                <input id="schTitle" placeholder="Cth: Penyelenggaraan Makmal Komputer & Wi-Fi" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold text-slate-900 outline-none focus:border-purple-600">
             </div>
-            <div>
-                <label class="block text-xs font-bold text-slate-500 mb-1">Lokasi / Premis *</label>
-                <input id="schLocation" placeholder="Cth: SK Pelangai / PKG Pelangai" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs text-slate-800">
+
+            <!-- MEDAN LOKASI (Akan disorok bila pilih tab Cuti Umum) -->
+            <div id="wrapperSchLocation">
+                <label class="block text-xs font-bold text-slate-600 mb-1">Lokasi / Premis *</label>
+                <input id="schLocation" placeholder="Cth: SK Pelangai / PKG Pelangai" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs text-slate-800 outline-none focus:border-purple-600">
             </div>
-            <div>
-                <label class="block text-xs font-bold text-slate-500 mb-1">Pegawai Bertugas</label>
-                <select id="schOfficer" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800">
+
+            <!-- MEDAN PEGAWAI (Akan disorok bila pilih tab Cuti Umum) -->
+            <div id="wrapperSchOfficer">
+                <label class="block text-xs font-bold text-slate-600 mb-1">Pegawai Bertugas</label>
+                <select id="schOfficer" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-bold text-slate-800 outline-none focus:border-purple-600">
                     <option value="Semua Pasukan PTIS">Semua Pasukan PTIS</option>
                     <option value="Amirulakbar bin Amir">Amirulakbar bin Amir</option>
                     <option value="Mohd Huszaini bin Zakaria">Mohd Huszaini bin Zakaria</option>
                     <option value="Mohd Shahrul Izad bin Shahbani">Mohd Shahrul Izad bin Shahbani</option>
                 </select>
             </div>
+
+            <!-- BUTANG SIMPAN -->
             <div class="flex gap-2 pt-2 border-t border-slate-200">
-                <button onclick="closeModal('addScheduleModal')" class="flex-1 bg-slate-100 text-slate-700 py-2 rounded-xl text-xs font-bold border border-slate-300">Batal</button>
-                <button id="btnSaveSchedule" onclick="saveSchedule()" class="flex-1 bg-purple-900 hover:bg-purple-800 text-white py-2 rounded-xl text-xs font-bold shadow-sm">Simpan Takwim</button>
+                <button type="button" onclick="closeModal('addScheduleModal')" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-xl text-xs font-bold transition-colors cursor-pointer">
+                    Batal
+                </button>
+                <button type="button" id="btnSaveSchedule" onclick="saveSchedule()" class="flex-1 bg-purple-900 hover:bg-purple-800 text-white py-2.5 rounded-xl text-xs font-bold shadow-sm transition-colors cursor-pointer">
+                    Simpan Takwim
+                </button>
             </div>
+
         </div>
     </div>
     <!-- FOOTER SECTION FORMAL -->
@@ -1849,12 +1882,23 @@ function renderTakwimCalendarGrid(yearMonth) {
         const dayEvents = eventsByDay[day] || [];
         const hasEvents = dayEvents.length > 0;
 
-       let boxClass = "bg-white border border-slate-300 shadow-xs hover:border-blue-500 hover:shadow-sm";
-if (isToday) {
-    boxClass = "bg-blue-600 text-white border-2 border-blue-700 shadow-md shadow-blue-500/30";
-} else if (hasEvents) {
-    boxClass = "bg-blue-50/40 border border-blue-300 shadow-xs hover:border-blue-500";
-}
+       // Semak jika hari ini ada Cuti Umum
+        const cutiEvent = dayEvents.find(e => (e.kategori || '').toLowerCase().includes('cuti umum'));
+        const isCutiUmum = Boolean(cutiEvent);
+
+        let boxClass = "bg-white border border-slate-300 shadow-xs hover:border-blue-500 hover:shadow-sm";
+        let dateNumColor = isSunday ? 'text-rose-600 font-black' : 'text-slate-800';
+
+        // Kotak kuning untuk Cuti Umum (gaya kalendar kuda)
+        if (isCutiUmum) {
+            boxClass = "bg-amber-100/95 border-2 border-amber-400/90 hover:bg-amber-200/80 shadow-xs";
+            dateNumColor = "text-rose-600 font-black";
+        }
+
+        if (isToday) {
+            boxClass = "bg-blue-600 text-white border-2 border-blue-700 shadow-md shadow-blue-500/30";
+            dateNumColor = "text-white font-black";
+        }
 
         html += `
             <div onclick="showTakwimDayDetail('${currentDayFormatted}')" 
@@ -2047,16 +2091,27 @@ function showTakwimDayDetail(dateStr) {
     } else {
         detailHTML += `
             <div class="space-y-3 max-h-[460px] overflow-y-auto pr-1">
-                ${dayEvents.map(item => {
+               ${dayEvents.map(item => {
                     const pegawai = item.pegawai || 'Semua Pasukan PTIS';
                     const kat = (item.kategori || '').toLowerCase();
+                    const isCuti = kat.includes('cuti umum');
+
                     let badgeClass = 'bg-blue-100 text-blue-900 border-blue-200';
-                    if (kat.includes('program')) badgeClass = 'bg-purple-100 text-purple-900 border-purple-200';
-                    else if (kat.includes('kursus') || kat.includes('bengkel')) badgeClass = 'bg-amber-100 text-amber-900 border-amber-200';
-                    else if (kat.includes('mesyuarat') || kat.includes('ppd')) badgeClass = 'bg-emerald-100 text-emerald-900 border-emerald-200';
+                    let boxStyle = 'bg-slate-50 border-slate-200';
+
+                    if (isCuti) {
+                        badgeClass = 'bg-amber-400 text-amber-950 border-amber-500 font-black';
+                        boxStyle = 'bg-amber-50/80 border-amber-300';
+                    } else if (kat.includes('program')) {
+                        badgeClass = 'bg-purple-100 text-purple-900 border-purple-200';
+                    } else if (kat.includes('kursus') || kat.includes('bengkel')) {
+                        badgeClass = 'bg-amber-100 text-amber-900 border-amber-200';
+                    } else if (kat.includes('mesyuarat') || kat.includes('ppd')) {
+                        badgeClass = 'bg-emerald-100 text-emerald-900 border-emerald-200';
+                    }
 
                     return `
-                        <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-2xl space-y-2 shadow-2xs">
+                        <div class="${boxStyle} border p-3.5 rounded-2xl space-y-2 shadow-2xs">
                             <div class="flex items-center justify-between">
                                 <span class="${badgeClass} border text-[10px] font-extrabold px-2 py-0.5 rounded-md uppercase">
                                     ${esc(item.kategori || 'Umum')}
@@ -2070,10 +2125,12 @@ function showTakwimDayDetail(dateStr) {
                                     <i class="fa-solid fa-location-dot text-blue-600 w-3.5"></i>
                                     <span>${esc(item.lokasi)}</span>
                                 </p>
+                                ${!isCuti ? `
                                 <p class="flex items-center gap-1.5">
                                     <i class="fa-solid fa-user-shield text-indigo-600 w-3.5"></i>
                                     <span>${esc(pegawai)}</span>
                                 </p>
+                                ` : ''}
                             </div>
                         </div>
                     `;
@@ -2142,7 +2199,12 @@ function showAdminSection(which) {
                     <tr class="hover:bg-slate-50 border-b border-slate-100 transition-colors">
                         <td class="p-3 text-slate-500 text-center font-bold">${index + 1}</td>
                         <td class="p-3 font-mono font-bold text-slate-900">${esc(item.tarikh)}</td>
-                        <td class="p-3"><span class="bg-purple-50 text-purple-800 border border-purple-200 text-[10px] font-bold px-2 py-0.5 rounded">${esc(item.kategori)}</span></td>
+                       <td class="p-3">
+    ${(item.kategori || '').toLowerCase().includes('cuti umum')
+        ? `<span class="bg-amber-100 text-amber-950 border border-amber-400 text-[10px] font-black px-2 py-0.5 rounded-md shadow-2xs">🎉 Cuti Umum</span>`
+        : `<span class="bg-purple-50 text-purple-800 border border-purple-200 text-[10px] font-bold px-2 py-0.5 rounded">${esc(item.kategori)}</span>`
+    }
+</td>
                         <td class="p-3 font-bold text-slate-800">${esc(item.tajuk)}</td>
                         <td class="p-3 font-medium text-slate-700">${esc(item.lokasi)}</td>
                         <td class="p-3 text-slate-700 font-medium">${esc(item.pegawai)}</td>
@@ -2161,23 +2223,69 @@ function showAdminSection(which) {
             }
         }
 
-      function openAddScheduleModal() {
-            document.getElementById('editScheduleId').value = '';
-            document.getElementById('scheduleModalTitle').textContent = "Tambah Aktiviti Takwim";
-            
-            // Dapatkan tarikh tempatan Malaysia (YYYY-MM-DD)
-            const now = new Date();
-            const todayLocal = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-            
-            document.getElementById('schDate').value = todayLocal;
-            document.getElementById('schCategory').value = 'Lawatan Sekolah';
-            document.getElementById('schTitle').value = '';
-            document.getElementById('schLocation').value = '';
-            document.getElementById('schOfficer').value = 'Semua Pasukan PTIS';
-            document.getElementById('addScheduleModal').classList.remove('hidden');
-        }
+    // FUNGSI BAHARU: Kawalan Pertukaran Tab (Aktiviti vs Cuti Umum)
+function switchScheduleMode(mode) {
+    const isCuti = (mode === 'cuti');
+    const modeInput = document.getElementById('currentScheduleMode');
+    if (modeInput) modeInput.value = mode;
 
-        async function editSchedule(id) {
+    const btnAktiviti = document.getElementById('tabModeAktiviti');
+    const btnCuti = document.getElementById('tabModeCuti');
+    const wrapCat = document.getElementById('wrapperSchCategory');
+    const wrapLoc = document.getElementById('wrapperSchLocation');
+    const wrapOff = document.getElementById('wrapperSchOfficer');
+    const lblTitle = document.getElementById('lblSchTitle');
+    const inpTitle = document.getElementById('schTitle');
+    const btnSave = document.getElementById('btnSaveSchedule');
+
+    if (isCuti) {
+        if (btnCuti) btnCuti.className = "text-xs sm:text-sm font-extrabold px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 transition-all shadow-xs cursor-pointer";
+        if (btnAktiviti) btnAktiviti.className = "text-xs sm:text-sm font-extrabold px-3 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all cursor-pointer";
+        
+        if (wrapCat) wrapCat.classList.add('hidden');
+        if (wrapLoc) wrapLoc.classList.add('hidden');
+        if (wrapOff) wrapOff.classList.add('hidden');
+
+        if (lblTitle) lblTitle.textContent = "Nama Cuti Umum *";
+        if (inpTitle) inpTitle.placeholder = "Cth: Hari Raya Aidilfitri / Hari Keputeraan Sultan Pahang";
+        if (btnSave) {
+            btnSave.className = "flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 py-2.5 rounded-xl text-xs font-black shadow-sm transition-colors cursor-pointer";
+            btnSave.textContent = "Simpan Cuti Umum";
+        }
+    } else {
+        if (btnAktiviti) btnAktiviti.className = "text-xs sm:text-sm font-extrabold px-3 py-1.5 rounded-xl bg-purple-900 text-white transition-all shadow-xs cursor-pointer";
+        if (btnCuti) btnCuti.className = "text-xs sm:text-sm font-extrabold px-3 py-1.5 rounded-xl bg-amber-100 text-amber-900 hover:bg-amber-200 transition-all cursor-pointer";
+        
+        if (wrapCat) wrapCat.classList.remove('hidden');
+        if (wrapLoc) wrapLoc.classList.remove('hidden');
+        if (wrapOff) wrapOff.classList.remove('hidden');
+
+        if (lblTitle) lblTitle.textContent = "Tajuk Aktiviti / Tugas *";
+        if (inpTitle) inpTitle.placeholder = "Cth: Penyelenggaraan Makmal Komputer & Wi-Fi";
+        if (btnSave) {
+            btnSave.className = "flex-1 bg-purple-900 hover:bg-purple-800 text-white py-2.5 rounded-xl text-xs font-bold shadow-sm transition-colors cursor-pointer";
+            btnSave.textContent = "Simpan Takwim";
+        }
+    }
+}
+
+// KEMASKINI openAddScheduleModal supaya kembali ke mod 'aktiviti' setiap kali dibuka
+function openAddScheduleModal() {
+    document.getElementById('editScheduleId').value = '';
+    const now = new Date();
+    const todayLocal = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    
+    document.getElementById('schDate').value = todayLocal;
+    document.getElementById('schCategory').value = 'Lawatan Sekolah';
+    document.getElementById('schTitle').value = '';
+    document.getElementById('schLocation').value = '';
+    document.getElementById('schOfficer').value = 'Semua Pasukan PTIS';
+
+    switchScheduleMode('aktiviti');
+    document.getElementById('addScheduleModal').classList.remove('hidden');
+}
+
+     async function editSchedule(id) {
             try {
                 const client = getSupabase();
                 const { data, error } = await client.from('ptis_schedules').select('*').eq('id', id).single();
@@ -2185,12 +2293,21 @@ function showAdminSection(which) {
 
                 if (data) {
                     document.getElementById('editScheduleId').value = data.id;
-                    document.getElementById('scheduleModalTitle').textContent = "Kemaskini Aktiviti Takwim";
                     document.getElementById('schDate').value = data.tarikh || '';
-                    document.getElementById('schCategory').value = data.kategori || 'Lawatan Sekolah';
                     document.getElementById('schTitle').value = data.tajuk || '';
-                    document.getElementById('schLocation').value = data.lokasi || '';
-                    document.getElementById('schOfficer').value = data.pegawai || 'Semua Pasukan PTIS';
+
+                    // Semak jika data ini adalah Cuti Umum atau Aktiviti PTIS
+                    const isCuti = (data.kategori || '').toLowerCase().includes('cuti umum');
+                    
+                    if (isCuti) {
+                        switchScheduleMode('cuti');
+                    } else {
+                        switchScheduleMode('aktiviti');
+                        document.getElementById('schCategory').value = data.kategori || 'Lawatan Sekolah';
+                        document.getElementById('schLocation').value = data.lokasi || '';
+                        document.getElementById('schOfficer').value = data.pegawai || 'Semua Pasukan PTIS';
+                    }
+
                     document.getElementById('addScheduleModal').classList.remove('hidden');
                 }
             } catch (err) {
@@ -2198,45 +2315,49 @@ function showAdminSection(which) {
             }
         }
 
-        async function saveSchedule() {
-            const id = document.getElementById('editScheduleId').value;
-            const tarikh = document.getElementById('schDate').value;
-            const kategori = document.getElementById('schCategory').value;
-            const tajuk = document.getElementById('schTitle').value.trim();
-            const lokasi = document.getElementById('schLocation').value.trim();
-            const pegawai = document.getElementById('schOfficer').value;
+       async function saveSchedule() {
+    const id = document.getElementById('editScheduleId').value;
+    const tarikh = document.getElementById('schDate').value;
+    const modeEl = document.getElementById('currentScheduleMode');
+    const isCuti = (modeEl && modeEl.value === 'cuti');
 
-            if (!tarikh || !tajuk || !lokasi) return alert('Sila lengkapkan semua medan bertanda (*).');
+    const kategori = isCuti ? 'Cuti Umum' : document.getElementById('schCategory').value;
+    const tajuk = document.getElementById('schTitle').value.trim();
+    const lokasi = isCuti ? 'Cuti Umum / Hari Kelepasan' : (document.getElementById('schLocation').value.trim() || '-');
+    const pegawai = isCuti ? '-' : document.getElementById('schOfficer').value;
 
-            const btn = document.getElementById('btnSaveSchedule');
-            btn.textContent = "Menyimpan...";
-            btn.disabled = true;
+    if (!tarikh || !tajuk) return alert('Sila lengkapkan tarikh dan tajuk.');
+    if (!isCuti && !lokasi) return alert('Sila masukkan lokasi aktiviti.');
 
-            try {
-                const client = getSupabase();
-                const payload = { tarikh, kategori, tajuk, lokasi, pegawai };
+    const btn = document.getElementById('btnSaveSchedule');
+    btn.textContent = "Menyimpan...";
+    btn.disabled = true;
 
-                let error;
-                if (id) {
-                    ({ error } = await client.from('ptis_schedules').update(payload).eq('id', id));
-                } else {
-                    ({ error } = await client.from('ptis_schedules').insert([payload]));
-                }
+    try {
+        const client = getSupabase();
+        const payload = { tarikh, kategori, tajuk, lokasi, pegawai };
 
-                if (error) throw error;
-
-                closeModal('addScheduleModal');
-                await loadAdminSchedules();
-                await loadTakwimSchedules();
-                alert('Aktiviti takwim berjaya disimpan!');
-
-            } catch (err) {
-                alert('Gagal menyimpan: ' + err.message);
-            } finally {
-                btn.textContent = "Simpan Takwim";
-                btn.disabled = false;
-            }
+        let error;
+        if (id) {
+            ({ error } = await client.from('ptis_schedules').update(payload).eq('id', id));
+        } else {
+            ({ error } = await client.from('ptis_schedules').insert([payload]));
         }
+
+        if (error) throw error;
+
+        closeModal('addScheduleModal');
+        await loadAdminSchedules();
+        await loadTakwimSchedules();
+        alert(isCuti ? 'Cuti umum berjaya disimpan!' : 'Aktiviti takwim berjaya disimpan!');
+
+    } catch (err) {
+        alert('Gagal menyimpan: ' + err.message);
+    } finally {
+        btn.textContent = isCuti ? "Simpan Cuti Umum" : "Simpan Takwim";
+        btn.disabled = false;
+    }
+}
 
         async function deleteSchedule(id) {
             if (!confirm('Adakah anda pasti mahu memadam aktiviti takwim ini?')) return;
