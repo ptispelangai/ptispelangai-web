@@ -1739,14 +1739,17 @@ function renderTakwimCalendarGrid(yearMonth) {
     const now = new Date();
     const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
+   // Tapis aktiviti sebenar (asingkan cuti umum)
+    const aktivitiSebenarEvents = monthlyEvents.filter(e => !(e.kategori || '').toLowerCase().includes('cuti umum'));
+
     // Statistik pecahan kategori
     const lawatanEvents = monthlyEvents.filter(e => (e.kategori || '').toLowerCase().includes('lawatan'));
     const programEvents = monthlyEvents.filter(e => (e.kategori || '').toLowerCase().includes('program') || (e.kategori || '').toLowerCase().includes('pkg'));
     const mesyuaratEvents = monthlyEvents.filter(e => (e.kategori || '').toLowerCase().includes('ppd') || (e.kategori || '').toLowerCase().includes('mesyuarat') || (e.kategori || '').toLowerCase().includes('jpn'));
     const kursusEvents = monthlyEvents.filter(e => (e.kategori || '').toLowerCase().includes('kursus') || (e.kategori || '').toLowerCase().includes('bengkel'));
 
-    // Aktiviti akan datang (dari tarikh hari ini ke hadapan)
-    const upcomingEvents = monthlyEvents.filter(e => e.tarikh >= todayStr);
+    // Aktiviti akan datang (dari tarikh hari ini ke hadapan & bukan cuti umum)
+    const upcomingEvents = monthlyEvents.filter(e => e.tarikh >= todayStr && !(e.kategori || '').toLowerCase().includes('cuti umum'));
 
     // Kumpulkan aktiviti mengikut nombor hari
     const eventsByDay = {};
@@ -1763,10 +1766,10 @@ function renderTakwimCalendarGrid(yearMonth) {
         <!-- 4 KAD STATISTIK PASTEL MODEN -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-4">
             
-            <!-- Kad 1: Jumlah Aktiviti -->
+           <!-- Kad 1: Jumlah Aktiviti (Hanya kira program/tugas PTIS sahaja) -->
             <div class="bg-gradient-to-br from-blue-50 to-blue-100/70 border border-blue-200/80 p-3.5 sm:p-4 rounded-3xl flex items-center justify-between shadow-sm relative overflow-hidden">
                 <div class="relative z-10">
-                    <p class="text-2xl sm:text-3xl font-black text-blue-950 leading-none">${monthlyEvents.length}</p>
+                    <p class="text-2xl sm:text-3xl font-black text-blue-950 leading-none">${aktivitiSebenarEvents.length}</p>
                     <p class="text-[11px] font-bold text-blue-800/90 mt-1">Jumlah Aktiviti Bulan Ini</p>
                 </div>
                 <div class="w-11 h-11 rounded-2xl bg-blue-600 text-white flex items-center justify-center text-lg shadow-md shadow-blue-500/20 shrink-0">
@@ -1799,16 +1802,16 @@ function renderTakwimCalendarGrid(yearMonth) {
                 <i class="fa-solid fa-users absolute -right-3 -bottom-3 text-emerald-200/40 text-6xl pointer-events-none"></i>
             </div>
 
-            <!-- Kad 4: Aktiviti Akan Datang -->
-            <div class="bg-gradient-to-br from-amber-50 to-amber-100/70 border border-amber-200/80 p-3.5 sm:p-4 rounded-3xl flex items-center justify-between shadow-sm relative overflow-hidden">
+          <!-- Kad 4: Aktiviti Akan Datang (Warna Rose Pastel - Tidak lagi bertembung dengan Cuti Umum) -->
+            <div class="bg-gradient-to-br from-rose-50 to-rose-100/70 border border-rose-200/80 p-3.5 sm:p-4 rounded-3xl flex items-center justify-between shadow-sm relative overflow-hidden">
                 <div class="relative z-10">
-                    <p class="text-2xl sm:text-3xl font-black text-amber-950 leading-none">${upcomingEvents.length}</p>
-                    <p class="text-[11px] font-bold text-amber-800/90 mt-1">Aktiviti Akan Datang</p>
+                    <p class="text-2xl sm:text-3xl font-black text-rose-950 leading-none">${upcomingEvents.length}</p>
+                    <p class="text-[11px] font-bold text-rose-800/90 mt-1">Aktiviti Akan Datang</p>
                 </div>
-                <div class="w-11 h-11 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-lg shadow-md shadow-amber-500/20 shrink-0">
+                <div class="w-11 h-11 rounded-2xl bg-rose-500 text-white flex items-center justify-center text-lg shadow-md shadow-rose-500/20 shrink-0">
                     <i class="fa-solid fa-bell"></i>
                 </div>
-                <i class="fa-solid fa-bell absolute -right-3 -bottom-3 text-amber-200/40 text-6xl pointer-events-none"></i>
+                <i class="fa-solid fa-bell absolute -right-3 -bottom-3 text-rose-200/40 text-6xl pointer-events-none"></i>
             </div>
 
         </div>
@@ -1994,14 +1997,21 @@ function renderTakwimCalendarGrid(yearMonth) {
                                 const dayNamesMalay = ["Aha", "Isn", "Sel", "Rab", "Kha", "Jum", "Sab"];
                                 const dayMalay = dayNamesMalay[dObj.getDay()] || '';
 
-                                const kat = (ev.kategori || '').toLowerCase();
+                            const kat = (ev.kategori || '').toLowerCase();
                                 let boxDateColor = 'bg-blue-50 text-blue-900 border-blue-100';
                                 let textDateColor = 'text-blue-600';
                                 let iconColor = 'text-blue-600';
                                 let dotColor = 'bg-blue-600';
                                 let iconClass = 'fa-solid fa-van-shuttle';
 
-                                if (kat.includes('program')) {
+                                // 1. Semakan Khas untuk Cuti Umum (Ikon Cuti / Payung Pantai)
+                                if (kat.includes('cuti umum')) {
+                                    boxDateColor = 'bg-amber-100 text-amber-950 border-amber-300';
+                                    textDateColor = 'text-rose-600 font-black';
+                                    iconColor = 'text-amber-600';
+                                    dotColor = 'bg-amber-500';
+                                    iconClass = 'fa-solid fa-umbrella-beach';
+                                } else if (kat.includes('program')) {
                                     boxDateColor = 'bg-purple-50 text-purple-900 border-purple-100';
                                     textDateColor = 'text-purple-600';
                                     iconColor = 'text-purple-600';
