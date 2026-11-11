@@ -1117,10 +1117,16 @@ function renderCalendar() {
 
         // Klik untuk lihat info
         cell.onclick = () => showBookingDetails(dStr, matches);
-      } else if (dStr === todayStr) {
+    
+} else if (dStr === todayStr) {
+        cell.style.cursor = 'pointer';
         cell.title = "Hari ini tiada tempahan (Bilik kosong)";
+        
+        // Fungsi klik/tap khas untuk telefon pintar & komputer
+        cell.onclick = () => {
+          alert(`📅 STATUS HARI INI (${formatDateDDMMYYYY(todayStr)})\n------------------------------------\n🟢 STATUS: TIADA TEMPAHAN\nBilik mesyuarat PKG Pelangai sedia digunakan / tiada sebarang program direkodkan.`);
+        };
       }
-
       calGrid.appendChild(cell);
     }
   }
