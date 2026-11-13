@@ -446,105 +446,41 @@
         </div>
     </div>
 
-<!-- SEKSYEN GALERI AKTIVITI PTIS (SLIDER DIKEMASKINI - TIDAK BERTINDAN) -->
-<section id="galeri-aktiviti" class="py-12 bg-slate-900 text-white border-y border-slate-800">
+<!-- SEKSYEN GALERI AKTIVITI PTIS (VERSI PADAT 3 KAD & LAZY LOAD) -->
+<section id="galeri-aktiviti" class="py-10 bg-slate-900 text-white border-y border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-       <!-- TAJUK SEKSYEN GALERI -->
-<div class="text-center max-w-xl mx-auto mb-8">
-    <span class="text-xs font-bold text-blue-400 uppercase tracking-widest">SOROTAN PROGRAM</span>
-    <h2 class="text-2xl font-extrabold text-white mt-1">Galeri Aktiviti & Program PTIS</h2>
-    <p class="text-slate-400 text-xs font-medium mt-1">Dokumentasi bergambar aktiviti penyelenggaraan, program teknikal, pemantauan ICT sekolah seliaan dan kursus.</p>
-</div>
-
-        <!-- CONTAINER SLIDER (BINGKAI UTAMA) -->
-        <div class="relative max-w-3xl mx-auto overflow-hidden rounded-2xl border border-slate-700/80 shadow-2xl bg-slate-950 group" onmouseenter="stopAutoSlide()" onmouseleave="startAutoSlide()">
+        <!-- Header Sebaris (Menjimatkan Ruang Atas-Bawah) -->
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-3">
+            <div>
+                <span class="text-xs font-bold text-blue-400 uppercase tracking-widest">SOROTAN PROGRAM</span>
+                <h2 class="text-2xl font-extrabold text-white mt-0.5">Galeri Aktiviti & Program PTIS</h2>
+                <p class="text-slate-400 text-xs font-medium mt-1">Dokumentasi bergambar aktiviti penyelenggaraan, program teknikal, pemantauan ICT sekolah seliaan dan kursus.</p>
+            </div>
             
-            <!-- TRACK IMAGES (SAIZ KETAT & TIDAK BERTINDAN) -->
-            <div id="gallerySliderTrack" class="flex transition-transform duration-500 ease-in-out w-full">
-                
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (1).jpg" alt="Aktiviti PTIS 1" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (2).jpg" alt="Aktiviti PTIS 2" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (3).jpg" alt="Aktiviti PTIS 3" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (4).jpg" alt="Aktiviti PTIS 4" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (5).jpg" alt="Aktiviti PTIS 5" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (6).jpg" alt="Aktiviti PTIS 6" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (7).jpg" alt="Aktiviti PTIS 7" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (8).jpg" alt="Aktiviti PTIS 8" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (9).jpg" alt="Aktiviti PTIS 9" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (10).jpg" alt="Aktiviti PTIS 10" class="w-full h-full object-contain"></div>
-
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (11).jpg" alt="Aktiviti PTIS 11" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (12).jpg" alt="Aktiviti PTIS 12" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (13).jpg" alt="Aktiviti PTIS 13" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (14).jpg" alt="Aktiviti PTIS 14" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (15).jpg" alt="Aktiviti PTIS 15" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (16).jpg" alt="Aktiviti PTIS 16" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (17).jpg" alt="Aktiviti PTIS 17" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (18).jpg" alt="Aktiviti PTIS 18" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (19).jpg" alt="Aktiviti PTIS 19" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (20).jpg" alt="Aktiviti PTIS 20" class="w-full h-full object-contain"></div>
-
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (21).jpg" alt="Aktiviti PTIS 21" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (22).jpg" alt="Aktiviti PTIS 22" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (23).jpg" alt="Aktiviti PTIS 23" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (24).jpg" alt="Aktiviti PTIS 24" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (25).jpg" alt="Aktiviti PTIS 25" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (26).jpg" alt="Aktiviti PTIS 26" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (27).jpg" alt="Aktiviti PTIS 27" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (28).jpg" alt="Aktiviti PTIS 28" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (29).jpg" alt="Aktiviti PTIS 29" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (30).jpg" alt="Aktiviti PTIS 30" class="w-full h-full object-contain"></div>
-
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (31).jpg" alt="Aktiviti PTIS 31" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (32).jpg" alt="Aktiviti PTIS 32" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (33).jpg" alt="Aktiviti PTIS 33" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (34).jpg" alt="Aktiviti PTIS 34" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (35).jpg" alt="Aktiviti PTIS 35" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (36).jpg" alt="Aktiviti PTIS 36" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (37).jpg" alt="Aktiviti PTIS 37" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (38).jpg" alt="Aktiviti PTIS 38" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (39).jpg" alt="Aktiviti PTIS 39" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (40).jpg" alt="Aktiviti PTIS 40" class="w-full h-full object-contain"></div>
-
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (41).jpg" alt="Aktiviti PTIS 41" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (42).jpg" alt="Aktiviti PTIS 42" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (43).jpg" alt="Aktiviti PTIS 43" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (44).jpg" alt="Aktiviti PTIS 44" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (45).jpg" alt="Aktiviti PTIS 45" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (46).jpg" alt="Aktiviti PTIS 46" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (47).jpg" alt="Aktiviti PTIS 47" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (48).jpg" alt="Aktiviti PTIS 48" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (49).jpg" alt="Aktiviti PTIS 49" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (50).jpg" alt="Aktiviti PTIS 50" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (51).jpg" alt="Aktiviti PTIS 51" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (52).jpg" alt="Aktiviti PTIS 52" class="w-full h-full object-contain"></div>
-                <div class="w-full min-w-full flex-shrink-0 h-[300px] sm:h-[420px] bg-slate-950 flex items-center justify-center overflow-hidden"><img src="gambar/img (53).jpg" alt="Aktiviti PTIS 53" class="w-full h-full object-contain"></div>
-
+            <!-- Kawalan Navigasi & Kaunter Nombor -->
+            <div class="flex items-center gap-2 self-start sm:self-end shrink-0">
+                <span class="bg-slate-800 border border-slate-700 text-blue-400 text-xs font-mono font-bold px-3 py-1.5 rounded-lg">
+                    <span id="galleryCurrentNum">1</span> / <span id="galleryTotalNum">53</span>
+                </span>
+                <button onclick="prevSlide()" type="button" title="Sebelumnya" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-blue-600 text-white flex items-center justify-center border border-slate-700 transition-colors cursor-pointer">
+                    <i class="fa-solid fa-chevron-left text-xs"></i>
+                </button>
+                <button onclick="nextSlide()" type="button" title="Seterusnya" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-blue-600 text-white flex items-center justify-center border border-slate-700 transition-colors cursor-pointer">
+                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                </button>
             </div>
-
-            <!-- BUTANG NAVIGASI KIRI -->
-            <button onclick="prevSlide()" type="button" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/80 hover:bg-blue-600 text-white flex items-center justify-center border border-slate-600 transition-all shadow-lg z-20">
-                <i class="fa-solid fa-chevron-left text-sm"></i>
-            </button>
-
-            <!-- BUTANG NAVIGASI KANAN -->
-            <button onclick="nextSlide()" type="button" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/80 hover:bg-blue-600 text-white flex items-center justify-center border border-slate-600 transition-all shadow-lg z-20">
-                <i class="fa-solid fa-chevron-right text-sm"></i>
-            </button>
-
-            <!-- BADGE PENUNJUK NOMBOR GAMBAR (GANTI DOTS TERLALU BANYAK) -->
-            <div class="absolute bottom-3 right-3 bg-slate-900/80 backdrop-blur-md border border-slate-700 text-blue-400 text-xs font-mono font-bold px-3 py-1 rounded-full shadow-lg z-20">
-                <span id="galleryCurrentNum">1</span> / <span id="galleryTotalNum">53</span>
-            </div>
-
-            <!-- INDIKATOR TITIK (BENTUK TERKAWAL) -->
-            <div id="galleryDotsContainer" class="hidden"></div>
-
         </div>
+
+        <!-- Bingkai Slider Padat (3 Kad di Desktop, 2 di Tablet, 1 di Telefon) -->
+        <div class="relative overflow-hidden rounded-xl" onmouseenter="stopAutoSlide()" onmouseleave="startAutoSlide()">
+            <div id="gallerySliderTrack" class="flex gap-4 transition-transform duration-500 ease-in-out">
+                <!-- 53 gambar dijana secara dinamik oleh JavaScript dengan loading="lazy" -->
+            </div>
+        </div>
+
     </div>
 </section>
-
   <!-- SECTION: GRID 12 SEKOLAH SELIAAN -->
 <section id="sekolah-zon" class="py-12 bg-white border-y border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -3639,55 +3575,82 @@ function toggleMobileMenu() {
     }
 }
 
-// ==================== LOGIK GALERI SLIDER (DIBANGKITKAN BUTANG & AUTO-SLIDE) ====================
+// ==================== LOGIK GALERI SLIDER (PADAT 3 KAD & LAZY LOAD) ====================
+const TOTAL_GALLERY_IMAGES = 53;
 let currentSlideIndex = 0;
 let slideInterval = null;
+
+function initGallerySlides() {
+    const track = document.getElementById('gallerySliderTrack');
+    const totalNum = document.getElementById('galleryTotalNum');
+    if (!track) return;
+
+    if (totalNum) totalNum.textContent = TOTAL_GALLERY_IMAGES;
+
+    let slidesHTML = '';
+    for (let i = 1; i <= TOTAL_GALLERY_IMAGES; i++) {
+        const imgSrc = `gambar/img (${i}).jpg`;
+        slidesHTML += `
+            <div onclick="openServiceImage('Dokumentasi Aktiviti PTIS #${i}', '${imgSrc}', 'Galeri Aktiviti & Program Rasmi PTIS Zon Pelangai')"
+                 class="w-full sm:w-[calc((100%-16px)/2)] lg:w-[calc((100%-32px)/3)] flex-shrink-0 h-56 bg-slate-950 rounded-xl border border-slate-700/80 overflow-hidden relative group cursor-pointer shadow-md">
+                <img src="${imgSrc}" 
+                     alt="Aktiviti PTIS ${i}" 
+                     loading="lazy"
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-3">
+                    <span class="text-[11px] font-bold text-white">Gambar #${i}</span>
+                    <span class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center text-xs shadow">
+                        <i class="fa-solid fa-magnifying-glass-plus"></i>
+                    </span>
+                </div>
+            </div>
+        `;
+    }
+    track.innerHTML = slidesHTML;
+}
+
+function getVisibleCardsCount() {
+    if (window.innerWidth >= 1024) return 3; // Desktop: 3 gambar
+    if (window.innerWidth >= 640) return 2;  // Tablet: 2 gambar
+    return 1;                                // Telefon: 1 gambar
+}
 
 function updateSliderPosition() {
     const track = document.getElementById('gallerySliderTrack');
     const currNum = document.getElementById('galleryCurrentNum');
-    const totalNum = document.getElementById('galleryTotalNum');
+    if (!track || track.children.length === 0) return;
 
-    if (!track) return;
+    const visibleCards = getVisibleCardsCount();
+    const maxIndex = Math.max(0, TOTAL_GALLERY_IMAGES - visibleCards);
 
-    const totalSlides = track.children.length;
-    if (totalSlides === 0) return;
+    if (currentSlideIndex > maxIndex) currentSlideIndex = 0;
+    if (currentSlideIndex < 0) currentSlideIndex = maxIndex;
 
-    if (currentSlideIndex >= totalSlides) currentSlideIndex = 0;
-    if (currentSlideIndex < 0) currentSlideIndex = totalSlides - 1;
+    const firstCard = track.children[0];
+    const stepWidth = firstCard.offsetWidth + 16; // Lebar kad + jarak gap-4 (16px)
+    track.style.transform = `translateX(-${currentSlideIndex * stepWidth}px)`;
 
-    // Gerakkan track secara tepat 100% per slide
-    track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
-
-    // Kemaskini Kaunter Nombor Gambar (Cth: 1 / 53)
     if (currNum) currNum.textContent = currentSlideIndex + 1;
-    if (totalNum) totalNum.textContent = totalSlides;
 }
 
 function nextSlide() {
     currentSlideIndex++;
     updateSliderPosition();
-    startAutoSlide(); // Mula semula pemutar automatik bila butang ditekan
+    startAutoSlide();
 }
 
 function prevSlide() {
     currentSlideIndex--;
     updateSliderPosition();
-    startAutoSlide(); // Mula semula pemutar automatik bila butang ditekan
-}
-
-function goToSlide(index) {
-    currentSlideIndex = index;
-    updateSliderPosition();
     startAutoSlide();
 }
 
 function startAutoSlide() {
-    stopAutoSlide(); // Clean up interval sedia ada
+    stopAutoSlide();
     slideInterval = setInterval(() => {
         currentSlideIndex++;
         updateSliderPosition();
-    }, 3500); // Bertukar setiap 3.5 saat
+    }, 3500);
 }
 
 function stopAutoSlide() {
@@ -3697,9 +3660,10 @@ function stopAutoSlide() {
     }
 }
 
-// Mulakan Slider apabila DOM sedia
+window.addEventListener('resize', updateSliderPosition);
+
 document.addEventListener('DOMContentLoaded', () => {
-    refreshAllData();
+    initGallerySlides();
     updateSliderPosition();
     startAutoSlide();
 });
