@@ -58,6 +58,7 @@
 
     </style>
 </head>
+<body class="bg-slate-50 text-slate-900 antialiased">
 
 <!-- HEADER / NAVBAR FORMAL -->
 <header id="utamanya" class="bg-white border-b border-slate-200 sticky top-0 z-50 py-3 shadow-sm">
@@ -854,28 +855,37 @@
 </section>
 
     <!-- ==================== HIMPUNAN MODAL POP-UP FORMAL ==================== -->
-
-    <!-- 1. MODAL: DIREKTORI PEGAWAI PTIS -->
+<!-- 1. MODAL: DIREKTORI PEGAWAI PTIS (GAYA BERSIH & KORPORAT) -->
 <div id="ptisModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white border border-slate-200 rounded-2xl max-w-4xl w-full max-h-[85vh] flex flex-col shadow-xl overflow-hidden">
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-5xl w-full max-h-[85vh] flex flex-col shadow-xl overflow-hidden">
+        
+        <!-- Header Modal (Seragam dengan Senarai Data Sekolah) -->
         <div class="p-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
             <div class="flex items-center gap-3">
-                <div class="p-2 bg-blue-100 text-blue-700 rounded-lg"><i class="fa-solid fa-users-gear"></i></div>
+                <div class="p-2.5 bg-blue-100 text-blue-800 rounded-xl border border-blue-200/60">
+                    <i class="fa-solid fa-users-gear text-base"></i>
+                </div>
                 <div>
                     <h3 class="text-base font-extrabold text-slate-900">Pasukan Teknikal ICT Sekolah Zon Pelangai</h3>
-                    <!-- SUB-TAJUK DITERANGKAN & DITEBALKAN -->
-                    <p class="text-xs font-semibold text-slate-700">Maklumat Pegawai & Taburan Sekolah Seliaan</p>
+                    <p class="text-xs font-semibold text-slate-600">Profil Pegawai & Agihan Sekolah Seliaan</p>
                 </div>
             </div>
-            <button onclick="closeModal('ptisModal')" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors">
+            <button onclick="closeModal('ptisModal')" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors cursor-pointer">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
-        <div class="p-6 overflow-y-auto max-h-[65vh]">
+
+        <!-- Badan Kad Pegawai -->
+        <div class="p-6 overflow-y-auto bg-white flex-1">
             <div id="ptisDynamicList" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
         </div>
-        <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-end">
-            <button onclick="closeModal('ptisModal')" class="bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-bold text-xs px-4 py-2 rounded-lg shadow-sm">Tutup</button>
+
+        <!-- Footer Modal -->
+        <div class="p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-between">
+            <span class="text-[11px] font-semibold text-slate-500">Unit Perkhidmatan ICT • PKG Pelangai</span>
+            <button onclick="closeModal('ptisModal')" class="bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-bold text-xs px-4 py-2 rounded-lg shadow-sm transition-colors cursor-pointer">
+                Tutup
+            </button>
         </div>
     </div>
 </div>
@@ -2823,7 +2833,22 @@ function renderPublicSchoolTable() {
             });
         }
 
-     function renderPublicTeamModal() {
+function formatSchoolNameTitleCase(str) {
+    if (!str) return '';
+    const keepUpper = ['SK', 'SMK', 'SJK', '(C)', '(T)', 'ICT', 'PKG', 'PTIS', 'PPD', 'JPN', 'KPM', 'SG'];
+    return str.split(' ').map(word => {
+        const cleanUpper = word.toUpperCase();
+        if (keepUpper.includes(cleanUpper)) return cleanUpper;
+        if (word.startsWith('(') && word.endsWith(')')) {
+            const inner = word.slice(1, -1);
+            if (keepUpper.includes('(' + inner.toUpperCase() + ')')) return '(' + inner.toUpperCase() + ')';
+            return '(' + inner.charAt(0).toUpperCase() + inner.slice(1).toLowerCase() + ')';
+        }
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    }).join(' ');
+}
+
+function renderPublicTeamModal() {
     const container = document.getElementById('ptisDynamicList');
     if (!container) return;
 
@@ -2834,44 +2859,95 @@ function renderPublicSchoolTable() {
 
     container.innerHTML = globalTeam.map(member => {
         const nama = member.name || member.nama || 'Nama Pegawai';
-        const jawatan = member.jawatan || member.role || 'Penolong Pegawai Teknologi Maklumat FA5';
+        const rawJawatan = member.jawatan || member.role || 'Penolong Pegawai Teknologi Maklumat FA5';
+        const jawatan = rawJawatan.replace(/fa5/gi, 'FA5');
 
         let imgUrl = member.image_url || member.gambar || '';
+        let emailPegawai = member.email || '';
+        const lower = nama.toLowerCase();
+
         if (!imgUrl) {
-            const lower = nama.toLowerCase();
             if (lower.includes('amirul')) imgUrl = 'https://raw.githubusercontent.com/mohdhuszaini-tech/ptispelangai-web/main/amirul.jpg';
             else if (lower.includes('huszaini')) imgUrl = 'https://raw.githubusercontent.com/mohdhuszaini-tech/ptispelangai-web/main/huszaini.jpg';
             else if (lower.includes('shahrul')) imgUrl = 'https://raw.githubusercontent.com/mohdhuszaini-tech/ptispelangai-web/main/shahrul.jpg';
         }
 
-        // TULISAN SEKOLAH SELIAAN DITERANGKAN & DITEBALKAN (font-semibold & text-slate-900)
-        let schoolsHTML = (member.assignedSchools || []).map(s => `
-            <li class="text-xs font-semibold text-slate-900 flex items-center gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-700 flex-shrink-0"></span>
-                <span>${esc(s['SEKOLAH'] || s.nama_sekolah || 'Sekolah')}</span>
-            </li>
-        `).join('');
+        if (!emailPegawai) {
+            if (lower.includes('amirul')) emailPegawai = 'amirulakbar.amir@moe.gov.my';
+            else if (lower.includes('huszaini')) emailPegawai = 'mohd.huszaini@moe.gov.my';
+            else if (lower.includes('shahrul')) emailPegawai = 'mohd.shahrulizad@moe.gov.my';
+        }
 
-        if (!schoolsHTML) schoolsHTML = `<li class="text-xs text-slate-500 italic">Tiada sekolah seliaan</li>`;
+        const assignedList = member.assignedSchools || [];
+        let schoolsHTML = assignedList.map(s => {
+            const rawSchoolName = s['SEKOLAH'] || s.nama_sekolah || 'Sekolah';
+            const formattedSchool = formatSchoolNameTitleCase(rawSchoolName);
+            return `
+                <li class="text-xs font-medium text-slate-800 flex items-center gap-2.5 py-1.5 border-b border-slate-100 last:border-b-0">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-800 shrink-0"></span>
+                    <span class="leading-snug">${esc(formattedSchool)}</span>
+                </li>
+            `;
+        }).join('');
+
+        if (!schoolsHTML) {
+            schoolsHTML = `<li class="text-xs text-slate-500 italic py-1">Tiada sekolah seliaan</li>`;
+        }
 
         return `
-            <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col justify-between">
+            <div class="bg-white border border-slate-200 rounded-xl shadow-xs hover:border-blue-300 transition-colors overflow-hidden flex flex-col justify-between">
+                
                 <div>
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-14 h-16 rounded-lg overflow-hidden border border-slate-200 bg-slate-100 flex-shrink-0">
-                            <img src="${imgUrl}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(nama)}&background=0284c7&color=fff'" class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <h4 class="text-xs font-bold text-slate-900 leading-snug">${esc(nama)}</h4>
+                    <!-- BAHAGIAN ATAS: NAMETAG BIRU KORPORAT TUNGGAL (SAMA DENGAN HEADER JADUAL) -->
+                    <div class="bg-blue-900 p-4 text-white">
+                        <div class="flex items-center gap-3.5">
+                            <!-- Sebelah Kiri: Gambar Profil -->
+                            <div class="w-14 h-18 rounded-lg overflow-hidden border border-white/40 bg-slate-800 shrink-0">
+                                <img src="${imgUrl}" 
+                                     onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(nama)}&background=1e3a8a&color=fff'" 
+                                     alt="${esc(nama)}" 
+                                     class="w-full h-full object-cover object-top">
+                            </div>
+
+                            <!-- Sebelah Kanan: Nama & Jawatan -->
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-xs sm:text-[13px] font-bold text-white leading-snug">
+                                    ${esc(nama)}
+                                </h4>
+                                <p class="mt-1 text-[11px] font-medium text-blue-200 leading-snug">
+                                    ${esc(jawatan)}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <p class="text-[11px] text-blue-800 font-bold mb-3">${esc(jawatan)}</p>
-                    <div class="pt-2 border-t border-slate-200">
-                        <!-- TAJUK SEKOLAH SELIAAN JUGA DITERANGKAN (font-extrabold & text-slate-600) -->
-                        <span class="text-[10px] uppercase font-extrabold text-slate-600 tracking-wider block mb-1.5">Sekolah Seliaan:</span>
-                        <ul class="space-y-1.5">${schoolsHTML}</ul>
+
+                    <!-- BAHAGIAN TENGAH: SENARAI SEKOLAH SELIAAN -->
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-slate-200">
+                            <span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Sekolah Seliaan</span>
+                            <span class="text-[10px] font-bold bg-blue-50 text-blue-900 border border-blue-200 px-2 py-0.5 rounded-md font-mono">
+                                ${assignedList.length} Sekolah
+                            </span>
+                        </div>
+                        <ul>
+                            ${schoolsHTML}
+                        </ul>
                     </div>
                 </div>
+
+                <!-- BAHAGIAN BAWAH: FOOTER KAD & E-MEL -->
+                ${emailPegawai ? `
+                <div class="px-4 py-2.5 bg-slate-50 border-t border-slate-200/80 flex items-center justify-between">
+                    <span class="text-[10px] font-mono text-slate-500 truncate max-w-[165px]" title="${esc(emailPegawai)}">
+                        ${esc(emailPegawai)}
+                    </span>
+                    <a href="mailto:${esc(emailPegawai)}" class="inline-flex items-center gap-1.5 text-[11px] font-bold text-blue-900 hover:bg-blue-100 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded-md transition-colors">
+                        <i class="fa-solid fa-envelope text-[10px]"></i>
+                        <span>E-mel</span>
+                    </a>
+                </div>
+                ` : ''}
+
             </div>
         `;
     }).join('');
