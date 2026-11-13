@@ -3592,12 +3592,23 @@ function initGallerySlides() {
         const imgSrc = `gambar/img (${i}).jpg`;
         slidesHTML += `
             <div onclick="openServiceImage('Dokumentasi Aktiviti PTIS #${i}', '${imgSrc}', 'Galeri Aktiviti & Program Rasmi PTIS Zon Pelangai')"
-                 class="w-full sm:w-[calc((100%-16px)/2)] lg:w-[calc((100%-32px)/3)] flex-shrink-0 h-56 bg-slate-950 rounded-xl border border-slate-700/80 overflow-hidden relative group cursor-pointer shadow-md">
+                 class="w-full sm:w-[calc((100%-16px)/2)] lg:w-[calc((100%-32px)/3)] flex-shrink-0 h-60 bg-slate-950 rounded-xl border border-slate-700/80 overflow-hidden relative group cursor-pointer shadow-md">
+                
+                <!-- Lapisan 1: Latar Belakang Kabur (Isi ruang tepi supaya tiada ruang hitam kosong) -->
+                <img src="${imgSrc}" 
+                     alt="" 
+                     aria-hidden="true"
+                     loading="lazy"
+                     class="absolute inset-0 w-full h-full object-cover blur-md scale-110 opacity-35 pointer-events-none">
+
+                <!-- Lapisan 2: Gambar Penuh (Tidak terpotong langsung) -->
                 <img src="${imgSrc}" 
                      alt="Aktiviti PTIS ${i}" 
                      loading="lazy"
-                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-3">
+                     class="relative z-10 w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
+
+                <!-- Lapisan Hover & Ikon Zum -->
+                <div class="absolute inset-0 z-20 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-3">
                     <span class="text-[11px] font-bold text-white">Gambar #${i}</span>
                     <span class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center text-xs shadow">
                         <i class="fa-solid fa-magnifying-glass-plus"></i>
