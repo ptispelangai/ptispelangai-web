@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penjana OPR - PTIS Pelangai</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- html2pdf.js (dimuatkan secara tidak menyekat) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+        }
+
+        /* Dimensi Kertas A4 Tepat (210mm x 297mm) */
+        .a4-sheet {
+            width: 210mm;
+            height: 297mm;
+            background: #ffffff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+
+        .font-script {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-style: italic;
+        }
+
+        #preview-wrapper {
+            transform-origin: top center;
+            transition: transform 0.2s ease;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Gaya Cetakan (Print / Save as PDF) */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+            html, body {
+                width: 210mm !important;
+                height: 297mm !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: #ffffff !important;
+                overflow: hidden !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            main {
+                display: block !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                max-width: none !important;
+                min-height: 0 !important;
+            }
+            #preview-container {
+                padding: 0 !important;
+                margin: 0 !important;
+                background: transparent !important;
+                overflow: visible !important;
+                display: block !important;
+                width: 210mm !important;
+                height: 297mm !important;
+            }
+            #preview-wrapper {
+                transform: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 210mm !important;
+                height: 297mm !important;
+            }
+            .a4-sheet {
+                box-shadow: none !important;
+                margin: 0 !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                page-break-after: avoid;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-blue-200 selection:text-blue-900">
+
+    <!-- Notifikasi Toast -->
+    <div id="toast-box" class="no-print fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg flex items-center gap-3 text-sm font-medium">
+            <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400"></i>
+            <span id="toast-msg">Tindakan berjaya!</span>
+        </div>
+    </div>
+
+    <!-- Bar Navigasi Atas -->
+    <header class="no-print bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-[1600px] mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0b4f8a] to-[#2997d8] flex items-center justify-center text-white shadow-sm">
+                    <i class="fa-solid fa-file-pdf text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-slate-900 text-base sm:text-lg leading-tight">Sistem Penjana OPR Digital</h1>
+                    <p class="text-xs text-slate-500">Pasukan Teknikal ICT Sekolah (PTIS) • Format A4 Sedia Cetak</p>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+                <button type="button" id="btn-reset" class="px-3 py-2 text-xs sm:text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition flex items-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    <span>Reset</span>
+                </button>
+                <button type="button" id="btn-download-pdf" class="px-3.5 py-2 text-xs sm:text-sm font-semibold text-[#0b4f8a] bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl transition flex items-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Muat Turun PDF</span>
+                </button>
+                <button type="button" id="btn-print-opr" class="px-3.5 py-2 text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-[#0b4f8a] to-[#1368b3] hover:from-[#093e6d] hover:to-[#0f5594] rounded-xl shadow-sm transition flex items-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-print"></i>
+                    <span>Cetak / Simpan PDF</span>
+                </button>
+                <button type="button" id="btn-submit-dashboard" class="px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-sm transition flex items-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span>Hantar ke Dashboard</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Kandungan Utama: Split Screen -->
+    <main class="max-w-[1600px] mx-auto flex flex-col lg:flex-row min-h-[calc(100vh-65px)]">
+        
+        <!-- PANEL KIRI: BORANG INPUT DATA -->
+        <section class="no-print w-full lg:w-[460px] xl:w-[500px] bg-white border-r border-slate-200 p-4 sm:p-6 overflow-y-auto lg:h-[calc(100vh-65px)] shrink-0">
+            
+            <!-- Tip Pantas -->
+            <div class="mb-5 p-3.5 rounded-xl bg-amber-50 border border-amber-200/80 text-amber-900 text-xs flex items-start gap-2.5">
+                <i class="fa-solid fa-lightbulb text-amber-500 text-base mt-0.5"></i>
+                <div>
+                    <p class="font-semibold mb-0.5">Pilihan Galeri Gambar Moden & Bersih</p>
+                    <p class="text-amber-800/90 leading-relaxed">Muat naik <strong>4 keping gambar</strong> (saiz dioptimumkan secara automatik) dan tukar gaya susunan antara <em>Kolaj 1+3</em>, <em>Grid 2×2</em>, <em>Banner 1+3</em> atau <em>1 Baris</em>.</p>
+                </div>
+            </div>
+
+            <form id="opr-form" class="space-y-5">
+                
+                <!-- Seksyen 1: Tetapan Header -->
+                <div class="bg-slate-50/80 p-4 rounded-2xl border border-slate-200/80 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-xs font-bold uppercase tracking-wider text-[#0b4f8a] flex items-center gap-1.5">
+                            <i class="fa-solid fa-building-columns"></i> Maklumat Organisasi / Header
+                        </h2>
+                        <span class="text-[11px] text-slate-400">Auto-simpan</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label for="input-ptis-title" class="block text-xs font-semibold text-slate-700 mb-1">Nama Zon / Daerah PTIS</label>
+                            <input type="text" id="input-ptis-title" value="PTIS PELANGAI" class="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none uppercase font-semibold">
+                        </div>
+                        <div>
+                            <label for="input-ptis-subtitle" class="block text-xs font-semibold text-slate-700 mb-1">Sub-tajuk Unit</label>
+                            <input type="text" id="input-ptis-subtitle" value="PASUKAN TEKNIKAL ICT SEKOLAH" class="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none uppercase">
+                        </div>
+                    </div>
+
+                    <!-- Muat Naik Logo Pilihan -->
+                    <div class="pt-1">
+                        <div class="flex items-center justify-between mb-1">
+                            <label class="block text-xs font-semibold text-slate-700">Logo Sekolah / PTIS (Pilihan)</label>
+                            <button type="button" id="btn-remove-logo" class="hidden text-xs text-rose-600 hover:underline font-medium cursor-pointer">Padam Logo</button>
+                        </div>
+                        <label for="input-logo" class="flex items-center justify-center gap-2 w-full px-3 py-2 bg-white border border-dashed border-slate-300 hover:border-blue-500 rounded-xl cursor-pointer transition text-xs text-slate-600">
+                            <i class="fa-solid fa-image text-blue-600"></i>
+                            <span id="logo-label-text">Pilih fail logo (PNG/JPG) jika perlu</span>
+                        </label>
+                        <input type="file" id="input-logo" accept="image/*" class="hidden">
+                    </div>
+                </div>
+
+                <!-- Seksyen 2: Butiran Laporan Aktiviti -->
+                <div class="bg-slate-50/80 p-4 rounded-2xl border border-slate-200/80 space-y-3.5">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-[#0b4f8a] flex items-center gap-1.5">
+                        <i class="fa-solid fa-clipboard-list"></i> Butiran Laporan OPR
+                    </h2>
+
+                    <div>
+                        <label for="input-tajuk" class="block text-xs font-semibold text-slate-700 mb-1">Tajuk Aktiviti / Program <span class="text-rose-500">*</span></label>
+                        <input type="text" id="input-tajuk" value="PEMANTAUAN KERJA PM/CM PERANTI GURU FASA 1" placeholder="Contoh: PEMANTAUAN KERJA PM/CM PERANTI GURU" class="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none uppercase font-medium">
+                    </div>
+
+                    <div>
+                        <label for="input-tempat" class="block text-xs font-semibold text-slate-700 mb-1">Tempat / Lokasi <span class="text-rose-500">*</span></label>
+                        <input type="text" id="input-tempat" value="SK FELDA SG. KEMAHAL" placeholder="Nama Sekolah / Makmal" class="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none uppercase">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label for="input-tarikh" class="block text-xs font-semibold text-slate-700 mb-1">Tarikh / Julat Tarikh <span class="text-rose-500">*</span></label>
+                            <div class="relative flex items-center">
+                                <input type="text" id="input-tarikh" value="16/07/2026 - 16/07/2026" placeholder="DD/MM/YYYY" class="w-full px-3 py-2 pr-9 text-sm bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                                <input type="date" id="date-helper" title="Pilih dari kalendar" class="absolute right-2 w-6 h-6 opacity-0 cursor-pointer">
+                                <i class="fa-regular fa-calendar text-slate-400 pointer-events-none absolute right-3"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="input-masa" class="block text-xs font-semibold text-slate-700 mb-1">Masa Pelaksanaan <span class="text-rose-500">*</span></label>
+                            <input type="text" id="input-masa" value="9:00 PAGI - 12:00 TENGAH HARI" placeholder="Contoh: 8:30 PAGI - 12:30 TGH" class="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none uppercase">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="input-aktiviti" class="block text-xs font-semibold text-slate-700 mb-1">Aktiviti yang Dijalankan</label>
+                        <textarea id="input-aktiviti" rows="2" placeholder="Huraian ringkas aktiviti..." class="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none">Memantau kerja PM/CM bagi 4 unit Peranti Guru Dell.</textarea>
+                    </div>
+
+                    <div>
+                        <label for="input-objektif" class="block text-xs font-semibold text-slate-700 mb-1">Objektif</label>
+                        <textarea id="input-objektif" rows="2" placeholder="Objektif pelaksanaan..." class="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none">Memastikan peranti berada dalam keadaan baik dan berfungsi dengan sempurna.</textarea>
+                    </div>
+
+                    <div>
+                        <label for="input-sasaran" class="block text-xs font-semibold text-slate-700 mb-1">Sasaran</label>
+                        <input type="text" id="input-sasaran" value="4 Orang Guru Penerima Peranti Dell" placeholder="Contoh: Semua Guru / Murid Tahun 6 / 4 Unit Peranti" class="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    </div>
+
+                    <div>
+                        <label for="input-ulasan" class="block text-xs font-semibold text-slate-700 mb-1">Ulasan / Impak</label>
+                        <textarea id="input-ulasan" rows="2" placeholder="Ulasan atau rumusan..." class="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none">Pemantauan kerja PM/CM bagi 4 unit Peranti Guru Dell telah dilaksanakan.</textarea>
+                    </div>
+                </div>
+
+                <!-- Seksyen 3: Gambar Aktiviti & Pilihan Gaya Galeri -->
+                <div class="bg-slate-50/80 p-4 rounded-2xl border border-slate-200/80 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-xs font-bold uppercase tracking-wider text-[#0b4f8a] flex items-center gap-1.5">
+                            <i class="fa-solid fa-camera"></i> Gambar Aktiviti (<span id="photo-count-badge">4</span>/6)
+                        </h2>
+                        <button type="button" id="btn-clear-photos" class="text-xs text-rose-600 hover:underline font-medium cursor-pointer">Padam Semua Gambar</button>
+                    </div>
+
+                    <!-- Zon Muat Naik Natif -->
+                    <label for="input-photos" id="drop-zone" class="block border-2 border-dashed border-blue-300 hover:border-blue-500 bg-blue-50/40 hover:bg-blue-50/80 rounded-xl p-4 text-center cursor-pointer transition">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 text-[#0b4f8a] flex items-center justify-center mx-auto mb-2 pointer-events-none">
+                            <i class="fa-solid fa-cloud-arrow-up text-lg"></i>
+                        </div>
+                        <p class="text-xs font-semibold text-slate-700 pointer-events-none">Klik di sini untuk pilih gambar atau seret masuk</p>
+                        <p class="text-[11px] text-slate-500 mt-0.5 pointer-events-none">Pilih 1 hingga 6 gambar serentak (Disyorkan: 4 gambar)</p>
+                    </label>
+                    <input type="file" id="input-photos" accept="image/*" multiple class="hidden">
+
+                    <!-- Butang Visual Pantas untuk Gaya Susunan 4 Gambar -->
+                    <div class="pt-1">
+                        <label class="block text-[11px] font-semibold text-slate-600 mb-1.5">Pilih Gaya Susunan Gambar (4 Gambar):</label>
+                        <div class="grid grid-cols-2 gap-2" id="layout-preset-buttons">
+                            <button type="button" data-layout="collage-1-3" class="layout-btn p-2 rounded-xl border text-left transition flex items-center gap-2.5 bg-blue-50 border-blue-500 text-[#0b4f8a] shadow-2xs cursor-pointer">
+                                <div class="w-7 h-5 shrink-0 grid grid-cols-[1.4fr_1fr] gap-0.5 pointer-events-none">
+                                    <span class="bg-current rounded-[2px] opacity-90"></span>
+                                    <div class="grid grid-rows-3 gap-0.5">
+                                        <span class="bg-current rounded-[1px] opacity-65"></span>
+                                        <span class="bg-current rounded-[1px] opacity-65"></span>
+                                        <span class="bg-current rounded-[1px] opacity-65"></span>
+                                    </div>
+                                </div>
+                                <div class="min-w-0 pointer-events-none">
+                                    <p class="text-[11px] font-bold leading-tight truncate">Kolaj 1 + 3</p>
+                                    <p class="text-[9.5px] opacity-75 truncate">1 Besar + 3 Kanan</p>
+                                </div>
+                            </button>
+
+                            <button type="button" data-layout="grid-2x2" class="layout-btn p-2 rounded-xl border border-slate-200 bg-white text-slate-700 hover:border-blue-300 text-left transition flex items-center gap-2.5 cursor-pointer">
+                                <div class="w-7 h-5 shrink-0 grid grid-cols-2 grid-rows-2 gap-0.5 pointer-events-none">
+                                    <span class="bg-current rounded-[2px] opacity-75"></span>
+                                    <span class="bg-current rounded-[2px] opacity-75"></span>
+                                    <span class="bg-current rounded-[2px] opacity-75"></span>
+                                    <span class="bg-current rounded-[2px] opacity-75"></span>
+                                </div>
+                                <div class="min-w-0 pointer-events-none">
+                                    <p class="text-[11px] font-bold leading-tight truncate">Grid 2 × 2</p>
+                                    <p class="text-[9.5px] opacity-75 truncate">4 Petak Simetri</p>
+                                </div>
+                            </button>
+
+                            <button type="button" data-layout="banner-1-3" class="layout-btn p-2 rounded-xl border border-slate-200 bg-white text-slate-700 hover:border-blue-300 text-left transition flex items-center gap-2.5 cursor-pointer">
+                                <div class="w-7 h-5 shrink-0 flex flex-col gap-0.5 pointer-events-none">
+                                    <span class="h-2.5 bg-current rounded-[2px] opacity-90"></span>
+                                    <div class="h-2 grid grid-cols-3 gap-0.5">
+                                        <span class="bg-current rounded-[1px] opacity-65"></span>
+                                        <span class="bg-current rounded-[1px] opacity-65"></span>
+                                        <span class="bg-current rounded-[1px] opacity-65"></span>
+                                    </div>
+                                </div>
+                                <div class="min-w-0 pointer-events-none">
+                                    <p class="text-[11px] font-bold leading-tight truncate">Banner 1 + 3</p>
+                                    <p class="text-[9.5px] opacity-75 truncate">1 Lebar + 3 Bawah</p>
+                                </div>
+                            </button>
+
+                            <button type="button" data-layout="row-4" class="layout-btn p-2 rounded-xl border border-slate-200 bg-white text-slate-700 hover:border-blue-300 text-left transition flex items-center gap-2.5 cursor-pointer">
+                                <div class="w-7 h-5 shrink-0 grid grid-cols-4 gap-0.5 pointer-events-none">
+                                    <span class="bg-current rounded-[1.5px] opacity-75"></span>
+                                    <span class="bg-current rounded-[1.5px] opacity-75"></span>
+                                    <span class="bg-current rounded-[1.5px] opacity-75"></span>
+                                    <span class="bg-current rounded-[1.5px] opacity-75"></span>
+                                </div>
+                                <div class="min-w-0 pointer-events-none">
+                                    <p class="text-[11px] font-bold leading-tight truncate">1 Baris (4×1)</p>
+                                    <p class="text-[9.5px] opacity-75 truncate">4 Kolum Sekata</p>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Kawalan Tambahan & Mod Paparan Gambar -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-0.5">
+                        <div>
+                            <label for="select-grid-layout" class="block text-[11px] font-semibold text-slate-600 mb-1">Susunan Lain / Auto</label>
+                            <select id="select-grid-layout" class="w-full px-2.5 py-2 text-xs bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-medium">
+                                <option value="collage-1-3" selected>4 Gambar: Kolaj 1 Besar + 3 Kanan</option>
+                                <option value="grid-2x2">4 Gambar: Grid 2×2 Simetri Besar</option>
+                                <option value="banner-1-3">4 Gambar: 1 Banner Atas + 3 Bawah</option>
+                                <option value="row-4">4 Gambar: 1 Baris (4 Kolum)</option>
+                                <option value="auto">Automatik (Ikut Bilangan Gambar)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="select-image-fit" class="block text-[11px] font-semibold text-slate-600 mb-1">Mod Paparan Gambar</label>
+                            <select id="select-image-fit" class="w-full px-2.5 py-2 text-xs bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none font-medium">
+                                <option value="contain-blur" selected>Gambar Penuh + Latar Kabur (Cantik)</option>
+                                <option value="contain">Gambar Penuh + Latar Bersih</option>
+                                <option value="cover">Penuh Bingkai (Crop Kemas)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Senarai Thumbnail Gambar -->
+                    <div id="thumbnail-list" class="grid grid-cols-4 gap-2 pt-1"></div>
+                </div>
+
+                <!-- Seksyen 4: Pelaksana -->
+                <div class="bg-slate-50/80 p-4 rounded-2xl border border-slate-200/80 space-y-3">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-[#0b4f8a] flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-check"></i> Maklumat Pelaksana
+                    </h2>
+
+                    <div>
+                        <label for="input-pelaksana" class="block text-xs font-semibold text-slate-700 mb-1">Dilaksanakan Oleh (Nama Penuh) <span class="text-rose-500">*</span></label>
+                        <input type="text" id="input-pelaksana" value="MOHD HUSZAINI B ZAKARIA" placeholder="Nama Penuh Pegawai / Juruteknik" class="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none uppercase font-semibold">
+                    </div>
+
+                    <div>
+                        <label for="input-jawatan" class="block text-xs font-semibold text-slate-700 mb-1">Jawatan / Unit (Pilihan)</label>
+                        <input type="text" id="input-jawatan" value="" placeholder="Contoh: Juruteknik Komputer FT19 / Penyelaras ICT" class="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    </div>
+                </div>
+
+            </form>
+        </section>
+
+        <!-- PANEL KANAN: PRATONTON DOKUMEN A4 LIVE -->
+        <section id="preview-container" class="flex-1 bg-slate-200/80 p-4 sm:p-8 overflow-auto flex flex-col items-center justify-start lg:h-[calc(100vh-65px)]">
+            
+            <!-- Bar Kawalan Pantas di Atas Pratonton -->
+            <div class="no-print mb-4 flex flex-wrap items-center justify-center gap-2">
+                <!-- Pintasan Tukar Susunan Gambar -->
+                <div class="bg-white/95 backdrop-blur px-2 py-1 rounded-full shadow-sm border border-slate-200 flex items-center gap-1 text-[11px]">
+                    <span class="font-semibold text-slate-500 pl-2 pr-1 hidden sm:inline">Susunan:</span>
+                    <button type="button" data-layout="collage-1-3" class="quick-layout-pill px-2.5 py-1 rounded-full font-semibold bg-[#0b4f8a] text-white transition cursor-pointer">Kolaj 1+3</button>
+                    <button type="button" data-layout="grid-2x2" class="quick-layout-pill px-2.5 py-1 rounded-full font-semibold text-slate-600 hover:bg-slate-100 transition cursor-pointer">Grid 2×2</button>
+                    <button type="button" data-layout="banner-1-3" class="quick-layout-pill px-2.5 py-1 rounded-full font-semibold text-slate-600 hover:bg-slate-100 transition cursor-pointer">Banner 1+3</button>
+                    <button type="button" data-layout="row-4" class="quick-layout-pill px-2.5 py-1 rounded-full font-semibold text-slate-600 hover:bg-slate-100 transition cursor-pointer">1 Baris</button>
+                </div>
+
+                <!-- Kawalan Zoom -->
+                <div class="bg-white/95 backdrop-blur px-3.5 py-1 rounded-full shadow-sm border border-slate-200 flex items-center gap-2 text-xs text-slate-600">
+                    <button type="button" id="btn-zoom-out" class="hover:text-blue-600 p-1 cursor-pointer" title="Kecilkan"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+                    <span id="zoom-level-text" class="font-mono font-semibold w-10 text-center">100%</span>
+                    <button type="button" id="btn-zoom-in" class="hover:text-blue-600 p-1 cursor-pointer" title="Besarkan"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+                    <button type="button" id="btn-zoom-fit" class="text-blue-600 hover:underline font-medium ml-0.5 cursor-pointer">Fit</button>
+                </div>
+            </div>
+
+            <!-- PEMBUNGKUS KERTAS A4 -->
+            <div id="preview-wrapper">
+                <!-- DOKUMEN OPR SEBENAR (210mm x 297mm) -->
+                <div id="opr-document" class="a4-sheet">
+                    
+                    <!-- ==================== BAHAGIAN ATAS: REBEN GEOMETRI & HEADER ==================== -->
+                    <div class="relative w-full pt-5 shrink-0">
+                        <svg class="w-full h-[96px] block" viewBox="0 0 800 96" preserveAspectRatio="none">
+                            <!-- Jalur Biru Tua Kiri -->
+                            <polygon points="0,12 245,12 268,34 0,34" fill="#0b4f8a" />
+                            <!-- Jalur Biru Cerah Bawah Kiri -->
+                            <polygon points="0,40 155,40 172,55 0,55" fill="#2997d8" />
+                            <!-- Blok Geometrik Kanan Atas -->
+                            <polygon points="505,0 640,0 715,68 580,68" fill="#105b9e" />
+                            <polygon points="648,0 800,0 800,68 723,68" fill="#0b4f8a" />
+                            <!-- Jalur Biru Cerah Kanan -->
+                            <polygon points="595,74 800,74 800,89 611,89" fill="#2997d8" />
+                        </svg>
+
+                        <!-- Kandungan Teks Header -->
+                        <div class="absolute inset-x-0 top-8 px-10 flex items-center justify-center gap-4">
+                            <div id="doc-logo-container" class="hidden shrink-0">
+                                <img id="doc-logo-img" src="" alt="Logo" class="h-14 w-14 object-contain">
+                            </div>
+
+                            <div class="text-center">
+                                <h1 id="doc-ptis-title" class="text-[25px] font-black tracking-wide text-[#c58917] leading-none drop-shadow-[0_1px_0_rgba(255,255,255,0.8)]">
+                                    PTIS PELANGAI
+                                </h1>
+                                <div class="mt-1 inline-block border-b-2 border-[#b45309]/60 pb-0.5 px-3">
+                                    <p id="doc-ptis-subtitle" class="text-[16px] font-bold tracking-wider text-[#b97a16] uppercase leading-tight">
+                                        PASUKAN TEKNIKAL ICT SEKOLAH
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ==================== BAHAGIAN TENGAH: MAKLUMAT & GALERI GAMBAR ==================== -->
+                    <div class="flex-1 px-9 pt-1.5 pb-2 flex flex-col justify-start min-h-0">
+                        
+                        <!-- Bar Tajuk Utama Biru Gelap -->
+                        <div class="w-full bg-gradient-to-r from-[#0b4f8a] via-[#105b9e] to-[#0b4f8a] rounded-xl px-5 py-2.5 shadow-sm flex items-center gap-4 border border-[#083b68] shrink-0">
+                            <span class="text-[#f5b82e] font-extrabold text-[15.5px] tracking-wide shrink-0">
+                                TAJUK &nbsp;:
+                            </span>
+                            <h2 id="doc-tajuk" class="text-white font-bold text-[15px] uppercase tracking-wide leading-snug">
+                                PEMANTAUAN KERJA PM/CM PERANTI GURU FASA 1
+                            </h2>
+                        </div>
+
+                        <!-- Butiran Tempat, Tarikh, Masa, Aktiviti, Objektif, Ulasan -->
+                        <div class="relative mt-3 space-y-2 shrink-0">
+                            
+                            <!-- Hiasan Titik Biru Menegak Kiri & Kanan -->
+                            <div class="absolute -left-5 top-20 flex flex-col gap-2.5 text-[#105b9e] opacity-85 select-none">
+                                <span class="w-2 h-2 rounded-full bg-[#105b9e]"></span>
+                                <span class="w-2 h-2 rounded-full bg-[#105b9e]"></span>
+                                <span class="w-2 h-2 rounded-full bg-[#105b9e]"></span>
+                                <span class="w-2 h-2 rounded-full bg-[#105b9e]"></span>
+                                <span class="w-2 h-2 rounded-full bg-[#105b9e]"></span>
+                                <span class="w-2 h-2 rounded-full bg-[#105b9e]"></span>
+                                <span class="w-2 h-2 rounded-full bg-[#105b9e]"></span>
+                            </div>
+                            <div class="absolute -right-5 top-20 flex flex-col gap-2.5 text-[#105b9e] opacity-85 select-none">
+                                <span class="w-2 h-2 rounded-full bg-[#105b9e]"></span>
+                                <span class="w-2 h-2 rounded-full bg-[#105b9e]"></span>
+                                <span class="w-2 h-2 rounded-full bg-[#105b9e]"></span>
+                                <span class="w-2 h-2 rounded-full bg-[#105b9e]"></span>
+                                <span class="w-2 h-2 rounded-full bg-[#105b9e]"></span>
+                                <span class="w-2 h-2 rounded-full bg-[#105b9e]"></span>
+                                <span class="w-2 h-2 rounded-full bg-[#105b9e]"></span>
+                            </div>
+
+                            <!-- Kotak Maklumat TEMPAT, TARIKH & MASA -->
+                            <div class="bg-slate-50/90 border border-slate-200/90 rounded-xl px-4 py-2 text-[12.5px] space-y-1.5">
+                                <!-- Baris 1: TEMPAT -->
+                                <div class="flex items-baseline gap-2 min-w-0">
+                                    <span class="font-extrabold text-[#0b4f8a] tracking-wide w-[76px] shrink-0">TEMPAT</span>
+                                    <span class="font-extrabold text-[#0b4f8a] shrink-0">:</span>
+                                    <span id="doc-tempat" class="font-bold text-slate-900 uppercase truncate">SK FELDA SG. KEMAHAL</span>
+                                </div>
+                                <!-- Baris 2: TARIKH & MASA Sebaris -->
+                                <div class="grid grid-cols-[1.05fr_1fr] gap-3 pt-1.5 border-t border-slate-200/80">
+                                    <div class="flex items-baseline gap-2 min-w-0">
+                                        <span class="font-extrabold text-[#0b4f8a] tracking-wide w-[76px] shrink-0">TARIKH</span>
+                                        <span class="font-extrabold text-[#0b4f8a] shrink-0">:</span>
+                                        <span id="doc-tarikh" class="font-bold text-slate-900 truncate">16/07/2026 - 16/07/2026</span>
+                                    </div>
+                                    <div class="flex items-baseline gap-2 border-l border-slate-200 pl-3 min-w-0">
+                                        <span class="font-extrabold text-[#0b4f8a] tracking-wide shrink-0">MASA &nbsp;:</span>
+                                        <span id="doc-masa" class="font-bold text-slate-900 uppercase truncate">9:00 PAGI - 12:00 TENGAH HARI</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Baris AKTIVITI -->
+                            <div class="grid grid-cols-[96px_12px_1fr] items-start text-[12.5px]">
+                                <span class="font-extrabold text-[#0b4f8a] tracking-wide pt-1.5">AKTIVITI</span>
+                                <span class="font-extrabold text-[#0b4f8a] pt-1.5">:</span>
+                                <div class="w-full min-h-[40px] px-3.5 py-1.5 bg-slate-50/75 border border-slate-300/90 rounded-lg text-slate-900 font-semibold leading-snug whitespace-pre-line" id="doc-aktiviti">Memantau kerja PM/CM bagi 4 unit Peranti Guru Dell.</div>
+                            </div>
+
+                            <!-- Baris OBJEKTIF -->
+                            <div class="grid grid-cols-[96px_12px_1fr] items-start text-[12.5px]">
+                                <span class="font-extrabold text-[#0b4f8a] tracking-wide pt-1.5">OBJEKTIF</span>
+                                <span class="font-extrabold text-[#0b4f8a] pt-1.5">:</span>
+                                <div class="w-full min-h-[36px] px-3.5 py-1.5 bg-slate-50/75 border border-slate-300/90 rounded-lg text-slate-900 font-semibold leading-snug whitespace-pre-line break-words" id="doc-objektif">Memastikan peranti berada dalam keadaan baik dan berfungsi dengan sempurna.</div>
+                            </div>
+
+                            <!-- Baris SASARAN -->
+                            <div class="grid grid-cols-[96px_12px_1fr] items-start text-[12.5px]">
+                                <span class="font-extrabold text-[#0b4f8a] tracking-wide pt-1.5">SASARAN</span>
+                                <span class="font-extrabold text-[#0b4f8a] pt-1.5">:</span>
+                                <div class="w-full min-h-[34px] px-3.5 py-1.5 bg-slate-50/75 border border-slate-300/90 rounded-lg text-slate-900 font-semibold leading-snug whitespace-pre-line break-words" id="doc-sasaran">4 Orang Guru Penerima Peranti Dell</div>
+                            </div>
+
+                            <!-- Baris ULASAN -->
+                            <div class="grid grid-cols-[96px_12px_1fr] items-start text-[12.5px]">
+                                <span class="font-extrabold text-[#0b4f8a] tracking-wide pt-1.5">ULASAN</span>
+                                <span class="font-extrabold text-[#0b4f8a] pt-1.5">:</span>
+                                <div class="w-full min-h-[36px] px-3.5 py-1.5 bg-slate-50/75 border border-slate-300/90 rounded-lg text-slate-900 font-semibold leading-snug whitespace-pre-line break-words" id="doc-ulasan">Pemantauan kerja PM/CM bagi 4 unit Peranti Guru Dell telah dilaksanakan.</div>
+                            </div>
+                        </div>
+
+                        <!-- SEKSYEN GAMBAR AKTIVITI -->
+                        <div class="mt-2.5 mb-1 flex-1 flex flex-col min-h-0">
+                            <div class="flex items-center justify-between gap-2.5 mb-1.5 shrink-0">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2 h-4 rounded-full bg-[#0b4f8a]"></span>
+                                    <h3 class="font-extrabold text-[13.5px] text-[#0b4f8a] tracking-wide uppercase">
+                                        GAMBAR AKTIVITI
+                                    </h3>
+                                </div>
+                                <div class="h-[2px] flex-1 bg-gradient-to-r from-[#2997d8]/50 to-transparent rounded-full"></div>
+                                <span id="doc-layout-badge" class="text-[10px] font-bold uppercase tracking-wider text-slate-400"></span>
+                            </div>
+
+                            <!-- Bekas Galeri Gambar Dinamik -->
+                            <div id="doc-photo-grid" class="w-full flex-1 bg-slate-100/75 border border-slate-200/80 rounded-2xl p-2 flex items-stretch justify-center overflow-hidden"></div>
+                        </div>
+
+                    </div>
+
+                    <!-- ==================== BAHAGIAN BAWAH: PELAKSANA & REBEN GEOMETRI ==================== -->
+                    <div class="w-full pt-1 shrink-0">
+                        <div class="px-10 pb-1.5 flex items-center gap-5">
+                            <!-- Lencana Emas Berbingkai -->
+                            <div class="relative inline-flex items-center justify-center px-5 py-1.5 bg-white border-2 border-[#c58917] rounded-2xl shadow-sm shrink-0">
+                                <div class="absolute inset-0.5 border border-[#e5b54f] rounded-[13px] pointer-events-none"></div>
+                                <span class="font-script text-[14px] text-[#b97a16] font-bold leading-tight text-center">
+                                    Dilaksanakan<br>Oleh :
+                                </span>
+                            </div>
+
+                            <div>
+                                <p id="doc-pelaksana" class="text-[15px] font-extrabold text-slate-900 uppercase tracking-wide">
+                                    MOHD HUSZAINI B ZAKARIA
+                                </p>
+                                <p id="doc-jawatan" class="text-[11.5px] font-semibold text-slate-600 hidden"></p>
+                            </div>
+                        </div>
+
+                        <!-- Reben Hiasan Bawah -->
+                        <svg class="w-full h-[56px] block" viewBox="0 0 800 56" preserveAspectRatio="none">
+                            <polygon points="0,4 225,4 240,16 0,16" fill="#2997d8" />
+                            <polygon points="0,20 185,20 235,56 0,56" fill="#0b4f8a" />
+                            <polygon points="193,20 320,20 370,56 243,56" fill="#105b9e" />
+                            <polygon points="620,18 800,18 800,30 606,30" fill="#2997d8" />
+                            <polygon points="525,35 800,35 800,56 500,56" fill="#0b4f8a" />
+                        </svg>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Pengesahan Reset -->
+    <div id="reset-modal" class="no-print fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-xl border border-slate-200">
+            <div class="w-11 h-11 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-3">
+                <i class="fa-solid fa-triangle-exclamation text-lg"></i>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">Kosongkan Borang Laporan?</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                Tajuk, tarikh, aktiviti, objektif, ulasan dan gambar semasa akan dikosongkan untuk laporan baharu. Maklumat PTIS & nama pelaksana akan dikekalkan.
+            </p>
+            <div class="mt-5 flex items-center justify-end gap-2">
+                <button type="button" id="btn-cancel-reset" class="px-3.5 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition cursor-pointer">Batal</button>
+                <button type="button" id="btn-confirm-reset" class="px-4 py-2 text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 rounded-xl transition cursor-pointer">Ya, Kosongkan</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            // =========================================================================
+            // PAUTAN WEB APP GOOGLE APPS SCRIPT PTIS PELANGAI
+            // =========================================================================
+          const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzutA-ctGhsV5d6oX871UDbcUL7z3gkGCBrz9RLffCNUGqQsLU4qskxGQGcXvQXaYIX/exec';
+
+            // =========================================================================
+            // 1. PENJANAAN GAMBAR CONTOH MENGGUNAKAN HTML5 CANVAS (100% BEBAS RALAT)
+            // =========================================================================
+            function createSamplePhotoCanvas(sceneIndex) {
+                const themes = [
+                    {
+                        bg: '#e0f2fe',
+                        border: '#38bdf8',
+                        accent: '#0284c7',
+                        badge: 'FOTO 1',
+                        title: 'GAMBAR AKTIVITI 1',
+                        sub: 'Pemeriksaan fizikal & spesifikasi peranti'
+                    },
+                    {
+                        bg: '#dcfce7',
+                        border: '#34d399',
+                        accent: '#059669',
+                        badge: 'FOTO 2',
+                        title: 'GAMBAR AKTIVITI 2',
+                        sub: 'Pengesahan nombor siri & rekod aset'
+                    },
+                    {
+                        bg: '#fef3c7',
+                        border: '#fbbf24',
+                        accent: '#d97706',
+                        badge: 'FOTO 3',
+                        title: 'GAMBAR AKTIVITI 3',
+                        sub: 'Ujian rangkaian & kemaskini perisian'
+                    },
+                    {
+                        bg: '#ede9fe',
+                        border: '#a78bfa',
+                        accent: '#6d28d9',
+                        badge: 'FOTO 4',
+                        title: 'GAMBAR AKTIVITI 4',
+                        sub: 'Pengesahan & tandatangan serahan'
+                    }
+                ];
+
+                const t = themes[sceneIndex % themes.length];
+                const canvas = document.createElement('canvas');
+                canvas.width = 640;
+                canvas.height = 420;
+                const ctx = canvas.getContext('2d');
+
+                ctx.fillStyle = t.bg;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+                ctx.beginPath();
+                if (ctx.roundRect) {
+                    ctx.roundRect(28, 28, 584, 364, 20);
+                } else {
+                    ctx.rect(28, 28, 584, 364);
+                }
+                ctx.fill();
+
+                ctx.strokeStyle = t.border;
+                ctx.lineWidth = 3;
+                ctx.setLineDash([10, 8]);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                ctx.fillStyle = t.bg;
+                ctx.beginPath();
+                ctx.arc(320, 148, 46, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = t.accent;
+                ctx.beginPath();
+                ctx.moveTo(292, 168);
+                ctx.lineTo(312, 142);
+                ctx.lineTo(326, 158);
+                ctx.lineTo(338, 145);
+                ctx.lineTo(352, 168);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(335, 134, 6, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#0f172a';
+                ctx.font = 'bold 24px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(t.title, 320, 232);
+
+                ctx.fillStyle = t.accent;
+                ctx.font = '600 16px Inter, sans-serif';
+                ctx.fillText(t.sub, 320, 264);
+
+                ctx.fillStyle = '#64748b';
+                ctx.font = '13px Inter, sans-serif';
+                ctx.fillText('Muat naik gambar aktiviti sebenar di panel kiri', 320, 304);
+
+                return canvas.toDataURL('image/png');
+            }
+
+            let uploadedPhotos = [
+                { id: 1, src: createSamplePhotoCanvas(0), isSample: true },
+                { id: 2, src: createSamplePhotoCanvas(1), isSample: true },
+                { id: 3, src: createSamplePhotoCanvas(2), isSample: true },
+                { id: 4, src: createSamplePhotoCanvas(3), isSample: true }
+            ];
+
+            let customLogoSrc = '';
+            let currentZoom = 1;
+            let toastTimer = null;
+
+            // =========================================================================
+            // 2. PEMAMPATAN & PENGECILAN SAIZ GAMBAR AUTOMATIK (HTML5 CANVAS)
+            // =========================================================================
+            function compressImageFile(file, maxWidth, quality) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onerror = () => reject(new Error('Gagal membaca fail gambar.'));
+                    reader.onload = (e) => {
+                        const img = new Image();
+                        img.onerror = () => reject(new Error('Format gambar tidak sah.'));
+                        img.onload = () => {
+                            try {
+                                let width = img.width;
+                                let height = img.height;
+
+                                if (width > maxWidth) {
+                                    height = Math.round((height * maxWidth) / width);
+                                    width = maxWidth;
+                                }
+
+                                const canvas = document.createElement('canvas');
+                                canvas.width = width;
+                                canvas.height = height;
+                                const ctx = canvas.getContext('2d');
+
+                                ctx.fillStyle = '#ffffff';
+                                ctx.fillRect(0, 0, width, height);
+                                ctx.drawImage(img, 0, 0, width, height);
+
+                                const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+                                resolve(compressedDataUrl);
+                            } catch (err) {
+                                resolve(e.target.result);
+                            }
+                        };
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            // =========================================================================
+            // 3. PENGURUSAN MUAT NAIK GAMBAR & LOGO
+            // =========================================================================
+            async function processImageFiles(fileList) {
+                const files = Array.from(fileList || []).filter(f => f.type && f.type.startsWith('image/'));
+                if (files.length === 0) {
+                    showToast('Sila pilih fail gambar yang sah (JPG/PNG).', 'error');
+                    return;
+                }
+
+                if (uploadedPhotos.length > 0 && uploadedPhotos.every(p => p.isSample)) {
+                    uploadedPhotos = [];
+                }
+
+                const remainingSlots = 6 - uploadedPhotos.length;
+                if (remainingSlots <= 0) {
+                    showToast('Maksimum 6 gambar sahaja dibenarkan.', 'error');
+                    return;
+                }
+
+                const filesToLoad = files.slice(0, remainingSlots);
+                showToast(`Memproses ${filesToLoad.length} gambar...`);
+
+                let successCount = 0;
+                for (let i = 0; i < filesToLoad.length; i++) {
+                    try {
+                        const dataUrl = await compressImageFile(filesToLoad[i], 1200, 0.85);
+                        uploadedPhotos.push({
+                            id: Date.now() + Math.random(),
+                            src: dataUrl,
+                            isSample: false
+                        });
+                        successCount++;
+                    } catch (err) {
+                        console.error('Ralat memproses gambar:', err);
+                    }
+                }
+
+                if (successCount > 0) {
+                    autoSelectBestLayout(uploadedPhotos.length);
+                    renderThumbnailList();
+                    renderPreview();
+                    showToast(`${successCount} gambar berjaya dimuat naik!`);
+                } else {
+                    showToast('Gagal memuat naik gambar. Sila cuba lagi.', 'error');
+                }
+            }
+
+            function autoSelectBestLayout(count) {
+                const select = document.getElementById('select-grid-layout');
+                if (!select) return;
+                if (count === 4) {
+                    if (!['collage-1-3', 'grid-2x2', 'banner-1-3', 'row-4'].includes(select.value)) {
+                        select.value = 'collage-1-3';
+                    }
+                } else {
+                    select.value = 'auto';
+                }
+                syncLayoutButtons();
+            }
+
+            async function handleLogoUpload(file) {
+                if (!file) return;
+                try {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        customLogoSrc = e.target.result;
+                        updateLogoUI();
+                        renderPreview();
+                        saveProfileToStorage();
+                        showToast('Logo berjaya dimuat naik!');
+                    };
+                    reader.readAsDataURL(file);
+                } catch (err) {
+                    showToast('Gagal memuat naik logo.', 'error');
+                }
+            }
+
+            function removeLogo() {
+                customLogoSrc = '';
+                const inputLogo = document.getElementById('input-logo');
+                if (inputLogo) inputLogo.value = '';
+                updateLogoUI();
+                renderPreview();
+                saveProfileToStorage();
+                showToast('Logo dipadam.');
+            }
+
+            function updateLogoUI() {
+                const btnRemove = document.getElementById('btn-remove-logo');
+                const labelText = document.getElementById('logo-label-text');
+                if (!btnRemove || !labelText) return;
+                if (customLogoSrc) {
+                    btnRemove.classList.remove('hidden');
+                    labelText.textContent = 'Logo aktif (Klik untuk tukar)';
+                } else {
+                    btnRemove.classList.add('hidden');
+                    labelText.textContent = 'Pilih fail logo (PNG/JPG) jika perlu';
+                }
+            }
+
+            // =========================================================================
+            // 4. KAWALAN SUSUNAN GALERI & SENARAI THUMBNAIL
+            // =========================================================================
+            function setGalleryLayout(layoutKey) {
+                const select = document.getElementById('select-grid-layout');
+                if (select) {
+                    select.value = layoutKey;
+                }
+                syncLayoutButtons();
+                renderPreview();
+            }
+
+            function syncLayoutButtons() {
+                const select = document.getElementById('select-grid-layout');
+                const current = select ? select.value : 'collage-1-3';
+
+                document.querySelectorAll('.layout-btn').forEach(btn => {
+                    const isActive = btn.getAttribute('data-layout') === current;
+                    if (isActive) {
+                        btn.className = 'layout-btn p-2 rounded-xl border text-left transition flex items-center gap-2.5 bg-blue-50 border-blue-500 text-[#0b4f8a] shadow-2xs cursor-pointer';
+                    } else {
+                        btn.className = 'layout-btn p-2 rounded-xl border border-slate-200 bg-white text-slate-700 hover:border-blue-300 text-left transition flex items-center gap-2.5 cursor-pointer';
+                    }
+                });
+
+                document.querySelectorAll('.quick-layout-pill').forEach(pill => {
+                    const isActive = pill.getAttribute('data-layout') === current;
+                    if (isActive) {
+                        pill.className = 'quick-layout-pill px-2.5 py-1 rounded-full font-semibold bg-[#0b4f8a] text-white transition cursor-pointer';
+                    } else {
+                        pill.className = 'quick-layout-pill px-2.5 py-1 rounded-full font-semibold text-slate-600 hover:bg-slate-100 transition cursor-pointer';
+                    }
+                });
+            }
+
+            function renderThumbnailList() {
+                const listEl = document.getElementById('thumbnail-list');
+                const badgeEl = document.getElementById('photo-count-badge');
+                if (badgeEl) badgeEl.textContent = uploadedPhotos.length;
+                if (!listEl) return;
+
+                if (uploadedPhotos.length === 0) {
+                    listEl.innerHTML = '<div class="col-span-full text-center py-3 text-xs text-slate-400 italic">Tiada gambar dimuat naik.</div>';
+                    return;
+                }
+
+                listEl.innerHTML = uploadedPhotos.map((photo, idx) => `
+                    <div class="relative group aspect-square rounded-xl overflow-hidden border border-slate-300 bg-white shadow-2xs">
+                        <img src="${photo.src}" alt="Gambar ${idx + 1}" class="w-full h-full object-cover">
+                        <span class="absolute top-1 left-1 bg-slate-900/75 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-md">${idx + 1}</span>
+                        <div class="absolute inset-x-0 bottom-0 bg-slate-900/80 p-1 flex items-center justify-between opacity-95 sm:opacity-0 sm:group-hover:opacity-100 transition">
+                            <div class="flex items-center gap-0.5">
+                                <button type="button" data-action="move-left" data-index="${idx}" ${idx === 0 ? 'disabled' : ''} class="w-5 h-5 rounded bg-white/20 hover:bg-white/40 disabled:opacity-30 text-white text-[10px] flex items-center justify-center cursor-pointer" title="Alih Kiri">
+                                    <i class="fa-solid fa-chevron-left pointer-events-none"></i>
+                                </button>
+                                <button type="button" data-action="move-right" data-index="${idx}" ${idx === uploadedPhotos.length - 1 ? 'disabled' : ''} class="w-5 h-5 rounded bg-white/20 hover:bg-white/40 disabled:opacity-30 text-white text-[10px] flex items-center justify-center cursor-pointer" title="Alih Kanan">
+                                    <i class="fa-solid fa-chevron-right pointer-events-none"></i>
+                                </button>
+                            </div>
+                            <button type="button" data-action="remove" data-index="${idx}" class="w-5 h-5 rounded bg-rose-500 hover:bg-rose-600 text-white text-[10px] flex items-center justify-center cursor-pointer" title="Padam">
+                                <i class="fa-solid fa-trash-can pointer-events-none"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // =========================================================================
+            // 5. PAPARAN DOKUMEN A4 & GALERI BERSIH
+            // =========================================================================
+            function renderPreview() {
+                document.getElementById('doc-ptis-title').textContent = document.getElementById('input-ptis-title').value || 'PTIS PELANGAI';
+                document.getElementById('doc-ptis-subtitle').textContent = document.getElementById('input-ptis-subtitle').value || 'PASUKAN TEKNIKAL ICT SEKOLAH';
+                document.getElementById('doc-tajuk').textContent = document.getElementById('input-tajuk').value || 'TAJUK AKTIVITI / PROGRAM';
+                document.getElementById('doc-tempat').textContent = document.getElementById('input-tempat').value || '-';
+                document.getElementById('doc-tarikh').textContent = document.getElementById('input-tarikh').value || '-';
+                document.getElementById('doc-masa').textContent = document.getElementById('input-masa').value || '-';
+                document.getElementById('doc-aktiviti').textContent = document.getElementById('input-aktiviti').value || '-';
+                document.getElementById('doc-objektif').textContent = document.getElementById('input-objektif').value || '-';
+                document.getElementById('doc-sasaran').textContent = document.getElementById('input-sasaran').value || '-';
+                document.getElementById('doc-ulasan').textContent = document.getElementById('input-ulasan').value || '-';
+                document.getElementById('doc-pelaksana').textContent = document.getElementById('input-pelaksana').value || 'NAMA PELAKSANA';
+
+                const jawatanVal = document.getElementById('input-jawatan').value.trim();
+                const docJawatan = document.getElementById('doc-jawatan');
+                if (jawatanVal) {
+                    docJawatan.textContent = jawatanVal;
+                    docJawatan.classList.remove('hidden');
+                } else {
+                    docJawatan.classList.add('hidden');
+                }
+
+                const logoContainer = document.getElementById('doc-logo-container');
+                const logoImg = document.getElementById('doc-logo-img');
+                if (customLogoSrc) {
+                    logoImg.src = customLogoSrc;
+                    logoContainer.classList.remove('hidden');
+                } else {
+                    logoContainer.classList.add('hidden');
+                }
+
+                renderPhotoGrid();
+            }
+
+            function renderPhotoGrid() {
+                const container = document.getElementById('doc-photo-grid');
+                const layoutBadge = document.getElementById('doc-layout-badge');
+                const layoutMode = document.getElementById('select-grid-layout').value;
+                const imageFit = document.getElementById('select-image-fit').value;
+                const count = uploadedPhotos.length;
+
+                if (count === 0) {
+                    if (layoutBadge) layoutBadge.textContent = '';
+                    container.innerHTML = `
+                        <div class="w-full h-full border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center text-slate-400 bg-white/60">
+                            <i class="fa-regular fa-images text-3xl mb-2"></i>
+                            <p class="text-xs font-medium">Ruangan Gambar Aktiviti (Sila muat naik gambar di panel kiri)</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let effectiveLayout = layoutMode;
+                if (layoutMode === 'auto') {
+                    if (count === 1) effectiveLayout = 'single-1';
+                    else if (count === 2) effectiveLayout = 'pair-2';
+                    else if (count === 3) effectiveLayout = 'trio-3';
+                    else if (count === 4) effectiveLayout = 'collage-1-3';
+                    else if (count === 5) effectiveLayout = 'balanced-5';
+                    else effectiveLayout = 'grid-6';
+                }
+
+                const badgeNames = {
+                    'collage-1-3': 'SUSUNAN: KOLAJ 1 UTAMA + 3 SISI',
+                    'grid-2x2': 'SUSUNAN: GRID 2×2 SIMETRI',
+                    'banner-1-3': 'SUSUNAN: BANNER 1 ATAS + 3 BAWAH',
+                    'row-4': 'SUSUNAN: 1 BARIS (4 KOLUM)',
+                    'single-1': 'SUSUNAN: 1 GAMBAR UTAMA',
+                    'pair-2': 'SUSUNAN: 2 GAMBAR SEBELAH-MENYEBELAH',
+                    'trio-3': 'SUSUNAN: 3 GAMBAR SEBARIS',
+                    'balanced-5': 'SUSUNAN: 5 GAMBAR SEIMBANG',
+                    'grid-6': 'SUSUNAN: GRID 3×2'
+                };
+                if (layoutBadge) layoutBadge.textContent = badgeNames[effectiveLayout] || '';
+
+                const cleanFrame = (photo, extraClasses) => {
+                    if (imageFit === 'cover') {
+                        return `
+                            <div class="relative overflow-hidden rounded-xl bg-white p-1.5 shadow-sm border border-slate-200/90 flex items-center justify-center ${extraClasses}">
+                                <img src="${photo.src}" alt="Gambar Aktiviti" class="w-full h-full rounded-lg object-cover">
+                            </div>
+                        `;
+                    }
+                    if (imageFit === 'contain') {
+                        return `
+                            <div class="relative overflow-hidden rounded-xl bg-white p-1.5 shadow-sm border border-slate-200/90 flex items-center justify-center ${extraClasses}">
+                                <div class="w-full h-full rounded-lg bg-slate-100/90 flex items-center justify-center overflow-hidden p-1">
+                                    <img src="${photo.src}" alt="Gambar Aktiviti" class="max-w-full max-h-full w-auto h-auto object-contain rounded-md">
+                                </div>
+                            </div>
+                        `;
+                    }
+                    return `
+                        <div class="relative overflow-hidden rounded-xl bg-white p-1.5 shadow-sm border border-slate-200/90 flex items-center justify-center ${extraClasses}">
+                            <div class="relative w-full h-full rounded-lg overflow-hidden flex items-center justify-center bg-slate-900/5">
+                                <img src="${photo.src}" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover scale-125 blur-md opacity-35 pointer-events-none">
+                                <img src="${photo.src}" alt="Gambar Aktiviti" class="relative z-10 max-w-full max-h-full w-auto h-auto object-contain rounded-md shadow-xs">
+                            </div>
+                        </div>
+                    `;
+                };
+
+                if (effectiveLayout === 'collage-1-3') {
+                    const items = uploadedPhotos.slice(0, 4);
+                    const mainPhoto = items[0];
+                    const sidePhotos = items.slice(1);
+                    const rowStyle = `grid-template-rows: repeat(${Math.max(sidePhotos.length, 1)}, minmax(0, 1fr));`;
+                    container.innerHTML = `
+                        <div class="w-full h-full grid grid-cols-[1.08fr_1fr] gap-2.5">
+                            ${cleanFrame(mainPhoto, 'h-full min-h-0')}
+                            <div class="h-full grid gap-2 min-h-0" style="${rowStyle}">
+                                ${sidePhotos.map(p => cleanFrame(p, 'h-full min-h-0')).join('')}
+                            </div>
+                        </div>
+                    `;
+                } else if (effectiveLayout === 'grid-2x2') {
+                    const items = uploadedPhotos.slice(0, 4);
+                    container.innerHTML = `
+                        <div class="w-full h-full grid grid-cols-2 grid-rows-2 gap-2.5">
+                            ${items.map(p => cleanFrame(p, 'h-full min-h-0')).join('')}
+                        </div>
+                    `;
+                } else if (effectiveLayout === 'banner-1-3') {
+                    const items = uploadedPhotos.slice(0, 4);
+                    const topPhoto = items[0];
+                    const bottomPhotos = items.slice(1);
+                    const colStyle = `grid-template-columns: repeat(${Math.max(bottomPhotos.length, 1)}, minmax(0, 1fr));`;
+                    container.innerHTML = `
+                        <div class="w-full h-full grid grid-rows-[1.2fr_1fr] gap-2.5">
+                            ${cleanFrame(topPhoto, 'h-full min-h-0')}
+                            <div class="h-full grid gap-2.5 min-h-0" style="${colStyle}">
+                                ${bottomPhotos.map(p => cleanFrame(p, 'h-full min-h-0')).join('')}
+                            </div>
+                        </div>
+                    `;
+                } else if (effectiveLayout === 'row-4') {
+                    const items = uploadedPhotos.slice(0, 4);
+                    container.innerHTML = `
+                        <div class="w-full h-full grid grid-cols-4 gap-2">
+                            ${items.map(p => cleanFrame(p, 'h-full min-h-0')).join('')}
+                        </div>
+                    `;
+                } else if (effectiveLayout === 'pair-2') {
+                    const items = uploadedPhotos.slice(0, 2);
+                    container.innerHTML = `
+                        <div class="w-full h-full grid grid-cols-2 gap-3">
+                            ${items.map(p => cleanFrame(p, 'h-full min-h-0')).join('')}
+                        </div>
+                    `;
+                } else if (effectiveLayout === 'trio-3') {
+                    const items = uploadedPhotos.slice(0, 3);
+                    container.innerHTML = `
+                        <div class="w-full h-full grid grid-cols-3 gap-2.5">
+                            ${items.map(p => cleanFrame(p, 'h-full min-h-0')).join('')}
+                        </div>
+                    `;
+                } else if (effectiveLayout === 'balanced-5') {
+                    const topRow = uploadedPhotos.slice(0, 3);
+                    const bottomRow = uploadedPhotos.slice(3, 5);
+                    container.innerHTML = `
+                        <div class="w-full h-full grid grid-rows-2 gap-2.5">
+                            <div class="grid grid-cols-3 gap-2.5 min-h-0">
+                                ${topRow.map(p => cleanFrame(p, 'h-full min-h-0')).join('')}
+                            </div>
+                            <div class="flex justify-center gap-2.5 min-h-0">
+                                ${bottomRow.map(p => cleanFrame(p, 'h-full w-[32.5%] min-h-0')).join('')}
+                            </div>
+                        </div>
+                    `;
+                } else if (effectiveLayout === 'grid-6') {
+                    const items = uploadedPhotos.slice(0, 6);
+                    container.innerHTML = `
+                        <div class="w-full h-full grid grid-cols-3 grid-rows-2 gap-2.5">
+                            ${items.map(p => cleanFrame(p, 'h-full min-h-0')).join('')}
+                        </div>
+                    `;
+                } else {
+                    const item = uploadedPhotos[0];
+                    container.innerHTML = `
+                        <div class="w-[82%] h-full mx-auto">
+                            ${cleanFrame(item, 'h-full w-full min-h-0')}
+                        </div>
+                    `;
+                }
+            }
+
+            // =========================================================================
+            // 6. CETAK, MUAT TURUN PDF & HANTAR KE DASHBOARD GOOGLE SHEETS
+            // =========================================================================
+            function printOPR() {
+                const originalTitle = document.title;
+                const tajuk = document.getElementById('input-tajuk').value.trim() || 'OPR_PTIS_PELANGAI';
+                document.title = tajuk.replace(/[^a-zA-Z0-9\s-_]/g, '').substring(0, 60);
+
+                window.print();
+
+                setTimeout(() => {
+                    document.title = originalTitle;
+                }, 1000);
+            }
+
+            function downloadPDF() {
+                const btn = document.getElementById('btn-download-pdf');
+                if (typeof window.html2pdf === 'undefined') {
+                    showToast('Membuka dialog simpan PDF pelayar...');
+                    printOPR();
+                    return;
+                }
+
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i><span>Menjana PDF...</span>';
+                btn.disabled = true;
+
+                const element = document.getElementById('opr-document');
+                const wrapper = document.getElementById('preview-wrapper');
+                const savedTransform = wrapper.style.transform;
+                const savedMargin = wrapper.style.marginBottom;
+
+                wrapper.style.transform = 'scale(1)';
+                wrapper.style.marginBottom = '0px';
+
+                const tajuk = (document.getElementById('input-tajuk').value.trim() || 'OPR_PTIS')
+                    .replace(/[^a-zA-Z0-9\s-_]/g, '')
+                    .replace(/\s+/g, '_')
+                    .substring(0, 50);
+
+                const opt = {
+                    margin: 0,
+                    filename: `${tajuk}.pdf`,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true, logging: false },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+
+                window.html2pdf().set(opt).from(element).save().then(() => {
+                    wrapper.style.transform = savedTransform;
+                    wrapper.style.marginBottom = savedMargin;
+                    btn.innerHTML = originalHTML;
+                    btn.disabled = false;
+                    showToast('Fail PDF berjaya dimuat turun!');
+                }).catch(() => {
+                    wrapper.style.transform = savedTransform;
+                    wrapper.style.marginBottom = savedMargin;
+                    btn.innerHTML = originalHTML;
+                    btn.disabled = false;
+                    showToast('Menggunakan mod cetak PDF pelayar...');
+                    printOPR();
+                });
+            }
+
+            async function submitToDashboard() {
+                const btn = document.getElementById('btn-submit-dashboard');
+                const tajuk = document.getElementById('input-tajuk').value.trim();
+                const tempat = document.getElementById('input-tempat').value.trim();
+                const tarikh = document.getElementById('input-tarikh').value.trim();
+
+                if (!tajuk || !tempat || !tarikh) {
+                    showToast('Sila lengkapkan Tajuk, Tempat dan Tarikh dahulu.', 'error');
+                    return;
+                }
+
+                if (typeof window.html2pdf === 'undefined') {
+                    showToast('Pustaka PDF sedang dimuatkan, sila cuba sebentar lagi.', 'error');
+                    return;
+                }
+
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i><span>Menghantar ke Dashboard...</span>';
+                btn.disabled = true;
+
+                try {
+                    const element = document.getElementById('opr-document');
+                    const wrapper = document.getElementById('preview-wrapper');
+                    const savedTransform = wrapper.style.transform;
+                    const savedMargin = wrapper.style.marginBottom;
+
+                    wrapper.style.transform = 'scale(1)';
+                    wrapper.style.marginBottom = '0px';
+
+                    // Jana PDF dalam format Base64
+                    const pdfBase64 = await window.html2pdf().set({
+                        margin: 0,
+                        image: { type: 'jpeg', quality: 0.90 },
+                        html2canvas: { scale: 2, useCORS: true, logging: false },
+                        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    }).from(element).outputPdf('datauristring');
+
+                    wrapper.style.transform = savedTransform;
+                    wrapper.style.marginBottom = savedMargin;
+
+                    // Ambil gambar pertama untuk pratinjau Dashboard
+                    const thumbnailBase64 = uploadedPhotos.length > 0 ? uploadedPhotos[0].src : '';
+                    const tarikhMula = tarikh.split('-')[0].trim();
+
+                    const response = await fetch(WEB_APP_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'text/plain;charset=utf-8'
+                        },
+                        body: JSON.stringify({
+                            tajuk: tajuk,
+                            tempat: tempat,
+                            tarikhMula: tarikhMula,
+                            thumbnailBase64: thumbnailBase64,
+                            pdfBase64: pdfBase64
+                        })
+                    });
+
+                    const result = await response.json();
+                    if (result.status === 'success') {
+                        showToast('Berjaya! Rekod & PDF OPR telah dihantar ke Dashboard.');
+                    } else {
+                        throw new Error(result.message || 'Ralat pelayan');
+                    }
+                } catch (error) {
+                    console.error('Ralat penghantaran:', error);
+                    showToast('Gagal menghantar ke Dashboard. Sila semak sambungan internet.', 'error');
+                } finally {
+                    btn.innerHTML = originalHTML;
+                    btn.disabled = false;
+                }
+            }
+
+            // =========================================================================
+            // 7. ZOOM PRATONTON, LOCAL STORAGE & PENGIKATAN EVENT
+            // =========================================================================
+            function adjustZoom(delta) {
+                currentZoom = Math.min(1.25, Math.max(0.38, +(currentZoom + delta).toFixed(2)));
+                applyZoom();
+            }
+
+            function autoFitPreview() {
+                const container = document.getElementById('preview-container');
+                if (!container) return;
+                const availableWidth = container.clientWidth - 48;
+                const availableHeight = container.clientHeight - 76;
+                const a4WidthPx = 794;
+                const a4HeightPx = 1123;
+
+                const scaleW = availableWidth / a4WidthPx;
+                const scaleH = availableHeight > 300 ? (availableHeight / a4HeightPx) : scaleW;
+                const bestScale = Math.min(scaleW, scaleH, 0.95);
+
+                currentZoom = Math.max(0.38, +bestScale.toFixed(2));
+                applyZoom();
+            }
+
+            function applyZoom() {
+                const wrapper = document.getElementById('preview-wrapper');
+                const label = document.getElementById('zoom-level-text');
+                if (!wrapper || !label) return;
+                wrapper.style.transform = `scale(${currentZoom})`;
+                const a4HeightPx = 1123;
+                wrapper.style.marginBottom = `${(currentZoom - 1) * a4HeightPx}px`;
+                label.textContent = `${Math.round(currentZoom * 100)}%`;
+            }
+
+            function loadSavedProfile() {
+                try {
+                    const saved = JSON.parse(localStorage.getItem('ptis_opr_profile') || '{}');
+                    if (saved.ptisTitle) document.getElementById('input-ptis-title').value = saved.ptisTitle;
+                    if (saved.ptisSubtitle) document.getElementById('input-ptis-subtitle').value = saved.ptisSubtitle;
+                    if (saved.tempat) document.getElementById('input-tempat').value = saved.tempat;
+                    if (saved.pelaksana) document.getElementById('input-pelaksana').value = saved.pelaksana;
+                    if (saved.jawatan) document.getElementById('input-jawatan').value = saved.jawatan;
+                    if (saved.logo) {
+                        customLogoSrc = saved.logo;
+                        updateLogoUI();
+                    }
+                } catch (e) {}
+            }
+
+            function saveProfileToStorage() {
+                try {
+                    const profile = {
+                        ptisTitle: document.getElementById('input-ptis-title').value,
+                        ptisSubtitle: document.getElementById('input-ptis-subtitle').value,
+                        tempat: document.getElementById('input-tempat').value,
+                        pelaksana: document.getElementById('input-pelaksana').value,
+                        jawatan: document.getElementById('input-jawatan').value,
+                        logo: customLogoSrc
+                    };
+                    localStorage.setItem('ptis_opr_profile', JSON.stringify(profile));
+                } catch (e) {}
+            }
+
+            function showToast(message, type = 'success') {
+                const box = document.getElementById('toast-box');
+                const msgEl = document.getElementById('toast-msg');
+                const iconEl = document.getElementById('toast-icon');
+                if (!box || !msgEl || !iconEl) return;
+
+                msgEl.textContent = message;
+                iconEl.className = type === 'error'
+                    ? 'fa-solid fa-circle-exclamation text-rose-400'
+                    : 'fa-solid fa-circle-check text-emerald-400';
+
+                box.classList.remove('translate-y-24', 'opacity-0');
+                if (toastTimer) clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => {
+                    box.classList.add('translate-y-24', 'opacity-0');
+                }, 3500);
+            }
+
+            function bindAllEvents() {
+                const oprForm = document.getElementById('opr-form');
+                if (oprForm) {
+                    oprForm.addEventListener('submit', (e) => e.preventDefault());
+                }
+
+                const textInputs = [
+                    'input-ptis-title', 'input-ptis-subtitle', 'input-tajuk',
+                    'input-tempat', 'input-tarikh', 'input-masa', 'input-aktiviti',
+                    'input-objektif', 'input-sasaran', 'input-ulasan', 'input-pelaksana', 'input-jawatan'
+                ];
+                textInputs.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.addEventListener('input', () => {
+                            renderPreview();
+                            saveProfileToStorage();
+                        });
+                    }
+                });
+
+                const dateHelper = document.getElementById('date-helper');
+                if (dateHelper) {
+                    dateHelper.addEventListener('change', (e) => {
+                        const val = e.target.value;
+                        if (!val) return;
+                        const parts = val.split('-');
+                        if (parts.length === 3) {
+                            document.getElementById('input-tarikh').value = `${parts[2]}/${parts[1]}/${parts[0]}`;
+                            renderPreview();
+                        }
+                    });
+                }
+
+                const inputLogo = document.getElementById('input-logo');
+                if (inputLogo) {
+                    inputLogo.addEventListener('change', (e) => {
+                        if (e.target.files && e.target.files[0]) {
+                            handleLogoUpload(e.target.files[0]);
+                        }
+                    });
+                }
+
+                const btnRemoveLogo = document.getElementById('btn-remove-logo');
+                if (btnRemoveLogo) {
+                    btnRemoveLogo.addEventListener('click', removeLogo);
+                }
+
+                const inputPhotos = document.getElementById('input-photos');
+                if (inputPhotos) {
+                    inputPhotos.addEventListener('change', (e) => {
+                        if (e.target.files && e.target.files.length > 0) {
+                            processImageFiles(e.target.files);
+                            e.target.value = '';
+                        }
+                    });
+                }
+
+                const dropZone = document.getElementById('drop-zone');
+                if (dropZone) {
+                    dropZone.addEventListener('dragover', (e) => {
+                        e.preventDefault();
+                        dropZone.classList.add('border-blue-600', 'bg-blue-100/70');
+                    });
+                    dropZone.addEventListener('dragleave', () => {
+                        dropZone.classList.remove('border-blue-600', 'bg-blue-100/70');
+                    });
+                    dropZone.addEventListener('drop', (e) => {
+                        e.preventDefault();
+                        dropZone.classList.remove('border-blue-600', 'bg-blue-100/70');
+                        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                            processImageFiles(e.dataTransfer.files);
+                        }
+                    });
+                }
+
+                const btnClearPhotos = document.getElementById('btn-clear-photos');
+                if (btnClearPhotos) {
+                    btnClearPhotos.addEventListener('click', () => {
+                        uploadedPhotos = [];
+                        renderThumbnailList();
+                        renderPreview();
+                        showToast('Semua gambar telah dikosongkan.');
+                    });
+                }
+
+                const thumbnailList = document.getElementById('thumbnail-list');
+                if (thumbnailList) {
+                    thumbnailList.addEventListener('click', (e) => {
+                        const btn = e.target.closest('button[data-action]');
+                        if (!btn) return;
+                        const action = btn.getAttribute('data-action');
+                        const idx = parseInt(btn.getAttribute('data-index'), 10);
+                        if (Number.isNaN(idx)) return;
+
+                        if (action === 'remove') {
+                            uploadedPhotos.splice(idx, 1);
+                            autoSelectBestLayout(uploadedPhotos.length);
+                            renderThumbnailList();
+                            renderPreview();
+                        } else if (action === 'move-left' && idx > 0) {
+                            const temp = uploadedPhotos[idx];
+                            uploadedPhotos[idx] = uploadedPhotos[idx - 1];
+                            uploadedPhotos[idx - 1] = temp;
+                            renderThumbnailList();
+                            renderPreview();
+                        } else if (action === 'move-right' && idx < uploadedPhotos.length - 1) {
+                            const temp = uploadedPhotos[idx];
+                            uploadedPhotos[idx] = uploadedPhotos[idx + 1];
+                            uploadedPhotos[idx + 1] = temp;
+                            renderThumbnailList();
+                            renderPreview();
+                        }
+                    });
+                }
+
+                document.querySelectorAll('.layout-btn, .quick-layout-pill').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const layout = btn.getAttribute('data-layout');
+                        if (layout) setGalleryLayout(layout);
+                    });
+                });
+
+                const selectGridLayout = document.getElementById('select-grid-layout');
+                if (selectGridLayout) {
+                    selectGridLayout.addEventListener('change', () => {
+                        syncLayoutButtons();
+                        renderPreview();
+                    });
+                }
+
+                const selectImageFit = document.getElementById('select-image-fit');
+                if (selectImageFit) {
+                    selectImageFit.addEventListener('change', renderPreview);
+                }
+
+                const btnPrint = document.getElementById('btn-print-opr');
+                if (btnPrint) btnPrint.addEventListener('click', printOPR);
+
+                const btnDownload = document.getElementById('btn-download-pdf');
+                if (btnDownload) btnDownload.addEventListener('click', downloadPDF);
+
+                const btnSubmitDashboard = document.getElementById('btn-submit-dashboard');
+                if (btnSubmitDashboard) btnSubmitDashboard.addEventListener('click', submitToDashboard);
+
+                const btnZoomOut = document.getElementById('btn-zoom-out');
+                if (btnZoomOut) btnZoomOut.addEventListener('click', () => adjustZoom(-0.1));
+
+                const btnZoomIn = document.getElementById('btn-zoom-in');
+                if (btnZoomIn) btnZoomIn.addEventListener('click', () => adjustZoom(0.1));
+
+                const btnZoomFit = document.getElementById('btn-zoom-fit');
+                if (btnZoomFit) btnZoomFit.addEventListener('click', autoFitPreview);
+
+                const resetModal = document.getElementById('reset-modal');
+                const btnReset = document.getElementById('btn-reset');
+                const btnCancelReset = document.getElementById('btn-cancel-reset');
+                const btnConfirmReset = document.getElementById('btn-confirm-reset');
+
+                if (btnReset && resetModal) {
+                    btnReset.addEventListener('click', () => {
+                        resetModal.classList.remove('hidden');
+                        resetModal.classList.add('flex');
+                    });
+                }
+                if (btnCancelReset && resetModal) {
+                    btnCancelReset.addEventListener('click', () => {
+                        resetModal.classList.add('hidden');
+                        resetModal.classList.remove('flex');
+                    });
+                }
+                if (btnConfirmReset && resetModal) {
+                    btnConfirmReset.addEventListener('click', () => {
+                        document.getElementById('input-tajuk').value = '';
+                        document.getElementById('input-tarikh').value = '';
+                        document.getElementById('input-masa').value = '';
+                        document.getElementById('input-aktiviti').value = '';
+                        document.getElementById('input-objektif').value = '';
+                        document.getElementById('input-sasaran').value = '';
+                        document.getElementById('input-ulasan').value = '';
+                        uploadedPhotos = [];
+                        renderThumbnailList();
+                        renderPreview();
+                        resetModal.classList.add('hidden');
+                        resetModal.classList.remove('flex');
+                        showToast('Borang laporan telah dikosongkan.');
+                    });
+                }
+
+                window.addEventListener('resize', autoFitPreview);
+            }
+
+            // Mulakan aplikasi
+            loadSavedProfile();
+            bindAllEvents();
+            syncLayoutButtons();
+            renderThumbnailList();
+            renderPreview();
+            autoFitPreview();
+        })();
+    </script>
+</body>
+</html>
