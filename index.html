@@ -585,14 +585,13 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- KAD 1: DASHBOARD DATA STUDIO -->
+           <!-- KAD 1: DASHBOARD DATA STUDIO -->
             <div class="corporate-card rounded-2xl p-6 flex flex-col justify-between">
                 <div>
                     <div class="w-10 h-10 bg-blue-50 text-blue-700 rounded-lg flex items-center justify-center mb-3 border border-blue-100">
                         <i class="fa-solid fa-chart-pie text-lg"></i>
                     </div>
                     <h3 class="text-base font-bold text-slate-900 mb-1">Dashboard Laporan & OPR</h3>
-                    <!-- KECILKAN KEPADA text-xs TAPI KEKAL PEKAT (text-slate-800 font-medium) -->
                     <p class="text-xs font-medium text-slate-800 leading-relaxed mb-4">Akses paparan visual interaktif Data Studio bagi pemantauan status makmal, aktiviti program, serta laporan OPR PTIS.</p>
                     
                     <ul class="space-y-1.5 text-xs font-medium text-slate-800">
@@ -602,10 +601,14 @@
                     </ul>
                 </div>
 
-                <div class="mt-6 pt-3 border-t border-slate-100">
-                    <button onclick="openModal('dashboardModal')" class="w-full bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm">
+                <div class="mt-6 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2">
+                    <a href="penjana_opr_ptis_pelangai.html" target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-sm">
+                        <i class="fa-solid fa-file-circle-plus"></i>
+                        <span>Borang OPR</span>
+                    </a>
+                    <button type="button" onclick="openModal('dashboardModal')" class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-sm">
                         <i class="fa-solid fa-chart-line"></i>
-                        <span>Buka Dashboard</span>
+                        <span>Dashboard OPR</span>
                     </button>
                 </div>
             </div>
