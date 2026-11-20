@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- html2pdf.js (dimuatkan secara tidak menyekat) -->
+    <!-- html2pdf.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 
     <style>
@@ -21,7 +21,7 @@
             background-color: #f1f5f9;
         }
 
-       /* Dimensi Kertas A4 Tepat (1 Muka Surat Penuh Tanpa Melimpah) */
+        /* Dimensi Kertas A4 Tepat (1 Muka Surat Penuh Tanpa Melimpah) */
         .a4-sheet {
             width: 210mm;
             height: 296.5mm;
@@ -414,12 +414,12 @@
 
             <!-- PEMBUNGKUS KERTAS A4 -->
             <div id="preview-wrapper">
-                <!-- DOKUMEN OPR SEBENAR (210mm x 297mm) -->
+                <!-- DOKUMEN OPR SEBENAR (210mm x 296.5mm) -->
                 <div id="opr-document" class="a4-sheet">
                     
-               <!-- ==================== BAHAGIAN ATAS: REBEN GEOMETRI & HEADER ==================== -->
+                    <!-- ==================== BAHAGIAN ATAS: REBEN GEOMETRI & HEADER ==================== -->
                     <div class="relative w-full pt-5 shrink-0">
-                        <div class="w-full h-[96px] block" style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 96' preserveAspectRatio='none'%3E%3Cpolygon points='0,12 245,12 268,34 0,34' fill='%230b4f8a'/%3E%3Cpolygon points='0,40 155,40 172,55 0,55' fill='%232997d8'/%3E%3Cpolygon points='505,0 640,0 715,68 580,68' fill='%23105b9e'/%3E%3Cpolygon points='648,0 800,0 800,68 723,68' fill='%230b4f8a'/%3E%3Cpolygon points='595,74 800,74 800,89 611,89' fill='%232997d8'/%3E%3C/svg&quot;); background-size: 100% 100%; background-repeat: no-repeat;"></div>
+                        <canvas id="canvas-top-ribbon" width="800" height="96" class="w-full h-[96px] block"></canvas>
 
                         <!-- Kandungan Teks Header -->
                         <div class="absolute inset-x-0 top-8 px-10 flex items-center justify-center gap-4">
@@ -565,8 +565,8 @@
                             </div>
                         </div>
 
-                       <!-- Reben Hiasan Bawah -->
-                        <div class="w-full h-[56px] block" style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 56' preserveAspectRatio='none'%3E%3Cpolygon points='0,4 225,4 240,16 0,16' fill='%232997d8'/%3E%3Cpolygon points='0,20 185,20 235,56 0,56' fill='%230b4f8a'/%3E%3Cpolygon points='193,20 320,20 370,56 243,56' fill='%23105b9e'/%3E%3Cpolygon points='620,18 800,18 800,30 606,30' fill='%232997d8'/%3E%3Cpolygon points='525,35 800,35 800,56 500,56' fill='%230b4f8a'/%3E%3C/svg&quot;); background-size: 100% 100%; background-repeat: no-repeat;"></div>
+                        <!-- Reben Hiasan Bawah -->
+                        <canvas id="canvas-bottom-ribbon" width="800" height="56" class="w-full h-[56px] block"></canvas>
                     </div>
 
                 </div>
@@ -598,10 +598,53 @@
             // =========================================================================
             // PAUTAN WEB APP GOOGLE APPS SCRIPT PTIS PELANGAI
             // =========================================================================
-      const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz5KSTEDVksJxx0mGwtuU5oM2DBrNYfu1Acjg6amipShvJ_FgXgXMx_Qd9fFK3GevQW/exec';
-            
+            const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz5KSTEDVksJxx0mGwtuU5oM2DBrNYfu1Acjg6amipShvJ_FgXgXMx_Qd9fFK3GevQW/exec';
+
             // =========================================================================
-            // 1. PENJANAAN GAMBAR CONTOH MENGGUNAKAN HTML5 CANVAS (100% BEBAS RALAT)
+            // 0. LUKIS REBEN GEOMETRI ATAS & BAWAH PADA HTML5 CANVAS
+            // =========================================================================
+            function drawRibbons() {
+                const topCanvas = document.getElementById('canvas-top-ribbon');
+                if (topCanvas && topCanvas.getContext) {
+                    const ctx = topCanvas.getContext('2d');
+                    ctx.clearRect(0, 0, 800, 96);
+                    const drawPoly = (pts, color) => {
+                        ctx.beginPath();
+                        ctx.moveTo(pts[0][0], pts[0][1]);
+                        for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+                        ctx.closePath();
+                        ctx.fillStyle = color;
+                        ctx.fill();
+                    };
+                    drawPoly([[0, 12], [245, 12], [268, 34], [0, 34]], '#0b4f8a');
+                    drawPoly([[0, 40], [155, 40], [172, 55], [0, 55]], '#2997d8');
+                    drawPoly([[505, 0], [640, 0], [715, 68], [580, 68]], '#105b9e');
+                    drawPoly([[648, 0], [800, 0], [800, 68], [723, 68]], '#0b4f8a');
+                    drawPoly([[595, 74], [800, 74], [800, 89], [611, 89]], '#2997d8');
+                }
+
+                const botCanvas = document.getElementById('canvas-bottom-ribbon');
+                if (botCanvas && botCanvas.getContext) {
+                    const ctx = botCanvas.getContext('2d');
+                    ctx.clearRect(0, 0, 800, 56);
+                    const drawPoly = (pts, color) => {
+                        ctx.beginPath();
+                        ctx.moveTo(pts[0][0], pts[0][1]);
+                        for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+                        ctx.closePath();
+                        ctx.fillStyle = color;
+                        ctx.fill();
+                    };
+                    drawPoly([[0, 4], [225, 4], [240, 16], [0, 16]], '#2997d8');
+                    drawPoly([[0, 20], [185, 20], [235, 56], [0, 56]], '#0b4f8a');
+                    drawPoly([[193, 20], [320, 20], [370, 56], [243, 56]], '#105b9e');
+                    drawPoly([[620, 18], [800, 18], [800, 30], [606, 30]], '#2997d8');
+                    drawPoly([[525, 35], [800, 35], [800, 56], [500, 56]], '#0b4f8a');
+                }
+            }
+
+            // =========================================================================
+            // 1. PENJANAAN GAMBAR CONTOH MENGGUNAKAN HTML5 CANVAS
             // =========================================================================
             function createSamplePhotoCanvas(sceneIndex) {
                 const themes = [
@@ -609,7 +652,6 @@
                         bg: '#e0f2fe',
                         border: '#38bdf8',
                         accent: '#0284c7',
-                        badge: 'FOTO 1',
                         title: 'GAMBAR AKTIVITI 1',
                         sub: 'Pemeriksaan fizikal & spesifikasi peranti'
                     },
@@ -617,7 +659,6 @@
                         bg: '#dcfce7',
                         border: '#34d399',
                         accent: '#059669',
-                        badge: 'FOTO 2',
                         title: 'GAMBAR AKTIVITI 2',
                         sub: 'Pengesahan nombor siri & rekod aset'
                     },
@@ -625,7 +666,6 @@
                         bg: '#fef3c7',
                         border: '#fbbf24',
                         accent: '#d97706',
-                        badge: 'FOTO 3',
                         title: 'GAMBAR AKTIVITI 3',
                         sub: 'Ujian rangkaian & kemaskini perisian'
                     },
@@ -633,7 +673,6 @@
                         bg: '#ede9fe',
                         border: '#a78bfa',
                         accent: '#6d28d9',
-                        badge: 'FOTO 4',
                         title: 'GAMBAR AKTIVITI 4',
                         sub: 'Pengesahan & tandatangan serahan'
                     }
@@ -695,14 +734,20 @@
                 ctx.font = '13px Inter, sans-serif';
                 ctx.fillText('Muat naik gambar aktiviti sebenar di panel kiri', 320, 304);
 
-                return canvas.toDataURL('image/png');
+                const rawSrc = canvas.toDataURL('image/png');
+                return { src: rawSrc, blurredSrc: rawSrc };
             }
 
+            const sample0 = createSamplePhotoCanvas(0);
+            const sample1 = createSamplePhotoCanvas(1);
+            const sample2 = createSamplePhotoCanvas(2);
+            const sample3 = createSamplePhotoCanvas(3);
+
             let uploadedPhotos = [
-                { id: 1, src: createSamplePhotoCanvas(0), isSample: true },
-                { id: 2, src: createSamplePhotoCanvas(1), isSample: true },
-                { id: 3, src: createSamplePhotoCanvas(2), isSample: true },
-                { id: 4, src: createSamplePhotoCanvas(3), isSample: true }
+                { id: 1, src: sample0.src, blurredSrc: sample0.blurredSrc, isSample: true },
+                { id: 2, src: sample1.src, blurredSrc: sample1.blurredSrc, isSample: true },
+                { id: 3, src: sample2.src, blurredSrc: sample2.blurredSrc, isSample: true },
+                { id: 4, src: sample3.src, blurredSrc: sample3.blurredSrc, isSample: true }
             ];
 
             let customLogoSrc = '';
@@ -710,9 +755,9 @@
             let toastTimer = null;
 
             // =========================================================================
-            // 2. PEMAMPATAN & PENGECILAN SAIZ GAMBAR AUTOMATIK (HTML5 CANVAS)
+            // 2. PEMAMPATAN & PRA-PENGABURAN GAMBAR AUTOMATIK (HTML5 CANVAS)
             // =========================================================================
-            function compressImageFile(file, maxWidth, quality) {
+            function compressAndBlurImageFile(file, maxWidth, quality) {
                 return new Promise((resolve, reject) => {
                     const reader = new FileReader();
                     reader.onerror = () => reject(new Error('Gagal membaca fail gambar.'));
@@ -729,19 +774,37 @@
                                     width = maxWidth;
                                 }
 
+                                // 1. Gambar utama berkualiti tinggi
                                 const canvas = document.createElement('canvas');
                                 canvas.width = width;
                                 canvas.height = height;
                                 const ctx = canvas.getContext('2d');
-
                                 ctx.fillStyle = '#ffffff';
                                 ctx.fillRect(0, 0, width, height);
                                 ctx.drawImage(img, 0, 0, width, height);
-
                                 const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
-                                resolve(compressedDataUrl);
+
+                                // 2. Latar belakang kabur lembut (kanvas kecil + blur)
+                                let blurredDataUrl = compressedDataUrl;
+                                try {
+                                    const bCanvas = document.createElement('canvas');
+                                    bCanvas.width = 96;
+                                    bCanvas.height = 96;
+                                    const bCtx = bCanvas.getContext('2d');
+                                    bCtx.filter = 'blur(8px)';
+                                    bCtx.drawImage(img, -14, -14, 124, 124);
+                                    blurredDataUrl = bCanvas.toDataURL('image/jpeg', 0.65);
+                                } catch (blurErr) {}
+
+                                resolve({
+                                    src: compressedDataUrl,
+                                    blurredSrc: blurredDataUrl
+                                });
                             } catch (err) {
-                                resolve(e.target.result);
+                                resolve({
+                                    src: e.target.result,
+                                    blurredSrc: e.target.result
+                                });
                             }
                         };
                         img.src = e.target.result;
@@ -776,10 +839,11 @@
                 let successCount = 0;
                 for (let i = 0; i < filesToLoad.length; i++) {
                     try {
-                        const dataUrl = await compressImageFile(filesToLoad[i], 1200, 0.85);
+                        const processed = await compressAndBlurImageFile(filesToLoad[i], 1200, 0.85);
                         uploadedPhotos.push({
                             id: Date.now() + Math.random(),
-                            src: dataUrl,
+                            src: processed.src,
+                            blurredSrc: processed.blurredSrc,
                             isSample: false
                         });
                         successCount++;
@@ -952,6 +1016,7 @@
                     logoContainer.classList.add('hidden');
                 }
 
+                drawRibbons();
                 renderPhotoGrid();
             }
 
@@ -996,23 +1061,6 @@
                 };
                 if (layoutBadge) layoutBadge.textContent = badgeNames[effectiveLayout] || '';
 
-              const createBlurredDataUrl = (src) => {
-                    try {
-                        const c = document.createElement('canvas');
-                        c.width = 64;
-                        c.height = 64;
-                        const ctx = c.getContext('2d');
-                        const tempImg = new Image();
-                        tempImg.src = src;
-                        if (tempImg.complete && tempImg.naturalWidth > 0) {
-                            ctx.filter = 'blur(8px)';
-                            ctx.drawImage(tempImg, -8, -8, 80, 80);
-                            return c.toDataURL('image/jpeg', 0.6);
-                        }
-                    } catch (e) {}
-                    return src;
-                };
-
                 const cleanFrame = (photo, extraClasses) => {
                     if (imageFit === 'cover') {
                         return `
@@ -1030,11 +1078,10 @@
                             </div>
                         `;
                     }
-                    const blurredBg = createBlurredDataUrl(photo.src);
                     return `
                         <div class="relative overflow-hidden rounded-xl bg-white p-1.5 shadow-sm border border-slate-200/90 flex items-center justify-center ${extraClasses}">
                             <div class="relative w-full h-full rounded-lg overflow-hidden flex items-center justify-center bg-slate-200/70">
-                                <img src="${blurredBg}" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-45 pointer-events-none">
+                                <img src="${photo.blurredSrc || photo.src}" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-50 pointer-events-none">
                                 <img src="${photo.src}" alt="Gambar Aktiviti" class="relative z-10 max-w-full max-h-full w-auto h-auto object-contain rounded-md shadow-xs">
                             </div>
                         </div>
@@ -1140,14 +1187,38 @@
                 }, 1000);
             }
 
-          async function generateSinglePagePdfBlob(scaleVal, qualityVal) {
-                const element = document.getElementById('opr-document');
-                const wrapper = document.getElementById('preview-wrapper');
-                const savedTransform = wrapper.style.transform;
-                const savedMargin = wrapper.style.marginBottom;
+            async function generateSinglePagePdfBlob(scaleVal, qualityVal) {
+                drawRibbons();
+                const original = document.getElementById('opr-document');
 
-                wrapper.style.transform = 'scale(1)';
-                wrapper.style.marginBottom = '0px';
+                // Cipta bekas tersembunyi di sudut (0,0) supaya html2canvas tidak memotong bahagian kiri
+                const stage = document.createElement('div');
+                stage.style.position = 'fixed';
+                stage.style.top = '0';
+                stage.style.left = '0';
+                stage.style.width = '210mm';
+                stage.style.height = '296.5mm';
+                stage.style.zIndex = '-9999';
+                stage.style.pointerEvents = 'none';
+                stage.style.background = '#ffffff';
+
+                const clone = original.cloneNode(true);
+                clone.style.transform = 'none';
+                clone.style.margin = '0';
+                clone.style.boxShadow = 'none';
+
+                // Salin lukisan kanvas reben atas & bawah ke dalam klon
+                const origCanvases = original.querySelectorAll('canvas');
+                const cloneCanvases = clone.querySelectorAll('canvas');
+                origCanvases.forEach((oc, i) => {
+                    if (cloneCanvases[i]) {
+                        const cCtx = cloneCanvases[i].getContext('2d');
+                        cCtx.drawImage(oc, 0, 0);
+                    }
+                });
+
+                stage.appendChild(clone);
+                document.body.appendChild(stage);
 
                 try {
                     const worker = window.html2pdf().set({
@@ -1157,23 +1228,24 @@
                             scale: scaleVal,
                             useCORS: true,
                             logging: false,
-                            width: element.offsetWidth,
-                            height: element.offsetHeight,
-                            windowWidth: element.offsetWidth,
-                            windowHeight: element.offsetHeight
+                            scrollX: 0,
+                            scrollY: 0,
+                            x: 0,
+                            y: 0,
+                            width: clone.offsetWidth,
+                            height: clone.offsetHeight,
+                            windowWidth: 1200
                         },
                         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                    }).from(element).toPdf();
+                    }).from(clone).toPdf();
 
                     const pdf = await worker.get('pdf');
-                    // Padam muka surat lebihan jika wujud supaya sentiasa 1 muka surat A4 tepat
                     while (pdf.internal.getNumberOfPages() > 1) {
                         pdf.deletePage(pdf.internal.getNumberOfPages());
                     }
                     return pdf;
                 } finally {
-                    wrapper.style.transform = savedTransform;
-                    wrapper.style.marginBottom = savedMargin;
+                    document.body.removeChild(stage);
                 }
             }
 
@@ -1544,4 +1616,3 @@
     </script>
 </body>
 </html>
-
