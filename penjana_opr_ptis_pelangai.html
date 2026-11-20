@@ -1187,22 +1187,26 @@
                 }, 1000);
             }
 
-            async function generateSinglePagePdfBlob(scaleVal, qualityVal) {
+          async function generateSinglePagePdfBlob(scaleVal, qualityVal) {
                 drawRibbons();
                 const original = document.getElementById('opr-document');
 
-                // Cipta bekas tersembunyi di sudut (0,0) supaya html2canvas tidak memotong bahagian kiri
+                // Cipta bekas di sudut mutlak atas-kiri dokumen
                 const stage = document.createElement('div');
-                stage.style.position = 'fixed';
-                stage.style.top = '0';
-                stage.style.left = '0';
-                stage.style.width = '210mm';
-                stage.style.height = '296.5mm';
+                stage.style.position = 'absolute';
+                stage.style.top = '0px';
+                stage.style.left = '0px';
+                stage.style.width = '794px';
+                stage.style.height = '1122px';
                 stage.style.zIndex = '-9999';
                 stage.style.pointerEvents = 'none';
                 stage.style.background = '#ffffff';
+                stage.style.overflow = 'hidden';
 
                 const clone = original.cloneNode(true);
+                clone.style.width = '794px';
+                clone.style.height = '1122px';
+                clone.style.maxHeight = '1122px';
                 clone.style.transform = 'none';
                 clone.style.margin = '0';
                 clone.style.boxShadow = 'none';
@@ -1221,28 +1225,33 @@
                 document.body.appendChild(stage);
 
                 try {
+                    // 1. Rakam klon menjadi kanvas tepat 794x1122 (tanpa anjakan kiri/kanan)
                     const worker = window.html2pdf().set({
-                        margin: 0,
-                        image: { type: 'jpeg', quality: qualityVal },
                         html2canvas: {
                             scale: scaleVal,
                             useCORS: true,
                             logging: false,
+                            width: 794,
+                            height: 1122,
                             scrollX: 0,
-                            scrollY: 0,
-                            x: 0,
-                            y: 0,
-                            width: clone.offsetWidth,
-                            height: clone.offsetHeight,
-                            windowWidth: 1200
-                        },
+                            scrollY: 0
+                        }
+                    }).from(clone).toCanvas();
+
+                    const canvas = await worker.get('canvas');
+                    const imgData = canvas.toDataURL('image/jpeg', qualityVal);
+
+                    // 2. Masukkan terus ke dalam PDF A4 pada koordinat tepat (0, 0, 210mm, 297mm)
+                    const pdfWorker = window.html2pdf().set({
                         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
                     }).from(clone).toPdf();
 
-                    const pdf = await worker.get('pdf');
+                    const pdf = await pdfWorker.get('pdf');
                     while (pdf.internal.getNumberOfPages() > 1) {
                         pdf.deletePage(pdf.internal.getNumberOfPages());
                     }
+                    pdf.setPage(1);
+                    pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
                     return pdf;
                 } finally {
                     document.body.removeChild(stage);
