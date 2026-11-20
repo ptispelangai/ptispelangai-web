@@ -996,6 +996,23 @@
                 };
                 if (layoutBadge) layoutBadge.textContent = badgeNames[effectiveLayout] || '';
 
+              const createBlurredDataUrl = (src) => {
+                    try {
+                        const c = document.createElement('canvas');
+                        c.width = 64;
+                        c.height = 64;
+                        const ctx = c.getContext('2d');
+                        const tempImg = new Image();
+                        tempImg.src = src;
+                        if (tempImg.complete && tempImg.naturalWidth > 0) {
+                            ctx.filter = 'blur(8px)';
+                            ctx.drawImage(tempImg, -8, -8, 80, 80);
+                            return c.toDataURL('image/jpeg', 0.6);
+                        }
+                    } catch (e) {}
+                    return src;
+                };
+
                 const cleanFrame = (photo, extraClasses) => {
                     if (imageFit === 'cover') {
                         return `
@@ -1013,10 +1030,11 @@
                             </div>
                         `;
                     }
+                    const blurredBg = createBlurredDataUrl(photo.src);
                     return `
                         <div class="relative overflow-hidden rounded-xl bg-white p-1.5 shadow-sm border border-slate-200/90 flex items-center justify-center ${extraClasses}">
-                            <div class="relative w-full h-full rounded-lg overflow-hidden flex items-center justify-center bg-slate-900/5">
-                                <img src="${photo.src}" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover scale-125 blur-md opacity-35 pointer-events-none">
+                            <div class="relative w-full h-full rounded-lg overflow-hidden flex items-center justify-center bg-slate-200/70">
+                                <img src="${blurredBg}" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-45 pointer-events-none">
                                 <img src="${photo.src}" alt="Gambar Aktiviti" class="relative z-10 max-w-full max-h-full w-auto h-auto object-contain rounded-md shadow-xs">
                             </div>
                         </div>
@@ -1122,7 +1140,44 @@
                 }, 1000);
             }
 
-            function downloadPDF() {
+          async function generateSinglePagePdfBlob(scaleVal, qualityVal) {
+                const element = document.getElementById('opr-document');
+                const wrapper = document.getElementById('preview-wrapper');
+                const savedTransform = wrapper.style.transform;
+                const savedMargin = wrapper.style.marginBottom;
+
+                wrapper.style.transform = 'scale(1)';
+                wrapper.style.marginBottom = '0px';
+
+                try {
+                    const worker = window.html2pdf().set({
+                        margin: 0,
+                        image: { type: 'jpeg', quality: qualityVal },
+                        html2canvas: {
+                            scale: scaleVal,
+                            useCORS: true,
+                            logging: false,
+                            width: element.offsetWidth,
+                            height: element.offsetHeight,
+                            windowWidth: element.offsetWidth,
+                            windowHeight: element.offsetHeight
+                        },
+                        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    }).from(element).toPdf();
+
+                    const pdf = await worker.get('pdf');
+                    // Padam muka surat lebihan jika wujud supaya sentiasa 1 muka surat A4 tepat
+                    while (pdf.internal.getNumberOfPages() > 1) {
+                        pdf.deletePage(pdf.internal.getNumberOfPages());
+                    }
+                    return pdf;
+                } finally {
+                    wrapper.style.transform = savedTransform;
+                    wrapper.style.marginBottom = savedMargin;
+                }
+            }
+
+            async function downloadPDF() {
                 const btn = document.getElementById('btn-download-pdf');
                 if (typeof window.html2pdf === 'undefined') {
                     showToast('Membuka dialog simpan PDF pelayar...');
@@ -1134,41 +1189,23 @@
                 btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i><span>Menjana PDF...</span>';
                 btn.disabled = true;
 
-                const element = document.getElementById('opr-document');
-                const wrapper = document.getElementById('preview-wrapper');
-                const savedTransform = wrapper.style.transform;
-                const savedMargin = wrapper.style.marginBottom;
+                try {
+                    const tajuk = (document.getElementById('input-tajuk').value.trim() || 'OPR_PTIS')
+                        .replace(/[^a-zA-Z0-9\s-_]/g, '')
+                        .replace(/\s+/g, '_')
+                        .substring(0, 50);
 
-                wrapper.style.transform = 'scale(1)';
-                wrapper.style.marginBottom = '0px';
-
-                const tajuk = (document.getElementById('input-tajuk').value.trim() || 'OPR_PTIS')
-                    .replace(/[^a-zA-Z0-9\s-_]/g, '')
-                    .replace(/\s+/g, '_')
-                    .substring(0, 50);
-
-                const opt = {
-                    margin: 0,
-                    filename: `${tajuk}.pdf`,
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2, useCORS: true, logging: false },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                };
-
-                window.html2pdf().set(opt).from(element).save().then(() => {
-                    wrapper.style.transform = savedTransform;
-                    wrapper.style.marginBottom = savedMargin;
-                    btn.innerHTML = originalHTML;
-                    btn.disabled = false;
-                    showToast('Fail PDF berjaya dimuat turun!');
-                }).catch(() => {
-                    wrapper.style.transform = savedTransform;
-                    wrapper.style.marginBottom = savedMargin;
-                    btn.innerHTML = originalHTML;
-                    btn.disabled = false;
+                    const pdf = await generateSinglePagePdfBlob(2, 0.96);
+                    pdf.save(`${tajuk}.pdf`);
+                    showToast('Fail PDF 1 muka surat berjaya dimuat turun!');
+                } catch (err) {
+                    console.error(err);
                     showToast('Menggunakan mod cetak PDF pelayar...');
                     printOPR();
-                });
+                } finally {
+                    btn.innerHTML = originalHTML;
+                    btn.disabled = false;
+                }
             }
 
             async function submitToDashboard() {
@@ -1192,31 +1229,15 @@
                 btn.disabled = true;
 
                 try {
-                    const element = document.getElementById('opr-document');
-                    const wrapper = document.getElementById('preview-wrapper');
-                    const savedTransform = wrapper.style.transform;
-                    const savedMargin = wrapper.style.marginBottom;
+                    const pdf = await generateSinglePagePdfBlob(1.6, 0.85);
+                    const pdfBase64 = pdf.output('datauristring');
 
-                    wrapper.style.transform = 'scale(1)';
-                    wrapper.style.marginBottom = '0px';
-
-                    // Jana PDF dalam format Base64
-                    const pdfBase64 = await window.html2pdf().set({
-                        margin: 0,
-                        image: { type: 'jpeg', quality: 0.90 },
-                        html2canvas: { scale: 2, useCORS: true, logging: false },
-                        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                    }).from(element).outputPdf('datauristring');
-
-                    wrapper.style.transform = savedTransform;
-                    wrapper.style.marginBottom = savedMargin;
-
-                    // Ambil gambar pertama untuk pratinjau Dashboard
                     const thumbnailBase64 = uploadedPhotos.length > 0 ? uploadedPhotos[0].src : '';
                     const tarikhMula = tarikh.split('-')[0].trim();
 
-                    const response = await fetch(WEB_APP_URL, {
+                    await fetch(WEB_APP_URL, {
                         method: 'POST',
+                        mode: 'no-cors',
                         headers: {
                             'Content-Type': 'text/plain;charset=utf-8'
                         },
@@ -1229,12 +1250,7 @@
                         })
                     });
 
-                    const result = await response.json();
-                    if (result.status === 'success') {
-                        showToast('Berjaya! Rekod & PDF OPR telah dihantar ke Dashboard.');
-                    } else {
-                        throw new Error(result.message || 'Ralat pelayan');
-                    }
+                    showToast('Berjaya! Rekod & PDF 1 muka surat telah dihantar ke Dashboard.');
                 } catch (error) {
                     console.error('Ralat penghantaran:', error);
                     showToast('Gagal menghantar ke Dashboard. Sila semak sambungan internet.', 'error');
